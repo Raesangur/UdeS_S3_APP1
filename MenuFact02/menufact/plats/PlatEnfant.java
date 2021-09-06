@@ -1,6 +1,6 @@
 package menufact.plats;
 
-public class PlatEnfant extends PlatAuMenu{
+public class PlatEnfant extends PlatAuMenu {
     private double proportion;
 
     public PlatEnfant() {
@@ -14,6 +14,10 @@ public class PlatEnfant extends PlatAuMenu{
     @Override
     public double getProportion() {
         return proportion;
+    }
+
+    public void setProportion(double proportion) {
+        this.proportion = proportion;
     }
 
     @Override

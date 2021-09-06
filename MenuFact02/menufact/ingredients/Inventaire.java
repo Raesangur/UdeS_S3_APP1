@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.Recette;
+import menufact.plats.builder.PlatBuilder;
 
 public class Inventaire {
     private static Inventaire instance;

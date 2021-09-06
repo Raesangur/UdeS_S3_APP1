@@ -15,4 +15,8 @@ public class PlatSanteBuilder extends PlatBuilder {
         ((PlatSante)plat).setKcal(chol);
         return this;
     }
+    public PlatSanteBuilder buildGras(double gras) {
+        ((PlatSante)plat).setKcal(gras);
+        return this;
+    }
 }

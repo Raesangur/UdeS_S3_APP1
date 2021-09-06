@@ -1,5 +1,6 @@
 package menufact.plats.builder;
 
+import menufact.ingredients.Ingredient;
 import menufact.plats.PlatAuMenu;
 import menufact.plats.Recette;
 
@@ -26,6 +27,11 @@ public class PlatBuilder {
 
     public PlatBuilder buildRecette(Recette recette) {
         plat.setRecette(recette);
+        return this;
+    }
+
+    public PlatBuilder buildRecette(Ingredient[] recette) {
+        plat.setRecette(new Recette(recette));
         return this;
     }
 }
