@@ -2,7 +2,11 @@ package menufact.facture;
 
 import menufact.Client;
 import menufact.facture.exceptions.FactureException;
+import menufact.facture.state.FactureEtatFermee;
+import menufact.facture.state.FactureEtatOuverte;
+import menufact.facture.state.FactureEtatPayee;
 import menufact.plats.PlatChoisi;
+import menufact.facture.state.FactureEtat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,15 +73,23 @@ public class Facture {
     /**
      * Permet de chager l'état de la facture à PAYEE
      */
-    public void payer() {
-        etat = FactureEtat.PAYEE;
+    public void payer() throws FactureException {
+        if (etat.changerEtat(new FactureEtatPayee())) {
+            etat = new FactureEtatPayee();
+        } else {
+            throw new FactureException("La facture ne peut pas être payée.");
+        }
     }
 
     /**
      * Permet de chager l'état de la facture à FERMEE
      */
-    public void fermer() {
-        etat = FactureEtat.FERMEE;
+    public void fermer() throws FactureException {
+        if (etat.changerEtat(new FactureEtatFermee())) {
+            etat = new FactureEtatFermee();
+        } else {
+            throw new FactureException("La facture ne peut pas être fermée.");
+        }
     }
 
     /**
@@ -86,10 +98,11 @@ public class Facture {
      * @throws FactureException en cas que la facture soit PAYEE
      */
     public void ouvrir() throws FactureException {
-        if (etat == FactureEtat.PAYEE)
+        if (etat.changerEtat(new FactureEtatFermee())) {
             throw new FactureException("La facture ne peut pas être reouverte.");
-        else
-            etat = FactureEtat.OUVERTE;
+        } else {
+            etat = new FactureEtatFermee();
+        }
     }
 
     /**
@@ -104,7 +117,7 @@ public class Facture {
      */
     public Facture(String description) {
         date = new Date();
-        etat = FactureEtat.OUVERTE;
+        etat = new FactureEtatOuverte();
         courant = -1;
         this.description = description;
     }
@@ -114,7 +127,7 @@ public class Facture {
      * @throws FactureException Seulement si la facture est OUVERTE
      */
     public void ajoutePlat(PlatChoisi p) throws FactureException {
-        if (etat == FactureEtat.OUVERTE)
+        if (etat instanceof FactureEtatOuverte)
             platchoisi.add(p);
         else
             throw new FactureException("On peut ajouter un plat seulement sur une facture OUVERTE.");
@@ -141,13 +154,10 @@ public class Facture {
      * @return une chaîne de caractères avec la facture à imprimer
      */
     public String genererFacture() {
-        String lesPlats = new String();
-        String factureGenere = new String();
-
+        String lesPlats = "";
         int i = 1;
 
-
-        factureGenere = "Facture generee.\n" +
+        String factureGenere = "Facture generee.\n" +
                 "Date:" + date + "\n" +
                 "Description: " + description + "\n" +
                 "Client:" + client.getNom() + "\n" +

@@ -1,6 +1,6 @@
 package menufact.ingredients;
 
-import menufact.ingredients.Etat.EtatIngredient;
+import menufact.ingredients.etat.EtatIngredient;
 
 public abstract class Ingredient {
     protected EtatIngredient etat;

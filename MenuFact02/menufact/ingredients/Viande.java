@@ -1,6 +1,6 @@
 package menufact.ingredients;
 
-import menufact.ingredients.Etat.EtatIngredient;
+import menufact.ingredients.etat.EtatIngredient;
 
 public class Viande extends Ingredient {
     public Viande(String nom, EtatIngredient etat) {

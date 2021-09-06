@@ -1,6 +1,6 @@
-package menufact.ingredients.Factory;
+package menufact.ingredients.factory;
 
-import menufact.ingredients.Etat.EtatIngredient;
+import menufact.ingredients.etat.EtatIngredient;
 import menufact.ingredients.Fruit;
 import menufact.ingredients.Ingredient;
 

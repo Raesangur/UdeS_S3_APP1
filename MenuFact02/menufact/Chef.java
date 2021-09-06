@@ -19,11 +19,7 @@ public class Chef {
     }
 
     public static synchronized Chef getInstance() {
-        if (instance == null) {
-            return instance = new Chef();
-        } else {
-            return instance;
-        }
+        return instance == null ? new Chef() : instance;
     }
 
     public String getNom() {
@@ -35,7 +31,6 @@ public class Chef {
     }
 
 
-    // TODO: 2021-09-05
     public PlatChoisi cusiner(PlatChoisi platACuisiner) throws IngredientException {
         platACuisiner.setEtat(new Commande());
 
@@ -44,7 +39,6 @@ public class Chef {
             terminer(platACuisiner);
             return servir(platACuisiner);
         } else {
-
             return null;
         }
     }
@@ -59,7 +53,6 @@ public class Chef {
 
             // Vérifie que l'ingrédient est disponible en quantité suffisante
             if (qtyDisponible < qtyRecquise) {
-                // TODO : 2021-09-05 | met un etat d'erreur
                 platAVerifier.setEtat(new ErrorServir());
 
                 throw new IngredientException("Missing ingredient: " + ingredient.getNom());

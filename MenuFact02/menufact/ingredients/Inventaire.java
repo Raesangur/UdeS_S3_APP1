@@ -20,7 +20,7 @@ public class Inventaire {
 
     public void ajouterIngredient(Ingredient ingredient) {
         // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
-        if (congelateur.containsValue(ingredient.getNom())) {
+        if (congelateur.containsKey(ingredient.getNom())) {
             Ingredient ing = congelateur.get(ingredient.getNom());
             ing.setQty(ing.getQty() + ingredient.getQty());
         }

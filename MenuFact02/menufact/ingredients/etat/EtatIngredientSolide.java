@@ -1,4 +1,4 @@
-package menufact.ingredients.Etat;
+package menufact.ingredients.etat;
 
 public class EtatIngredientSolide implements EtatIngredient {
     private double qtyKg;
