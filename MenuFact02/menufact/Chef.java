@@ -28,7 +28,7 @@ public class Chef {
     }
 
 
-    public PlatChoisi cusiner(PlatChoisi platACuisiner) throws IngredientException, PlatException {
+    public PlatChoisi cuisiner(PlatChoisi platACuisiner) throws IngredientException, PlatException {
         platACuisiner.setEtat(new Commande());
 
         if (verifierIngredient(platACuisiner)) {

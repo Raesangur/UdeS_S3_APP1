@@ -142,6 +142,7 @@ public class TestMenuFact02 {
 
     }
 
+
     private class TestFactoryIngredient{
         public void TestCreerFruit(){
             CreatorIngredient factory = new ConcreteCreatorFruit();
@@ -203,6 +204,31 @@ public class TestMenuFact02 {
 
     }
 
+    private class testChef{
+        Chef Zeff;
+        public testChef(){
+            Zeff = Chef.getInstance();
+            Zeff.setNom("Zeff");
+            
+
+        }
+        public void testNom() {
+            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
+            Assert.assertEquals(Zeff.getNom(), "Zeff");
+        }
+        public void testNom() {
+            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
+            Assert.assertEquals(Zeff.getNom(), "Zeff");
+        }
+        public void testNom() {
+            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
+            Assert.assertEquals(Zeff.getNom(), "Zeff");
+        }
+        public void testNom() {
+            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
+            Assert.assertEquals(Zeff.getNom(), "Zeff");
+        }
+    };
 
     private class TestRecette {
 
@@ -235,6 +261,8 @@ public class TestMenuFact02 {
             Assert.assertEquals(poivre, listeIngredient.get(2));
             Assert.assertEquals(0.3, listeIngredient.get(0).getQty(), 0.005);
         }
+
+
 
         @Test
         public void testAddIngredient() {
