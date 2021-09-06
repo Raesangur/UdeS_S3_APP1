@@ -2,6 +2,7 @@ package menufact;
 
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.PlatChoisi;
+import menufact.plats.PlatEnfant;
 import menufact.plats.Recette;
 import menufact.ingredients.Inventaire;
 import menufact.ingredients.Ingredient;
@@ -48,8 +49,9 @@ public class Chef {
         Recette recette = platAVerifier.getPlat().getRecette();
 
         for (Ingredient ingredient : recette.getIngredients()) {
-            double qtyRecquise = platAVerifier.getQuantite() * ingredient.getQty();
+            double qtyRecquise = platAVerifier.getQuantite() * platAVerifier.getPlat().getProportion() * ingredient.getQty();
             double qtyDisponible = inventaire.getIngredient(ingredient.getNom()).getQty();
+
 
             // Vérifie que l'ingrédient est disponible en quantité suffisante
             if (qtyDisponible < qtyRecquise) {
@@ -69,7 +71,7 @@ public class Chef {
         Recette recette = platAPreparer.getPlat().getRecette();
 
         // Consomme les ingrédients dans l'inventaire
-        inventaire.consommerRecette(recette, platAPreparer.getQuantite());
+        inventaire.consommerRecette(recette, platAPreparer.getQuantite(), platAPreparer.getPlat().getProportion());
     }
 
     private void terminer(PlatChoisi platATerminer) {
@@ -79,5 +81,12 @@ public class Chef {
     private PlatChoisi servir(PlatChoisi platAServir) {
         platAServir.setEtat(new Servi());
         return platAServir;
+    }
+
+    @Override
+    public String toString() {
+        return "Chef: {\n\t" +
+                "Nom: '" + nom + "'\n" +
+                "\n}";
     }
 }

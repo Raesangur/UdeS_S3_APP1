@@ -16,5 +16,10 @@ public class EtatIngredientGazeux implements EtatIngredient {
     public void setQty(double qty) {
         qtyL = qty;
     }
+
+    @Override
+    public String toString() {
+        return "'Gazeux': {\n\t 'Qty (L)': " + qtyL + "\n}";
+    }
 }
 

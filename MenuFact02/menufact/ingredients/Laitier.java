@@ -10,5 +10,10 @@ public class Laitier extends Ingredient {
         this.etat = etat;
         this.etat.setQty(qty);
     }
+
+    @Override
+    public String toString() {
+        return "Ingrédient 'laitier': {\n\t État " + etat + "\n}";
+    }
 }
 

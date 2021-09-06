@@ -6,4 +6,9 @@ public class EnPreparation implements CommandeEtat
     public boolean changerEtat(CommandeEtat etat){
         return etat instanceof Servi;
     };
+
+    @Override
+    public String toString() {
+        return "En Préparation";
+    }
 }

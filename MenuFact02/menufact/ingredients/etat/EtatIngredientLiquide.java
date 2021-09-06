@@ -16,4 +16,9 @@ public class EtatIngredientLiquide implements EtatIngredient {
     public void setQty(double qty) {
         qtyL = qty;
     }
+
+    @Override
+    public String toString() {
+        return "'Liquide': {\n\t 'Qty (L)': " + qtyL + "\n}";
+    }
 }

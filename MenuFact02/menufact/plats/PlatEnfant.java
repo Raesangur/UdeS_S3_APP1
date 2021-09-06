@@ -11,6 +11,7 @@ public class PlatEnfant extends PlatAuMenu{
         this.proportion = proportion;
     }
 
+    @Override
     public double getProportion() {
         return proportion;
     }
