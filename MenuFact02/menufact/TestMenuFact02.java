@@ -3,13 +3,11 @@ package menufact;
 import menufact.exceptions.MenuException;
 import menufact.facture.Facture;
 import menufact.facture.exceptions.FactureException;
-import menufact.ingredients.Epice;
-import menufact.ingredients.Ingredient;
-import menufact.ingredients.Legume;
-import menufact.ingredients.Viande;
+import menufact.ingredients.*;
 import menufact.ingredients.etat.EtatIngredientGazeux;
 import menufact.ingredients.etat.EtatIngredientLiquide;
 import menufact.ingredients.etat.EtatIngredientSolide;
+import menufact.ingredients.exceptions.IngredientException;
 import menufact.ingredients.factory.*;
 import menufact.plats.PlatAuMenu;
 import menufact.plats.PlatChoisi;
@@ -108,6 +106,7 @@ public class TestMenuFact02 {
             System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
             try {
                 spag.setEtat(Termine);
+                System.out.println("Error avec l'erreur");
                 Assert.assertTrue(false);
 
             }
@@ -206,28 +205,70 @@ public class TestMenuFact02 {
 
     private class testChef{
         Chef Zeff;
+        Ingredient tomatoSauce;
+        Ingredient pepperoni;
+        Ingredient bacon;
+        Ingredient cheese;
+        Ingredient pate;
+        Recette piz;
+        PlatAuMenu pizz;
+        PlatChoisi pizza;
+        PlatChoisi pizza2;
+        Inventaire congelateur;
+
         public testChef(){
             Zeff = Chef.getInstance();
+            congelateur = Inventaire.getInstance();
             Zeff.setNom("Zeff");
-            
+            tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.5));
+            pepperoni = new Viande("pepperoni",new EtatIngredientSolide(0.2));
+            bacon = new Viande("bacon",new EtatIngredientSolide(0.2));
+            cheese = new Laitier("cheese",new EtatIngredientSolide(1));
+            pate = new Fruit("pate", new EtatIngredientSolide(0.454));
+            piz = new Recette(new Ingredient[]{pepperoni, tomatoSauce, bacon,cheese,pate});
+            PlatAuMenu pizz = new PlatAuMenu(69, "pizza pepperoni bacon",60);
+            pizz.setRecette(piz);
+            pizza2 = new PlatChoisi(pizz,2);
+            congelateur.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon,cheese,pate});
 
-        }
+
+        };
         public void testNom() {
             System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
             Assert.assertEquals(Zeff.getNom(), "Zeff");
-        }
-        public void testNom() {
-            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
-            Assert.assertEquals(Zeff.getNom(), "Zeff");
-        }
-        public void testNom() {
-            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
-            Assert.assertEquals(Zeff.getNom(), "Zeff");
-        }
-        public void testNom() {
-            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
-            Assert.assertEquals(Zeff.getNom(), "Zeff");
-        }
+        };
+        public void testCuisiner() {
+            System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Quantité d'ingredients insuffisant'");
+            try {
+                Zeff.cuisiner(pizza2);
+                System.out.println("Error avec l'erreur");
+                Assert.assertTrue(pizza.getEtat() instanceof Servi);
+            }
+            catch (IngredientException Ie)
+            {
+                System.out.println("Quantité d'ingredients insuffisant");
+                Assert.assertTrue(pizza2.getEtat() instanceof ErrorServir);
+            }
+            catch (PlatException pe){
+                System.out.println("Erreur de Changement d'etat");
+                Assert.assertTrue(false);
+            }
+            System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Servi'");
+            try {
+                Zeff.cuisiner(pizza);
+                System.out.println(pizza.getEtat());
+                Assert.assertTrue(pizza.getEtat() instanceof Servi);
+            }
+            catch (IngredientException Ie)
+            {
+                System.out.println("Quantité d'ingredients insuffisant");
+                Assert.assertTrue(pizza.getEtat() instanceof ErrorServir);
+            }
+            catch (PlatException pe){
+                System.out.println("Erreur de Changement d'etat");
+                Assert.assertTrue(false);
+            }
+        };
     };
 
     private class TestRecette {
@@ -268,7 +309,6 @@ public class TestMenuFact02 {
         public void testAddIngredient() {
             testRecette();
             recetteSteak.addIngredient(tomate);
-
             System.out.println("===Test Recette Ajout de tomate");
             System.out.println(recetteSteak);
 

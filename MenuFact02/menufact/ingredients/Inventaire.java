@@ -1,9 +1,9 @@
 package menufact.ingredients;
 
-import java.util.HashMap;
-
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.Recette;
+
+import java.util.HashMap;
 
 public class Inventaire {
     private static Inventaire instance;
@@ -16,6 +16,13 @@ public class Inventaire {
     private Inventaire() {
     }
 
+    public void ajouterIngredient(Ingredient[] ingredients) {
+        // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
+        for(Ingredient ingredient : ingredients)
+        {
+            ajouterIngredient(ingredient);
+        }
+    }
     public void ajouterIngredient(Ingredient ingredient) {
         // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
         if (congelateur.containsKey(ingredient.getNom())) {
