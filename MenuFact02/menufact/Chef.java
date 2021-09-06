@@ -1,16 +1,12 @@
 package menufact;
 
+import menufact.ingredients.Ingredient;
+import menufact.ingredients.Inventaire;
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.PlatChoisi;
-import menufact.plats.PlatEnfant;
 import menufact.plats.Recette;
-import menufact.ingredients.Inventaire;
-import menufact.ingredients.Ingredient;
-import menufact.plats.state.Commande;
-import menufact.plats.state.EnPreparation;
-import menufact.plats.state.Termine;
-import menufact.plats.state.Servi;
-import menufact.plats.state.ErrorServir;
+import menufact.plats.exception.PlatException;
+import menufact.plats.state.*;
 
 public class Chef {
     private static Chef instance;
@@ -32,7 +28,7 @@ public class Chef {
     }
 
 
-    public PlatChoisi cusiner(PlatChoisi platACuisiner) throws IngredientException {
+    public PlatChoisi cusiner(PlatChoisi platACuisiner) throws IngredientException, PlatException {
         platACuisiner.setEtat(new Commande());
 
         if (verifierIngredient(platACuisiner)) {
@@ -44,12 +40,12 @@ public class Chef {
         }
     }
 
-    private boolean verifierIngredient(PlatChoisi platAVerifier) throws IngredientException {
+    private boolean verifierIngredient(PlatChoisi platAVerifier) throws IngredientException, PlatException {
         Inventaire inventaire = Inventaire.getInstance();
         Recette recette = platAVerifier.getPlat().getRecette();
 
         for (Ingredient ingredient : recette.getIngredients()) {
-            double qtyRecquise = platAVerifier.getQuantite() * platAVerifier.getPlat().getProportion() * ingredient.getQty();
+            double qtyRecquise = platAVerifier.getQty() * platAVerifier.getPlat().getProportion() * ingredient.getQty();
             double qtyDisponible = inventaire.getIngredient(ingredient.getNom()).getQty();
 
 
@@ -64,21 +60,21 @@ public class Chef {
         return true;
     }
 
-    private void preparer(PlatChoisi platAPreparer) throws IngredientException {
+    private void preparer(PlatChoisi platAPreparer) throws IngredientException, PlatException {
         platAPreparer.setEtat(new EnPreparation());
 
         Inventaire inventaire = Inventaire.getInstance();
         Recette recette = platAPreparer.getPlat().getRecette();
 
         // Consomme les ingrédients dans l'inventaire
-        inventaire.consommerRecette(recette, platAPreparer.getQuantite(), platAPreparer.getPlat().getProportion());
+        inventaire.consommerRecette(recette, platAPreparer.getQty(), platAPreparer.getPlat().getProportion());
     }
 
-    private void terminer(PlatChoisi platATerminer) {
+    private void terminer(PlatChoisi platATerminer) throws PlatException{
         platATerminer.setEtat(new Termine());
     }
 
-    private PlatChoisi servir(PlatChoisi platAServir) {
+    private PlatChoisi servir(PlatChoisi platAServir) throws PlatException {
         platAServir.setEtat(new Servi());
         return platAServir;
     }
