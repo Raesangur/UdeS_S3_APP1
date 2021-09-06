@@ -19,4 +19,7 @@ public abstract class Ingredient {
     public void setQty(double qty) {
         etat.setQty(qty);
     }
+    public EtatIngredient getEtat() {
+        return etat;
+    }
 }

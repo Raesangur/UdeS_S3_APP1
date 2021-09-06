@@ -7,22 +7,102 @@ import menufact.ingredients.Epice;
 import menufact.ingredients.Ingredient;
 import menufact.ingredients.Legume;
 import menufact.ingredients.Viande;
+<<<<<<< Updated upstream
 import menufact.ingredients.etat.EtatIngredientSolide;
 import menufact.ingredients.factory.ConcreteCreatorLaitier;
 import menufact.ingredients.factory.CreatorIngredient;
+=======
+import menufact.ingredients.etat.EtatIngredientGazeux;
+import menufact.ingredients.etat.EtatIngredientLiquide;
+import menufact.ingredients.etat.EtatIngredientSolide;
+>>>>>>> Stashed changes
 import menufact.plats.PlatAuMenu;
 import menufact.plats.PlatChoisi;
 import menufact.plats.PlatSante;
 import menufact.plats.Recette;
 import org.junit.Assert;
 import org.junit.Test;
+<<<<<<< Updated upstream
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+=======
+>>>>>>> Stashed changes
 
 public class TestMenuFact02 {
+    private static class TestIngredient {
+        @Test
+        public void testNom() {
+
+            Ingredient curcuma = new Epice("curcuma",new EtatIngredientSolide(0.1));
+            System.out.println("TestGetNom : valeur retour GOOD = 'curcuma'");
+            System.out.println(curcuma.getNom());
+            Assert.assertEquals(curcuma.getNom(), "curcuma");
+            curcuma.setNom("Curcuma");
+            System.out.println("TestSetNom : valeur retour GOOD = 'Curcuma'");
+            System.out.println(curcuma.getNom());
+            Assert.assertEquals(curcuma.getNom(), "Curcuma");
+
+        };
+        @Test
+        public void testQty() {
+            Ingredient kobeSteak = new Viande("kobe",new EtatIngredientSolide(1.5);
+            System.out.println("TestGetQty : valeur retour GOOD = '1.5kg'");
+            System.out.println(kobeSteak.getQty());
+            Assert.assertEquals(kobeSteak.getQty(), 1.5,0.05);
+            kobeSteak.setQty(1);
+            System.out.println("TestSetQty : valeur retour GOOD = '1 kg'");
+            System.out.println(kobeSteak.getQty());
+            Assert.assertEquals(kobeSteak.getQty(), 1,0.05);
+        };
+        @Test
+        public void testEtat(){
+            Ingredient chips = new Legume("lays",new EtatIngredientGazeux(8);
+            System.out.println("TestEtat : valeur retour GOOD = 'Gazeux'");
+            Assert.assertTrue(chips.getEtat() instanceof EtatIngredientGazeux);
+        }
+
+    }
+
+
+    private static class TestPlatChoisi {
+
+        public TestPlatChoisi() {
+
+            Ingredient spaghetti = new Legume("spaghetti",new EtatIngredientSolide(0.2));
+            Ingredient tomatoSauce = new Legume("tomate",new EtatIngredientLiquide(0.3));
+            Ingredient meetBall = new Viande("steakHache",new EtatIngredientSolide(0.05));
+            Recette spagBoulDeViande = new Recette(new Ingredient[]{spaghetti,tomatoSauce,meetBall});
+
+
+        };
+        @Test
+        public void testQty() {
+            Ingredient kobeSteak = new Viande("kobe",new EtatIngredientSolide(1.5);
+            System.out.println("TestGetQty : valeur retour GOOD = '1.5kg'");
+            System.out.println(kobeSteak.getQty());
+            Assert.assertEquals(kobeSteak.getQty(), 1.5,0.05);
+            kobeSteak.setQty(1);
+            System.out.println("TestSetQty : valeur retour GOOD = '1 kg'");
+            System.out.println(kobeSteak.getQty());
+            Assert.assertEquals(kobeSteak.getQty(), 1,0.05);
+        };
+        @Test
+        public void testPlat(){
+            Ingredient chips = new Legume("lays",new EtatIngredientGazeux(8);
+            System.out.println("TestEtat : valeur retour GOOD = 'Gazeux'");
+            Assert.assertTrue(chips.getEtat() instanceof EtatIngredientGazeux);
+        }
+        @Test
+        public void testEtat(){
+            Ingredient chips = new Legume("lays",new EtatIngredientGazeux(8);
+            System.out.println("TestEtat : valeur retour GOOD = 'Gazeux'");
+            Assert.assertTrue(chips.getEtat() instanceof EtatIngredientGazeux);
+        }
+
+    }
 
     private class TestRecette {
 
@@ -312,6 +392,7 @@ public class TestMenuFact02 {
 
         System.out.println("Avant payer la facture");
         System.out.println(f1);
+
         f1.payer();
         System.out.println("Apres avoir paye la facture");
         System.out.println(f1);
