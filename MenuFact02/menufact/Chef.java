@@ -20,7 +20,7 @@ public class Chef {
     }
 
     public static synchronized Chef getInstance() {
-        return instance == null ? new Chef() : instance;
+        return instance == null ? instance = new Chef() : instance;
     }
 
     public String getNom() {
