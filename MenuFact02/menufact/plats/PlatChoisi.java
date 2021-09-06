@@ -1,5 +1,6 @@
 package menufact.plats;
 
+import menufact.plats.exception.PlatException;
 import menufact.plats.state.CommandeEtat;
 
 public class PlatChoisi {
@@ -20,11 +21,11 @@ public class PlatChoisi {
                 '}';
     }
 
-    public int getQuantite() {
+    public int getQty(){
         return quantite;
     }
 
-    public void setQuantite(int quantite) {
+    public void setQty(int quantite) {
         this.quantite = quantite;
     }
 
@@ -36,13 +37,16 @@ public class PlatChoisi {
         return etat;
     };
 
-    public void setEtat(CommandeEtat etat2) {
+    public void setEtat(CommandeEtat etat2)  throws PlatException{
         // Vérifie que l'état peut changer vers le nouvel état
         if(etat == null) {
             etat = etat2;
         }
         if(etat.changerEtat(etat2)){
             this.etat = etat2;
+        }
+        else{
+            throw new PlatException("Imposibilite de changer vers cette etat!!! :(");
         }
     }
 }
