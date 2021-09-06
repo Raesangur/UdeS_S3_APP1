@@ -51,7 +51,6 @@ public class TestMenuFact02 {
             Assert.assertEquals(listeIngredient.get(0), steak);
             Assert.assertEquals(listeIngredient.get(1), sel);
             Assert.assertEquals(listeIngredient.get(2), poivre);
-
         }
 
         @Test
