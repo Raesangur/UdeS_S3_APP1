@@ -1,6 +1,6 @@
 package menufact;
 
-import ingredients.exceptions.IngredientException;
+import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.PlatChoisi;
 import menufact.plats.Recette;
 import menufact.ingredients.Inventaire;

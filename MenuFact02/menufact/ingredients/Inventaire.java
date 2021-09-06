@@ -2,7 +2,7 @@ package menufact.ingredients;
 
 import java.util.HashMap;
 
-import ingredients.exceptions.IngredientException;
+import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.Recette;
 
 public class Inventaire {
