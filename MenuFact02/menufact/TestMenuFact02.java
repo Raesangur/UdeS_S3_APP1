@@ -3,14 +3,70 @@ package menufact;
 import menufact.exceptions.MenuException;
 import menufact.facture.Facture;
 import menufact.facture.exceptions.FactureException;
+import menufact.ingredients.Epice;
+import menufact.ingredients.Ingredient;
+import menufact.ingredients.Legume;
+import menufact.ingredients.Viande;
+import menufact.ingredients.etat.EtatIngredientSolide;
+import menufact.ingredients.factory.ConcreteCreatorLaitier;
+import menufact.ingredients.factory.CreatorIngredient;
 import menufact.plats.PlatAuMenu;
 import menufact.plats.PlatChoisi;
 import menufact.plats.PlatSante;
+import menufact.plats.Recette;
 import org.junit.Assert;
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestMenuFact02 {
 
-    public static void main(String[] args) {
+    private class TestRecette {
+
+        Recette recetteSteak;
+        Ingredient steak;
+        Ingredient sel;
+        Ingredient poivre;
+        Ingredient tomate;
+
+        // Pas besoin de @BeforeEach avant un constructeur
+        TestRecette() {
+            steak = new Viande("Steak", new EtatIngredientSolide(0.3));
+            sel = new Epice("Sel", new EtatIngredientSolide(0.02));
+            poivre = new Epice("Poivre", new EtatIngredientSolide(0.01));
+            tomate = new Legume("Tomate", new EtatIngredientSolide(0.1));
+
+            recetteSteak = new Recette(new Ingredient[]{steak, sel, poivre});
+        }
+
+        @Test
+        public void testRecette() {
+            System.out.println("===Test Recette Steak + Sel/Poivre");
+            System.out.println(recetteSteak);
+
+            List<Ingredient> listeIngredient = recetteSteak.getIngredients();
+            Assert.assertEquals(listeIngredient.get(0), steak);
+            Assert.assertEquals(listeIngredient.get(1), sel);
+            Assert.assertEquals(listeIngredient.get(2), poivre);
+
+        }
+
+        @Test
+        public void testAddIngredient() {
+            recetteSteak.addIngredient(tomate);
+
+            System.out.println("===Test Recette Ajout de tomate");
+            System.out.println(recetteSteak);
+
+            Assert.assertEquals(recetteSteak.getIngredients().get(3), tomate);
+            Assert.assertEquals(recetteSteak.getIngredients().size(), 4);
+        }
+    }
+
+    public static void main(String[] args) throws FactureException {
         boolean trace = true;
         Assert.assertTrue(trace);
 
