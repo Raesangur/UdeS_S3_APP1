@@ -1,4 +1,4 @@
-package menufact.ingredients;
+package menufact.ingredients.Etat;
 
 public interface EtatIngredient {
     double getQty();

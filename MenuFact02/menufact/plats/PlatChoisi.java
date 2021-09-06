@@ -1,7 +1,6 @@
 package menufact.plats;
 
-import menufact.facture.CommandeEtat;
-import menufact.plats.PlatAuMenu;
+import menufact.plats.state.CommandeEtat;
 
 public class PlatChoisi {
     private PlatAuMenu plat;
@@ -37,6 +36,10 @@ public class PlatChoisi {
     };
 
     public void setEtat(CommandeEtat etat2) {
+        // Vérifie que l'état peut changer vers le nouvel état
+        if(etat == null) {
+            etat = etat2;
+        }
         if(etat.changerEtat(etat2)){
             this.etat = etat2;
         }

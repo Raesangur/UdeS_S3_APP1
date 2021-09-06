@@ -1,10 +1,7 @@
-package menufact.facture;
+package menufact.plats.state;
 
-public class Commander {
+public class Commande implements CommandeEtat {
     public boolean changerEtat(CommandeEtat etat){
         return etat instanceof EnPreparation || etat instanceof ErrorServir;
-    };
-    public boolean IsOuvert(){
-        return true;
     };
 }

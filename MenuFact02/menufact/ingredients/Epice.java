@@ -1,5 +1,7 @@
 package menufact.ingredients;
 
+import menufact.ingredients.Etat.EtatIngredient;
+
 public class Epice extends Ingredient {
     public Epice(String nom, EtatIngredient etat) {
         this.etat = etat;

@@ -1,4 +1,4 @@
-package menufact.ingredients;
+package menufact.ingredients.Etat;
 
 public class EtatIngredientGazeux implements EtatIngredient {
     private double qtyL;

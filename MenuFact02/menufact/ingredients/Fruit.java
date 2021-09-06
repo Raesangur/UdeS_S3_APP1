@@ -1,5 +1,7 @@
 package menufact.ingredients;
 
+import menufact.ingredients.Etat.EtatIngredient;
+
 public class Fruit extends Ingredient {
     public Fruit(String nom, EtatIngredient etat) {
         this.etat = etat;

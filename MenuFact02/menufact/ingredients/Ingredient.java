@@ -1,5 +1,7 @@
 package menufact.ingredients;
 
+import menufact.ingredients.Etat.EtatIngredient;
+
 public abstract class Ingredient {
     protected EtatIngredient etat;
     private String nom;
