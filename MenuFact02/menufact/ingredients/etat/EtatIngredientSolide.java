@@ -7,9 +7,12 @@ public class EtatIngredientSolide implements EtatIngredient {
         qtyKg = qty;
     }
 
+    @Override
     public double getQty() {
         return qtyKg;
     }
+
+    @Override
     public void setQty(double qty) {
         qtyKg = qty;
     }

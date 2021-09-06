@@ -251,7 +251,7 @@ public class TestMenuFact02 {
         System.out.println(f1);
     }
 
-    private void test9_PayerFacture(Facture f1) {
+    private void test9_PayerFacture(Facture f1) throws FactureException {
         System.out.println("===test9_PayerFacture");
 
         System.out.println("Avant payer la facture");

@@ -7,9 +7,12 @@ public class EtatIngredientLiquide implements EtatIngredient {
         qtyL = qty;
     }
 
+    @Override
     public double getQty() {
         return qtyL;
     }
+
+    @Override
     public void setQty(double qty) {
         qtyL = qty;
     }
