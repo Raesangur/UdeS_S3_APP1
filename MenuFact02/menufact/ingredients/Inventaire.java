@@ -33,8 +33,7 @@ public class Inventaire {
         return congelateur.get(nomIngredient);
     }
 
-
-    public void consommerRecette(Recette recette, int qtyPlats) throws IngredientException {
+    public void consommerRecette(Recette recette, int qtyPlats, double proportion) throws IngredientException {
         // Parcours tous les plats
         for (Ingredient ingredientRecette : recette.getIngredients()) {
             Ingredient ingredientCongelateur = congelateur.get(ingredientRecette.getNom());
@@ -43,7 +42,7 @@ public class Inventaire {
             if (ingredientCongelateur == null) {
                 throw new IngredientException("Ingrédient n'existe pas dans l'inventaire");
             }
-            double qtyRecette = ingredientRecette.getQty() * qtyPlats;
+            double qtyRecette = ingredientRecette.getQty() * qtyPlats * proportion;
             double qtyInventaire = ingredientCongelateur.getQty();
 
             // Vérifie que la quantité d'ingrédients est valide (on ne devrait jamais lancer cette exception)

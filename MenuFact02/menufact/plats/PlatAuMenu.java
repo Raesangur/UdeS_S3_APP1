@@ -40,6 +40,10 @@ public class PlatAuMenu {
         this.description = description;
     }
 
+    public double getProportion() {
+        return 1.0;
+    }
+
     public double getPrix() {
         return prix;
     }
