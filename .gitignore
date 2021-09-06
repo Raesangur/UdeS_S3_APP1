@@ -2,3 +2,5 @@
 *.vs
 */debug/*
 */release/*
+*/out/*
+*.class

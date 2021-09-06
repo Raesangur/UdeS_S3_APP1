@@ -1,11 +1,12 @@
 package menufact.plats;
 
+import menufact.facture.CommandeEtat;
 import menufact.plats.PlatAuMenu;
 
 public class PlatChoisi {
     private PlatAuMenu plat;
     private int quantite;
-
+    private CommandeEtat etat;
     public PlatChoisi(PlatAuMenu plat, int quantite) {
         this.plat = plat;
         this.quantite = quantite;
@@ -29,5 +30,15 @@ public class PlatChoisi {
 
     public PlatAuMenu getPlat() {
         return plat;
+    }
+
+    public CommandeEtat getEtat(){
+        return etat;
+    };
+
+    public void setEtat(CommandeEtat etat2) {
+        if(etat.changerEtat(etat2)){
+            this.etat = etat2;
+        }
     }
 }
