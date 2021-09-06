@@ -109,6 +109,7 @@ public class TestMenuFact02 {
         Ingredient sel;
         Ingredient poivre;
         Ingredient tomate;
+        Ingredient laitue;
 
         // Pas besoin de @BeforeEach avant un constructeur
         TestRecette() {
@@ -116,6 +117,7 @@ public class TestMenuFact02 {
             sel = new Epice("Sel", new EtatIngredientSolide(0.02));
             poivre = new Epice("Poivre", new EtatIngredientSolide(0.01));
             tomate = new Legume("Tomate", new EtatIngredientSolide(0.1));
+            laitue = new Legume("Laitue", new EtatIngredientSolide(0.05));
 
             recetteSteak = new Recette(new Ingredient[]{steak, sel, poivre});
         }
@@ -126,20 +128,35 @@ public class TestMenuFact02 {
             System.out.println(recetteSteak);
 
             List<Ingredient> listeIngredient = recetteSteak.getIngredients();
-            Assert.assertEquals(listeIngredient.get(0), steak);
-            Assert.assertEquals(listeIngredient.get(1), sel);
-            Assert.assertEquals(listeIngredient.get(2), poivre);
+            Assert.assertEquals(steak, listeIngredient.get(0));
+            Assert.assertEquals(sel, listeIngredient.get(1));
+            Assert.assertEquals(poivre, listeIngredient.get(2));
+            Assert.assertEquals(0.3, listeIngredient.get(0).getQty(), 0.005);
         }
 
         @Test
         public void testAddIngredient() {
+            testRecette();
             recetteSteak.addIngredient(tomate);
 
             System.out.println("===Test Recette Ajout de tomate");
             System.out.println(recetteSteak);
 
-            Assert.assertEquals(recetteSteak.getIngredients().get(3), tomate);
-            Assert.assertEquals(recetteSteak.getIngredients().size(), 4);
+            Assert.assertEquals(tomate, recetteSteak.getIngredients().get(3));
+            Assert.assertEquals(4, recetteSteak.getIngredients().size());
+        }
+
+        @Test
+        public void testSetIngredients() {
+            testRecette();
+
+            recetteSteak.setIngredients(new Ingredient[]{laitue, tomate, sel});
+
+            System.out.println("===Test Recette plat steak végétarien");
+            System.out.println(recetteSteak);
+
+            Assert.assertEquals(3, recetteSteak.getIngredients().size());
+            Assert.assertFalse(recetteSteak.getIngredients().contains(steak));
         }
     }
 
