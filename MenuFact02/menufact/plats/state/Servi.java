@@ -6,5 +6,8 @@ public class Servi implements CommandeEtat {
         return etat instanceof Termine;
     }
 
-    ;
+    @Override
+    public String toString() {
+        return "Servir";
+    }
 }

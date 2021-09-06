@@ -10,4 +10,9 @@ public class Viande extends Ingredient {
         this.etat = etat;
         this.etat.setQty(qty);
     }
+
+    @Override
+    public String toString() {
+        return "Ingrédient 'viande': {\n\t État " + etat + "\n}";
+    }
 }

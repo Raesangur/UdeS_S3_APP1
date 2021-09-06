@@ -16,4 +16,10 @@ public class EtatIngredientSolide implements EtatIngredient {
     public void setQty(double qty) {
         qtyKg = qty;
     }
+
+    @Override
+    public String toString() {
+        return "'Solide': {\n\t 'Qty (kg)': " + qtyKg + "\n}";
+
+    }
 }

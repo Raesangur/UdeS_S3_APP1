@@ -5,4 +5,9 @@ public class Commande implements CommandeEtat {
     public boolean changerEtat(CommandeEtat etat) {
         return etat instanceof EnPreparation || etat instanceof ErrorServir;
     }
+
+    @Override
+    public String toString() {
+        return "Commande";
+    }
 }
