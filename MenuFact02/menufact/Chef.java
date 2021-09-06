@@ -1,6 +1,6 @@
 package menufact;
 
-import ingredients.exceptions.IngredientException;
+import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.PlatChoisi;
 import menufact.plats.Recette;
 import menufact.ingredients.Inventaire;
@@ -9,6 +9,7 @@ import menufact.plats.state.Commande;
 import menufact.plats.state.EnPreparation;
 import menufact.plats.state.Termine;
 import menufact.plats.state.Servi;
+import menufact.plats.state.ErrorServir;
 
 public class Chef {
     private static Chef instance;
@@ -59,6 +60,7 @@ public class Chef {
             // Vérifie que l'ingrédient est disponible en quantité suffisante
             if (qtyDisponible < qtyRecquise) {
                 // TODO : 2021-09-05 | met un etat d'erreur
+                platAVerifier.setEtat(new ErrorServir());
 
                 throw new IngredientException("Missing ingredient: " + ingredient.getNom());
             }
