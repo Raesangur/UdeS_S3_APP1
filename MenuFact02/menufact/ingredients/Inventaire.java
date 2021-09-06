@@ -9,13 +9,11 @@ public class Inventaire {
     private static Inventaire instance;
     private HashMap<String, Ingredient> congelateur;
 
-    private Inventaire() {}
-
     public static synchronized Inventaire getInstance() {
-        if (instance == null) {
-            return instance = new Inventaire();
-        }
-        return instance;
+        return instance == null ? instance = new Inventaire() : instance;
+    }
+
+    private Inventaire() {
     }
 
     public void ajouterIngredient(Ingredient ingredient) {
@@ -23,8 +21,7 @@ public class Inventaire {
         if (congelateur.containsKey(ingredient.getNom())) {
             Ingredient ing = congelateur.get(ingredient.getNom());
             ing.setQty(ing.getQty() + ingredient.getQty());
-        }
-        else {
+        } else {
             congelateur.put(ingredient.getNom(), ingredient);
         }
     }
