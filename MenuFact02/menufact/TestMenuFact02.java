@@ -3,28 +3,23 @@ package menufact;
 import menufact.exceptions.MenuException;
 import menufact.facture.Facture;
 import menufact.facture.exceptions.FactureException;
-
 import menufact.ingredients.Epice;
 import menufact.ingredients.Ingredient;
 import menufact.ingredients.Legume;
 import menufact.ingredients.Viande;
-import menufact.ingredients.etat.EtatIngredientSolide;
-import menufact.ingredients.factory.ConcreteCreatorLaitier;
-import menufact.ingredients.factory.CreatorIngredient;
 import menufact.ingredients.etat.EtatIngredientGazeux;
 import menufact.ingredients.etat.EtatIngredientLiquide;
 import menufact.ingredients.etat.EtatIngredientSolide;
-
+import menufact.ingredients.factory.*;
 import menufact.plats.PlatAuMenu;
 import menufact.plats.PlatChoisi;
 import menufact.plats.PlatSante;
 import menufact.plats.Recette;
-
+import menufact.plats.exception.PlatException;
+import menufact.plats.state.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TestMenuFact02 {
@@ -65,42 +60,149 @@ public class TestMenuFact02 {
 
 
     private static class TestPlatChoisi {
+        private PlatChoisi spag;
+        private PlatChoisi spagError;
         public TestPlatChoisi() {
 
             Ingredient spaghetti = new Legume("spaghetti", new EtatIngredientSolide(0.2));
             Ingredient tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.3));
             Ingredient meetBall = new Viande("steakHache", new EtatIngredientSolide(0.05));
             Recette spagBoulDeViande = new Recette(new Ingredient[]{spaghetti, tomatoSauce, meetBall});
+            PlatAuMenu spagBoulette = new PlatAuMenu(22, "spag contenant des boulettes de viande et de la sauce tomate",18.50);
+            spagBoulette.setRecette(spagBoulDeViande);
+            spag = new PlatChoisi(spagBoulette,2);
+            spagError = new PlatChoisi(spagBoulette,15623);
         }
 
         @Test
         public void testQty() {
-            Ingredient kobeSteak = new Viande("kobe", new EtatIngredientSolide(1.5));
-            System.out.println("TestGetQty : valeur retour GOOD = '1.5kg'");
-            System.out.println(kobeSteak.getQty());
-            Assert.assertEquals(kobeSteak.getQty(), 1.5, 0.05);
-            kobeSteak.setQty(1);
-            System.out.println("TestSetQty : valeur retour GOOD = '1 kg'");
-            System.out.println(kobeSteak.getQty());
-            Assert.assertEquals(kobeSteak.getQty(), 1, 0.05);
-        }
 
+            System.out.println("TestGetQty : valeur retour GOOD = '2'");
+            System.out.println(spag.getQty());
+            Assert.assertEquals(spag.getQty(), 2);
+            spag.setQty(12);
+            System.out.println("TestSetQty : valeur retour GOOD = '12'");
+            System.out.println(spag.getQty());
+            Assert.assertEquals(spag.getQty(), 12);
+        }
 
         @Test
         public void testPlat() {
-            Ingredient chips = new Legume("lays", new EtatIngredientGazeux(8));
-            System.out.println("TestEtat : valeur retour GOOD = 'Gazeux'");
-            Assert.assertTrue(chips.getEtat() instanceof EtatIngredientGazeux);
+            System.out.println("TestgetPlat : valeur retour GOOD = {'code':22,'description':'spag contenant des boulettes de viande et de la sauce tomate','prix':'18.50'}");
+            System.out.println(spag.getPlat());
+            Assert.assertEquals(spag.getPlat().getCode(), 22);
+            Assert.assertEquals(spag.getPlat().getDescription(), "spag contenant des boulettes de viande et de la sauce tomate");
+            Assert.assertEquals(spag.getPlat().getPrix(), 18.50,0.01);
         }
 
         @Test
-        public void testEtat() {
-            Ingredient chips = new Legume("lays", new EtatIngredientGazeux(8));
-            System.out.println("TestEtat : valeur retour GOOD = 'Gazeux'");
-            Assert.assertTrue(chips.getEtat() instanceof EtatIngredientGazeux);
+        public void testEtat() throws PlatException {
+            Commande Commande = new Commande();
+            EnPreparation EnPreparation = new EnPreparation();
+            Servi Servi = new Servi();
+            ErrorServir Error = new ErrorServir();
+            Termine Termine = new Termine();
+
+            System.out.println("TestgetEtat : valeur retour GOOD = 'Commande'");
+            System.out.println(spag.getEtat());
+            System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+            try {
+                spag.setEtat(Termine);
+                Assert.assertTrue(false);
+
+            }
+            catch (PlatException pe){
+                System.out.println("Imposibilite de changer vers cette etat!!! :(");
+                System.out.println("ici on a commande");
+                System.out.println(spag.getEtat());
+                Assert.assertTrue(spag.getEtat() instanceof Commande);
+            }
+
+            System.out.println("TestsetEtat : valeur retour GOOD = 'En préparation'");
+            spag.setEtat(EnPreparation);
+            System.out.println(spag.getEtat());
+            Assert.assertTrue(spag.getEtat() instanceof EnPreparation);
+
+            System.out.println("TestsetEtat : valeur retour GOOD = 'Servi'");
+            spag.setEtat(Servi);
+            System.out.println(spag.getEtat());
+            Assert.assertTrue(spag.getEtat() instanceof Servi);
+
+            System.out.println("TestsetEtat : valeur retour GOOD = 'Termine'");
+            spag.setEtat(Termine);
+            System.out.println(spag.getEtat());
+            Assert.assertTrue(spag.getEtat() instanceof Termine);
+
+            System.out.println("TestsetEtat : valeur retour GOOD = 'Error'");
+            spag.setEtat(Error);
+            System.out.println(spag.getEtat());
+            Assert.assertTrue(spag.getEtat() instanceof Error);
+
         }
 
     }
+
+    private class TestFactoryIngredient{
+        public void TestCreerFruit(){
+            CreatorIngredient factory = new ConcreteCreatorFruit();
+            Ingredient pomme = factory.creer("pomme",new EtatIngredientSolide(0.2));
+            System.out.println("TestFactoryFruit : valeur retour GOOD = 'pomme'");
+            Assert.assertEquals(pomme.getNom(), "pomme");
+            System.out.println("TestFactoryFruit : valeur retour GOOD = '0.2 kg'");
+            System.out.println(pomme.getQty());
+            Assert.assertEquals(pomme.getQty(), 0.2, 0.05);
+            System.out.println("TestFactoryFruit : valeur retour GOOD = 'Solide'");
+            Assert.assertTrue(pomme.getEtat() instanceof EtatIngredientSolide);
+
+        };
+        public void TestCreerLegume(){
+            CreatorIngredient factory = new ConcreteCreatorLegume();
+            Ingredient concombre = factory.creer("concombre",new EtatIngredientSolide(0.5));
+            System.out.println("TestFactoryLegumes : valeur retour GOOD = 'concombre'");
+            Assert.assertEquals(concombre.getNom(), "concombre");
+            System.out.println("TestFactoryLegumes : valeur retour GOOD = '0.5 kg'");
+            System.out.println(concombre.getQty());
+            Assert.assertEquals(concombre.getQty(), 0.5, 0.05);
+            System.out.println("TestFactoryLegumes : valeur retour GOOD = 'Solide'");
+            Assert.assertTrue(concombre.getEtat() instanceof EtatIngredientSolide);
+
+        };
+        public void TestCreerEpice(){
+            CreatorIngredient factory = new ConcreteCreatorEpice();
+            Ingredient Sriracha = factory.creer("Sriracha",new EtatIngredientLiquide(1));
+            System.out.println("TestFactoryEpice : valeur retour GOOD = 'Sriracha'");
+            Assert.assertEquals(Sriracha.getNom(), "Sriracha");
+            System.out.println("TestFactoryEpice : valeur retour GOOD = '1 L'");
+            System.out.println(Sriracha.getQty());
+            Assert.assertEquals(Sriracha.getQty(), 1, 0.05);
+            System.out.println("TestFactoryEpice : valeur retour GOOD = 'Liquide'");
+            Assert.assertTrue(Sriracha.getEtat() instanceof EtatIngredientLiquide);
+        };
+        public void TestCreerLaitier(){
+            CreatorIngredient factory = new ConcreteCreatorLaitier();
+            Ingredient Lait = factory.creer("Lait",new EtatIngredientLiquide(4));
+            System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Lait'");
+            Assert.assertEquals(Lait.getNom(), "Lait");
+            System.out.println("TestFactoryLaitier : valeur retour GOOD = '4 L'");
+            System.out.println(Lait.getQty());
+            Assert.assertEquals(Lait.getQty(), 4, 0.05);
+            System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Liquide'");
+            Assert.assertTrue(Lait.getEtat() instanceof EtatIngredientLiquide);
+        };
+        public void TestCreerViande(){
+            CreatorIngredient factory = new ConcreteCreatorViande();
+            Ingredient coteLevee = factory.creer("coteLevee",new EtatIngredientSolide(0.454));
+            System.out.println("TestFactoryViande : valeur retour GOOD = 'coteLevee'");
+            Assert.assertEquals(coteLevee.getNom(), "coteLevee");
+            System.out.println("TestFactoryViande : valeur retour GOOD = '0.454 kg'");
+            System.out.println(coteLevee.getQty());
+            Assert.assertEquals(coteLevee.getQty(), 0.454, 0.05);
+            System.out.println("TestFactoryViande : valeur retour GOOD = 'Solide'");
+            Assert.assertTrue(coteLevee.getEtat() instanceof EtatIngredientSolide);
+        };
+
+    }
+
 
     private class TestRecette {
 
