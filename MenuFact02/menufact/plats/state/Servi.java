@@ -8,6 +8,6 @@ public class Servi implements CommandeEtat {
 
     @Override
     public String toString() {
-        return "Servir";
+        return "Servi";
     }
 }

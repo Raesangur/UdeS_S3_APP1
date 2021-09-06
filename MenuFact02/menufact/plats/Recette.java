@@ -28,8 +28,8 @@ public class Recette {
         this.ingredients = Arrays.asList(ingredients);
     }
 
-    public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
+    public Recette addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient); return this;
     }
 
     @Override

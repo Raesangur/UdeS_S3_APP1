@@ -6,6 +6,10 @@ public abstract class Ingredient {
     protected EtatIngredient etat;
     private String nom;
 
+    public Ingredient(Ingredient other) {
+        nom = new String(other.nom);
+    }
+
     public String getNom() {
         return nom;
     }

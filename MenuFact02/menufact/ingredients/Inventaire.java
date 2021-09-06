@@ -2,6 +2,7 @@ package menufact.ingredients;
 
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.Recette;
+import menufact.plats.builder.PlatBuilder;
 
 import java.util.HashMap;
 
