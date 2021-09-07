@@ -18,6 +18,12 @@ public class EtatIngredientSolide implements EtatIngredient {
     }
 
     @Override
+    public EtatIngredient copy()
+    {
+        return new EtatIngredientSolide(getQty());
+    }
+
+    @Override
     public String toString() {
         return "'Solide': {\n\t 'Qty (kg)': " + qtyKg + "\n}";
 

@@ -18,6 +18,12 @@ public class EtatIngredientGazeux implements EtatIngredient {
     }
 
     @Override
+    public EtatIngredient copy()
+    {
+        return new EtatIngredientGazeux(getQty());
+    }
+
+    @Override
     public String toString() {
         return "'Gazeux': {\n\t 'Qty (L)': " + qtyL + "\n}";
     }

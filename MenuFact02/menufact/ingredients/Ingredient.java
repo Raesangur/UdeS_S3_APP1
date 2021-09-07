@@ -8,6 +8,7 @@ public abstract class Ingredient {
 
     public Ingredient(Ingredient other) {
         nom = new String(other.nom);
+        etat = other.etat.copy();
     }
 
     public String getNom() {

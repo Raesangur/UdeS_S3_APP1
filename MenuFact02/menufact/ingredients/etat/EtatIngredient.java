@@ -1,6 +1,8 @@
 package menufact.ingredients.etat;
 
 public interface EtatIngredient {
-    double getQty();
-    void setQty(double qty);
+    public double getQty();
+    public void setQty(double qty);
+
+    public EtatIngredient copy();
 }
