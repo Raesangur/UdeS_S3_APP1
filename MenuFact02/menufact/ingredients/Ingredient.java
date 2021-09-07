@@ -8,7 +8,7 @@ public abstract class Ingredient {
     private String nom;
 
     public Ingredient() {}
-    public Ingredient(Ingredient other) {
+    public Ingredient(Ingredient other) throws IngredientException {
         nom = new String(other.nom);
         etat = other.etat.copy();
     }

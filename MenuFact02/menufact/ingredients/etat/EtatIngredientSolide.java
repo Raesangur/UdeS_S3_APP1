@@ -24,8 +24,7 @@ public class EtatIngredientSolide implements EtatIngredient {
     }
 
     @Override
-    public EtatIngredient copy()
-    {
+    public EtatIngredient copy() throws IngredientException {
         return new EtatIngredientSolide(getQty());
     }
 
