@@ -20,6 +20,7 @@ import menufact.plats.Recette;
 import menufact.plats.state.*;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -30,17 +31,12 @@ public class TestMenuFact02 {
         // Les tests de base qui venaient avec le code fourni
         test0_base();
 
-        TestIngredient testIngredient = new TestIngredient();
-        TestPlatChoisi testPlatChoisi = new TestPlatChoisi();
-        TestFactoryIngredient testFactoryIngredient = new TestFactoryIngredient();
-        TestChef testChef = new TestChef();
-        TestRecette testRecette = new TestRecette();
-
-        testIngredient.runTests();
-        testPlatChoisi.runTests();
-        testFactoryIngredient.runTests();
-        testChef.runTests();
-        testRecette.runTests();
+        TestIngredient.runTests();
+        TestPlatChoisi.runTests();
+        TestFactoryIngredient.runTests();
+        TestChef.runTests();
+        TestRecette.runTests();
+        TestInventaire.runTests();
     }
 
 
@@ -53,14 +49,14 @@ public class TestMenuFact02 {
          * Roule tous les tests sur les ingrédients
          */
         @Test
-        public void runTests() {
+        public static void runTests() {
             testNom();
             testQty();
             testEtat();
         }
 
         @Test
-        public void testNom() {
+        public static void testNom() {
             // Création d'un ingrédient
             Ingredient curcuma = null;
             try {
@@ -83,7 +79,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testQty() {
+        public static void testQty() {
             // Création d'un ingrédient
             Ingredient kobeSteak = null;
             try {
@@ -125,7 +121,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testEtat() {
+        public static void testEtat() {
             // Création d'un ingrédient
             Ingredient chipsLays = null;
             try {
@@ -186,10 +182,10 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void runTests() {
-            testQty();
-            testPlat();
-            testEtat();
+        public static void runTests() {
+            new TestPlatChoisi().testQty();
+            new TestPlatChoisi().testPlat();
+            new TestPlatChoisi().testEtat();
         }
 
         @Test
@@ -348,7 +344,7 @@ public class TestMenuFact02 {
     private static class TestFactoryIngredient {
 
         @Test
-        public void runTests() {
+        public static void runTests() {
             testCreerFruit();
             testCreerLegume();
             testCreerEpice();
@@ -357,7 +353,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testCreerFruit() {
+        public static void testCreerFruit() {
             // Crée une factory de fruit
             CreatorIngredient factory = new ConcreteCreatorFruit();
             Ingredient pomme = null;
@@ -385,7 +381,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testCreerLegume() {
+        public static void testCreerLegume() {
             // Crée une factory de légumes
             CreatorIngredient factory = new ConcreteCreatorLegume();
             Ingredient concombre = null;
@@ -413,7 +409,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testCreerEpice() {
+        public static void testCreerEpice() {
             // Crée une factory d'épice
             CreatorIngredient factory = new ConcreteCreatorEpice();
             Ingredient sriracha = null;
@@ -441,7 +437,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testCreerLaitier() {
+        public static void testCreerLaitier() {
             // Crée une factory de produits laitiers
             CreatorIngredient factory = new ConcreteCreatorLaitier();
             Ingredient lait = null;
@@ -469,7 +465,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testCreerViande() {
+        public static void testCreerViande() {
             // Crée une factory de viande
             CreatorIngredient factory = new ConcreteCreatorViande();
             Ingredient coteLevee = null;
@@ -517,6 +513,7 @@ public class TestMenuFact02 {
             // Crée le chef et récupère l'inventaire
             Zeff = Chef.getInstance();
             Zeff.setNom("Zeff");
+            Inventaire.clear();
             congelateur = Inventaire.getInstance();
 
             // Crée les ingrédients pour une pizza
@@ -562,9 +559,9 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void runTests() {
-            testNom();
-            testCuisiner();
+        public static void runTests() {
+            new TestChef().testNom();
+            new TestChef().testCuisiner();
         }
 
         @Test
@@ -635,10 +632,10 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void runTests() {
-            testRecette();
-            testAddIngredient();
-            testSetIngredients();
+        public static void runTests() {
+            new TestRecette().testRecette();
+            new TestRecette().testAddIngredient();
+            new TestRecette().testSetIngredients();
         }
 
         @Test
@@ -683,16 +680,21 @@ public class TestMenuFact02 {
         }
     }
 
-    // TODO Test Inventaire
-    private static class TestInventaire{
+    private static class TestInventaire {
+        Inventaire congelo;
+
         Ingredient tomatoSauce;
         Ingredient pepperoni;
         Ingredient bacon;
         Ingredient cheese;
         Ingredient pate;
-        Inventaire congelo;
+
         public TestInventaire() {
+            // Création de l'inventaire
+            Inventaire.clear();
             congelo = Inventaire.getInstance();
+
+            // Création des ingrédients
             try {
                 tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(5));
                 pepperoni = new Viande("pepperoni", new EtatIngredientSolide(2));
@@ -703,51 +705,149 @@ public class TestMenuFact02 {
                 System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
                 Assert.fail();
             }
+
+            // Ajout des ingrédients dans l'inventaire
             try {
                 congelo.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate});
             } catch (IngredientException ie) {
                 System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
-                Assert.assertTrue(false);
+                Assert.fail();
             }
-
         }
-        public void testInventairePrésent(){
+
+        @Test
+        public static void runTests() {
+            new TestInventaire().testInventairePrésent();
+            new TestInventaire().testAjoutDouble();
+            new TestInventaire().testConsommation();
+        }
+
+        @Test
+        public void testInventairePrésent() {
+            // Récupération d'un ingrédient existant
             System.out.println("testInventairePrésent : valeur retour GOOD = 'tomate'");
             Ingredient tomate = congelo.getIngredient("tomate");
             Assert.assertNotNull(tomate);
             System.out.println(tomate.getNom());
             Assert.assertEquals(tomatoSauce, tomate);
 
+            // Récupération d'un ingrédient innexistant
             System.out.println("testIngrédientAbsent : valeur retour GOOD = 'null'");
             Ingredient merde = congelo.getIngredient("merde");
             Assert.assertNull(merde);
 
+            // Récupération d'un ingrédient avec une string null
             System.out.println("testNullIngredient : valeur retour GOOD = 'null'");
-            Ingredient merde2 = congelo.getIngredient(null);
-            Assert.assertNull(merde2);
+            Ingredient nullMerde = congelo.getIngredient(null);
+            Assert.assertNull(nullMerde);
         }
-        public void testAjoutDouble(){
-            System.out.println("testAjoutDouble : valeur retour GOOD = '10'");
-            try {
-                congelo.ajouterIngredient(tomatoSauce);
-            } catch (IngredientException ie) {
-                System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
-                Assert.assertTrue(false);
+
+        @Test
+        public void testAjoutDouble() {
+            {
+                double qtyInitiale = tomatoSauce.getQty();
+                // Duplication d'un ingrédient (tomatoSauce est déjà dans le congélateur)
+                try {
+                    congelo.ajouterIngredient(tomatoSauce);
+                } catch (IngredientException ie) {
+                    System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
+                    Assert.fail();
+                }
+
+                // Récupération de l'ingrédient ajouté (qty initiale = 5, x2 = 10)
+                System.out.println("testAjoutDouble : valeur retour GOOD = '10kg'");
+                Ingredient tomate = congelo.getIngredient("tomate");
+                Assert.assertNotNull(tomate);
+                System.out.println(tomate.getQty() + "kg");
+                Assert.assertEquals(10, tomate.getQty(), 0.05);
+
+                // Le tomatoSauce hors de l'inventaire ne devrait pas avoir été affecté par l'ajout
+                Assert.assertEquals(qtyInitiale, tomatoSauce.getQty(), 0.05);
             }
-            Ingredient tomate2 = congelo.getIngredient("tomate");
-            Assert.assertNotNull(tomate2);
-            System.out.println(tomate2.getQty());
-            Assert.assertEquals(tomatoSauce, tomate2);
+            {
+                // Création d'un ingrédient similaire avec le même nom
+                Ingredient tomate2 = null;
+                try {
+                    tomate2 = new Fruit("tomate", new EtatIngredientLiquide(3));
+                } catch (IngredientException ie) {
+                    System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
+                    Assert.fail();
+                }
 
-            System.out.println("testIngrédientAbsent : valeur retour GOOD = 'null'");
-            Ingredient merde = congelo.getIngredient("merde");
-            Assert.assertNull(merde);
+                // Ajout du nouvel ingrédient à l'inventaire
+                try {
+                    congelo.ajouterIngredient(tomate2);
+                } catch (IngredientException ie) {
+                    System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
+                    Assert.fail();
+                }
 
-            System.out.println("testNullIngredient : valeur retour GOOD = 'null'");
-            Ingredient merde2 = congelo.getIngredient(null);
-            Assert.assertNull(merde2);
+                // Récupération de l'ingrédient ajouté (qty initiale = 10, + 3 = 13)
+                System.out.println("testAjout : valeur retour GOOD = '13kg'");
+                Ingredient tomate = congelo.getIngredient("tomate");
+                Assert.assertNotNull(tomate);
+                System.out.println(tomate.getQty() + "kg");
+                Assert.assertEquals(13, tomate.getQty(), 0.05);
+            }
+            {
+                // Ajout d'un ingrédient null à l'inventaire (devrait throw une IngredientException)
+                int tailleInitiale = congelo.getIngredientSize();
+                System.out.println("testAjoutNull : valeur retour GOOD = 'Impossible de rajouter un ingrédient null à l'inventaire'");
+                try {
+                    Ingredient nullIngredient = null;
+                    congelo.ajouterIngredient(nullIngredient);
+                    Assert.fail();      // On devrait avoir throw
+                } catch (IngredientException ie) {
+                    System.out.println(ie.getMessage());
+                    // L'inventaire ne devrait pas avoir plus d'ingrédients
+                    Assert.assertEquals(tailleInitiale, congelo.getIngredientSize());
+                }
+            }
         }
 
+        @Test
+        public void testConsommation() {
+            // Création d'une recette
+            Recette recettePizza = new Recette(new Ingredient[]{pepperoni, tomatoSauce, cheese, bacon, pate});
+
+            // Consommation d'une demi-recette
+            try {
+                congelo.consommerRecette(recettePizza, 1, 0.5);
+            } catch (IngredientException ie) {
+                System.out.println("Test Consommation Erreur: " + ie.getMessage());
+                Assert.fail();
+            }
+
+            // Les qty devraient être de moitié
+            System.out.println();   // TODO Affichage des valeurs normales
+            System.out.println(congelo);
+            System.out.println(recettePizza);
+            Assert.assertEquals(pepperoni.getQty() / 2, congelo.getIngredient(pepperoni.getNom()).getQty(), 0.05);
+            Assert.assertEquals(tomatoSauce.getQty() / 2, congelo.getIngredient(tomatoSauce.getNom()).getQty(), 0.05);
+            Assert.assertEquals(cheese.getQty() / 2, congelo.getIngredient(cheese.getNom()).getQty(), 0.05);
+            Assert.assertEquals(bacon.getQty() / 2, congelo.getIngredient(bacon.getNom()).getQty(), 0.05);
+            Assert.assertEquals(pate.getQty() / 2, congelo.getIngredient(pate.getNom()).getQty(), 0.05);
+
+            // Consommation d'une recette complète (devrait échouer)
+            System.out.println("Test Consommation : valeur retour GOOD = 'Ingrédients manquants dans l'inventaire'");
+            try {
+                congelo.consommerRecette(recettePizza, 1, 1);
+                System.out.println("Erreur avec l'erreur");
+                Assert.fail();
+            } catch (IngredientException ie) {
+                System.out.println(ie.getMessage());
+            }
+
+            // Les qty devraient être encore les mêmes
+            System.out.println();   // TODO Affichage des valeurs normales
+            System.out.println(congelo);
+            System.out.println(recettePizza);
+            Assert.assertEquals(pepperoni.getQty() / 2, congelo.getIngredient(pepperoni.getNom()).getQty(), 0.05);
+            Assert.assertEquals(tomatoSauce.getQty() / 2, congelo.getIngredient(tomatoSauce.getNom()).getQty(), 0.05);
+            Assert.assertEquals(cheese.getQty() / 2, congelo.getIngredient(cheese.getNom()).getQty(), 0.05);
+            Assert.assertEquals(bacon.getQty() / 2, congelo.getIngredient(bacon.getNom()).getQty(), 0.05);
+            Assert.assertEquals(pate.getQty() / 2, congelo.getIngredient(pate.getNom()).getQty(), 0.05);
+        }
     }
     // TODO Test Builder Plat
     // TODO Test Facture?

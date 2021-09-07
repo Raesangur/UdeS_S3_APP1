@@ -24,12 +24,30 @@ public class EtatIngredientLiquide implements EtatIngredient {
     }
 
     @Override
-    public EtatIngredient copy() throws IngredientException {
-        return new EtatIngredientLiquide(getQty());
+    public EtatIngredient makeCopy() {
+        try {
+            return new EtatIngredientLiquide(getQty());
+        } catch (IngredientException ie) {
+            // Erreur impossible
+            return null;
+        }
     }
 
     @Override
     public String toString() {
         return "'Liquide': {\n\t 'Qty (L)': " + qtyL + "\n}";
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (other instanceof EtatIngredientLiquide) {
+            return getQty() - ((EtatIngredient) other).getQty() < 0.05;
+        } else {
+            return false;
+        }
     }
 }

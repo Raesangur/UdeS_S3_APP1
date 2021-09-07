@@ -15,6 +15,11 @@ public class Laitier extends Ingredient {
     }
 
     @Override
+    public Ingredient makeCopy() {
+        return new Laitier(getNom(), getEtat().makeCopy());
+    }
+
+    @Override
     public String toString() {
         return "Ingrédient 'laitier': {\n\t État " + etat + "\n}";
     }

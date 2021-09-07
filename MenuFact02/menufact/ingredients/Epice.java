@@ -1,6 +1,7 @@
 package menufact.ingredients;
 
 import menufact.ingredients.etat.EtatIngredient;
+import menufact.ingredients.etat.EtatIngredientSolide;
 import menufact.ingredients.exceptions.IngredientException;
 
 public class Epice extends Ingredient {
@@ -8,9 +9,15 @@ public class Epice extends Ingredient {
         setNom(nom);
         this.etat = etat;
     }
+
     public Epice(String nom, EtatIngredient etat, double qty) throws IngredientException {
         this.etat = etat;
         this.etat.setQty(qty);
+    }
+
+    @Override
+    public Ingredient makeCopy() {
+        return new Epice(getNom(), getEtat().makeCopy());
     }
 
     @Override

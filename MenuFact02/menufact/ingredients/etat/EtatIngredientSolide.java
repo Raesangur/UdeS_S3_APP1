@@ -5,7 +5,7 @@ import menufact.ingredients.exceptions.IngredientException;
 public class EtatIngredientSolide implements EtatIngredient {
     private double qtyKg;
 
-    public EtatIngredientSolide(double qty) throws IngredientException{
+    public EtatIngredientSolide(double qty) throws IngredientException {
         setQty(qty);
     }
 
@@ -24,13 +24,31 @@ public class EtatIngredientSolide implements EtatIngredient {
     }
 
     @Override
-    public EtatIngredient copy() throws IngredientException {
-        return new EtatIngredientSolide(getQty());
+    public EtatIngredient makeCopy() {
+        try {
+            return new EtatIngredientSolide(getQty());
+        } catch (IngredientException ie) {
+            // Erreur impossible
+            return null;
+        }
     }
 
     @Override
     public String toString() {
         return "'Solide': {\n\t 'Qty (kg)': " + qtyKg + "\n}";
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (other instanceof EtatIngredientSolide) {
+            return getQty() - ((EtatIngredient) other).getQty() < 0.05;
+        } else {
+            return false;
+        }
     }
 }

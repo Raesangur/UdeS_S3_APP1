@@ -1,5 +1,6 @@
 package menufact.ingredients.etat;
 
+import menufact.ingredients.Ingredient;
 import menufact.ingredients.exceptions.IngredientException;
 
 public class EtatIngredientGazeux implements EtatIngredient {
@@ -24,13 +25,31 @@ public class EtatIngredientGazeux implements EtatIngredient {
     }
 
     @Override
-    public EtatIngredient copy() throws IngredientException {
-        return new EtatIngredientGazeux(getQty());
+    public EtatIngredient makeCopy() {
+        try {
+            return new EtatIngredientGazeux(getQty());
+        } catch (IngredientException ie) {
+            // Erreur impossible
+            return null;
+        }
     }
 
     @Override
     public String toString() {
         return "'Gazeux': {\n\t 'Qty (L)': " + qtyL + "\n}";
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (other instanceof EtatIngredientGazeux) {
+            return getQty() - ((EtatIngredient) other).getQty() < 0.05;
+        } else {
+            return false;
+        }
     }
 }
 

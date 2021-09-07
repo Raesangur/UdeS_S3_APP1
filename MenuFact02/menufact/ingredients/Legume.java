@@ -15,6 +15,11 @@ public class Legume extends Ingredient {
     }
 
     @Override
+    public Ingredient makeCopy() {
+        return new Legume(getNom(), getEtat().makeCopy());
+    }
+
+    @Override
     public String toString() {
         return "Ingrédient 'legume': {\n\t État " + etat + "\n}";
     }

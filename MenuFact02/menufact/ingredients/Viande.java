@@ -15,6 +15,11 @@ public class Viande extends Ingredient {
     }
 
     @Override
+    public Ingredient makeCopy() {
+        return new Viande(getNom(), getEtat().makeCopy());
+    }
+
+    @Override
     public String toString() {
         return "Ingrédient 'viande': {\n\t État " + etat + "\n}";
     }

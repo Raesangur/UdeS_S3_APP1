@@ -7,15 +7,15 @@ public abstract class Ingredient {
     protected EtatIngredient etat;
     private String nom;
 
-    public Ingredient() {}
-    public Ingredient(Ingredient other) throws IngredientException {
-        nom = new String(other.nom);
-        etat = other.etat.copy();
+    public Ingredient() {
     }
+
+    public abstract Ingredient makeCopy();
 
     public String getNom() {
         return nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -23,10 +23,25 @@ public abstract class Ingredient {
     public double getQty() {
         return etat.getQty();
     }
+
     public void setQty(double qty) throws IngredientException {
         etat.setQty(qty);
     }
+
     public EtatIngredient getEtat() {
         return etat;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (other instanceof Ingredient) {
+            return etat.equals(((Ingredient) other).getEtat()) && nom.equals(((Ingredient) other).getNom());
+        } else {
+            return false;
+        }
     }
 }

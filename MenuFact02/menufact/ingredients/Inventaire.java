@@ -20,27 +20,31 @@ public class Inventaire {
 
     public void ajouterIngredient(Ingredient[] ingredients) throws IngredientException {
         // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
-        for(Ingredient ingredient : ingredients)
-        {
+        for (Ingredient ingredient : ingredients) {
             ajouterIngredient(ingredient);
         }
     }
+
     public void ajouterIngredient(Ingredient ingredient) throws IngredientException {
-        // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
-        if (congelateur.containsKey(ingredient.getNom())) {
-            Ingredient ing = congelateur.get(ingredient.getNom());
-            ing.setQty(ing.getQty() + ingredient.getQty());
+        if (ingredient == null) {
+            throw new IngredientException("Impossible de rajouter un ingrédient null à l'inventaire");
         } else {
-            congelateur.put(ingredient.getNom(), ingredient);
+            // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
+            if (congelateur.containsKey(ingredient.getNom())) {
+                Ingredient ing = congelateur.get(ingredient.getNom());
+                ing.setQty(ing.getQty() + ingredient.getQty());
+            } else {
+                congelateur.put(ingredient.getNom(), ingredient.makeCopy());
+            }
         }
     }
 
-    public Ingredient getIngredient(String nomIngredient) throws IngredientException {
-        if (congelateur.containsKey(nomIngredient)) {
-            return congelateur.get(nomIngredient);
-        } else {
-            throw new IngredientException("Élément n'existe pas dans l'inventaire");
-        }
+    public Ingredient getIngredient(String nomIngredient) {
+        return congelateur.get(nomIngredient);
+    }
+
+    public int getIngredientSize() {
+        return congelateur.size();
     }
 
     public void consommerRecette(Recette recette, int qtyPlats, double proportion) throws IngredientException {
@@ -63,5 +67,17 @@ public class Inventaire {
             // Actualise la quantité à l'inventaire
             ingredientCongelateur.setQty(qtyInventaire - qtyRecette);
         }
+    }
+
+    public static void clear() {
+        if (instance != null) {
+            instance.congelateur.clear();
+            instance = null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Inventaire: " + congelateur;
     }
 }
