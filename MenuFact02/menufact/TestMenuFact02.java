@@ -111,7 +111,7 @@ public class TestMenuFact02 {
             spag = new PlatChoisi(spagBoulette, 2);
             spagError = new PlatChoisi(spagBoulette, 15623);
         }
-
+        
         @Test
         public void testQty() {
 
