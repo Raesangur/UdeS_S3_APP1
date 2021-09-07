@@ -1,13 +1,17 @@
 package menufact.ingredients;
 
 import menufact.ingredients.etat.EtatIngredient;
-import menufact.ingredients.etat.EtatIngredientSolide;
 import menufact.ingredients.exceptions.IngredientException;
 
 public class Epice extends Ingredient {
-    public Epice(String nom, EtatIngredient etat) {
+    public Epice(String nom, EtatIngredient etat) throws IngredientException {
         setNom(nom);
-        this.etat = etat;
+        if(etat != null){
+            this.etat = etat;
+        }
+        else{
+            throw new IngredientException("L'État ne peut pas être null");
+        }
     }
 
     public Epice(String nom, EtatIngredient etat, double qty) throws IngredientException {
@@ -17,7 +21,12 @@ public class Epice extends Ingredient {
 
     @Override
     public Ingredient makeCopy() {
-        return new Epice(getNom(), getEtat().makeCopy());
+        try {
+            return new Epice(getNom(), getEtat().makeCopy());
+        } catch (IngredientException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

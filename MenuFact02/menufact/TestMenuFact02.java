@@ -71,6 +71,12 @@ public class TestMenuFact02 {
             System.out.println("TestSetNom : valeur retour GOOD = 'Curcuma'");
             System.out.println(curcuma.getNom());
             Assert.assertEquals("Curcuma", curcuma.getNom());
+
+            //Test d'une nouvelle valeur nulle
+            curcuma.setNom(null);
+            System.out.println("TestSetNull : valeur retour GOOD = 'Curcuma'");
+            System.out.println(curcuma.getNom());
+            Assert.assertEquals("Curcuma", curcuma.getNom());
         }
 
         @Test
@@ -102,16 +108,32 @@ public class TestMenuFact02 {
             System.out.println(kobeSteak.getQty());
             Assert.assertEquals(1, kobeSteak.getQty(), 0.05);
 
+            //changement de la valeur de 0
+            try {
+                kobeSteak.setQty(0);
+            } catch (IngredientException ie) {
+                System.out.println("Erreur dans le test d'ingrédient: " + ie.getMessage());
+                Assert.fail();
+            }
+
+            // Test de la nouvelle valeur 0
+            System.out.println("TestSet0 : valeur retour GOOD = '0' (kg)");
+            System.out.println(kobeSteak.getQty());
+            Assert.assertEquals(0, kobeSteak.getQty(), 0.05);
+
+            //changement de la valeur de -1
+            System.out.println("TestSetNégatif : valeur retour GOOD = 'Task Failed Successfully'");
             // Test avec une valeur négative (devrait throw une IngredientException)
             try {
                 kobeSteak.setQty(-1);
-                System.out.println("Erreur dans le test d'ingrédient, une valeur négative ne peut pas être utilisée");
+                System.out.println("Error dans L'Erreur");
                 Assert.fail();
             } catch (IngredientException ie) {
                 // Test de la nouvelle valeur (la valeur négative ne devrait pas avoir été enregistrée)
-                System.out.println("TestSetQty : valeur retour GOOD = '1' (kg)");
+                System.out.println("Task Failed Successfully");
+                System.out.println("TestSetQty : valeur retour GOOD = '0' (kg)");
                 System.out.println(kobeSteak.getQty());
-                Assert.assertEquals(1, kobeSteak.getQty(), 0.05);
+                Assert.assertEquals(0, kobeSteak.getQty(), 0.05);
             }
         }
 

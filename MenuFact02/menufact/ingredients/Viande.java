@@ -4,9 +4,15 @@ import menufact.ingredients.etat.EtatIngredient;
 import menufact.ingredients.exceptions.IngredientException;
 
 public class Viande extends Ingredient {
-    public Viande(String nom, EtatIngredient etat) {
+    public Viande(String nom, EtatIngredient etat) throws IngredientException {
         setNom(nom);
-        this.etat = etat;
+        if(etat != null){
+            this.etat = etat;
+        }
+        else{
+            throw new IngredientException("L'État ne peut pas être null");
+        }
+
     }
 
     public Viande(String nom, EtatIngredient etat, double qty) throws IngredientException {
@@ -16,7 +22,12 @@ public class Viande extends Ingredient {
 
     @Override
     public Ingredient makeCopy() {
-        return new Viande(getNom(), getEtat().makeCopy());
+        try {
+            return new Viande(getNom(), getEtat().makeCopy());
+        } catch (IngredientException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

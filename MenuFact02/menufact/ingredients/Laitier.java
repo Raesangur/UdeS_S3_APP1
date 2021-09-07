@@ -4,9 +4,14 @@ import menufact.ingredients.etat.EtatIngredient;
 import menufact.ingredients.exceptions.IngredientException;
 
 public class Laitier extends Ingredient {
-    public Laitier(String nom, EtatIngredient etat) {
+    public Laitier(String nom, EtatIngredient etat) throws IngredientException {
         setNom(nom);
-        this.etat = etat;
+        if(etat != null){
+            this.etat = etat;
+        }
+        else{
+            throw new IngredientException("L'État ne peut pas être null");
+        }
     }
 
     public Laitier(String nom, EtatIngredient etat, double qty) throws IngredientException {
@@ -16,7 +21,12 @@ public class Laitier extends Ingredient {
 
     @Override
     public Ingredient makeCopy() {
-        return new Laitier(getNom(), getEtat().makeCopy());
+        try {
+            return new Laitier(getNom(), getEtat().makeCopy());
+        } catch (IngredientException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

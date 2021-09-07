@@ -17,7 +17,10 @@ public abstract class Ingredient {
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        if(nom != null){
+            this.nom = nom;
+        }
+
     }
 
     public double getQty() {
