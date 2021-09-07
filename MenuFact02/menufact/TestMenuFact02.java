@@ -284,83 +284,115 @@ public class TestMenuFact02 {
 
     private class TestFactoryIngredient {
         public void TestCreerFruit() {
+            // Crée une factory de fruit
             CreatorIngredient factory = new ConcreteCreatorFruit();
+            Ingredient pomme = null;
+
+            // Crée un fruit avec la factory
             try {
-                Ingredient pomme = factory.creer("pomme", new EtatIngredientSolide(0.2));
+                pomme = factory.creer("pomme", new EtatIngredientSolide(0.2));
             }
             catch (IngredientException pe){
                 System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
                 Assert.assertTrue(false);
             }
+
+            // Test le fruit créé
             System.out.println("TestFactoryFruit : valeur retour GOOD = 'pomme'");
+            System.out.println(pomme.getNom());
             Assert.assertEquals(pomme.getNom(), "pomme");
-            System.out.println("TestFactoryFruit : valeur retour GOOD = '0.2 kg'");
-            System.out.println(pomme.getQty());
+
+            System.out.println("TestFactoryFruit : valeur retour GOOD = '0.2kg'");
+            System.out.println(pomme.getQty() + "kg");
             Assert.assertEquals(pomme.getQty(), 0.2, 0.05);
-            System.out.println("TestFactoryFruit : valeur retour GOOD = 'Solide'");
+
+            System.out.println("TestFactoryFruit : valeur retour GOOD = 'Solide': {'Qty (kg)': 0.2}");
+            System.out.println(pomme.getEtat());
             Assert.assertTrue(pomme.getEtat() instanceof EtatIngredientSolide);
         }
 
         public void TestCreerLegume() {
+            // Crée une factory de légumes
             CreatorIngredient factory = new ConcreteCreatorLegume();
+            Ingredient concombre = null;
+
+            // Crée une légume avec la factory
             try {
-                Ingredient concombre = factory.creer("concombre", new EtatIngredientSolide(0.5));
+                concombre = factory.creer("concombre", new EtatIngredientSolide(0.5));
             }
             catch (IngredientException pe){
                 System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
                 Assert.assertTrue(false);
             }
+
+            // Test le légume créé
             System.out.println("TestFactoryLegumes : valeur retour GOOD = 'concombre'");
+            System.out.println(concombre.getNom());
             Assert.assertEquals(concombre.getNom(), "concombre");
-            System.out.println("TestFactoryLegumes : valeur retour GOOD = '0.5 kg'");
-            System.out.println(concombre.getQty());
+
+            System.out.println("TestFactoryLegumes : valeur retour GOOD = '0.5kg'");
+            System.out.println(concombre.getQty() + "kg");
             Assert.assertEquals(concombre.getQty(), 0.5, 0.05);
-            System.out.println("TestFactoryLegumes : valeur retour GOOD = 'Solide'");
+
+            System.out.println("TestFactoryLegumes : valeur retour GOOD = 'Solide': {'Qty (kg)': 0.5}");
+            System.out.println(concombre.getEtat());
             Assert.assertTrue(concombre.getEtat() instanceof EtatIngredientSolide);
-
         }
-
-        ;
 
         public void TestCreerEpice() {
+            // Crée une factory d'épice
             CreatorIngredient factory = new ConcreteCreatorEpice();
+            Ingredient sriracha = null;
+
+            // Crée une épice avec la factory
             try {
-                Ingredient Sriracha = factory.creer("Sriracha", new EtatIngredientLiquide(1));
+                sriracha = factory.creer("Sriracha", new EtatIngredientLiquide(1));
             }
             catch (IngredientException pe){
                 System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
                 Assert.assertTrue(false);
             }
-            System.out.println("TestFactoryEpice : valeur retour GOOD = 'Sriracha'");
-            Assert.assertEquals(Sriracha.getNom(), "Sriracha");
-            System.out.println("TestFactoryEpice : valeur retour GOOD = '1 L'");
-            System.out.println(Sriracha.getQty());
-            Assert.assertEquals(Sriracha.getQty(), 1, 0.05);
-            System.out.println("TestFactoryEpice : valeur retour GOOD = 'Liquide'");
-            Assert.assertTrue(Sriracha.getEtat() instanceof EtatIngredientLiquide);
-        }
 
-        ;
+            // Test l'épice
+            System.out.println("TestFactoryEpice : valeur retour GOOD = 'Sriracha'");
+            System.out.println(sriracha.getNom());
+            Assert.assertEquals(sriracha.getNom(), "Sriracha");
+
+            System.out.println("TestFactoryEpice : valeur retour GOOD = '1L'");
+            System.out.println(sriracha.getQty() + "L");
+            Assert.assertEquals(sriracha.getQty(), 1, 0.05);
+
+            System.out.println("TestFactoryEpice : valeur retour GOOD = 'Liquide': {'Qty (L)': 1}");
+            System.out.println(sriracha.getEtat());
+            Assert.assertTrue(sriracha.getEtat() instanceof EtatIngredientLiquide);
+        }
 
         public void TestCreerLaitier() {
+            // Crée une factory de produits laitiers
             CreatorIngredient factory = new ConcreteCreatorLaitier();
+            Ingredient lait = null;
+
+            // Crée un produit laitier avec la factory
             try {
-                Ingredient Lait = factory.creer("Lait", new EtatIngredientLiquide(4));
+                lait = factory.creer("Lait", new EtatIngredientLiquide(4));
             }
             catch (IngredientException pe){
                 System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
                 Assert.assertTrue(false);
             }
-            System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Lait'");
-            Assert.assertEquals(Lait.getNom(), "Lait");
-            System.out.println("TestFactoryLaitier : valeur retour GOOD = '4 L'");
-            System.out.println(Lait.getQty());
-            Assert.assertEquals(Lait.getQty(), 4, 0.05);
-            System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Liquide'");
-            Assert.assertTrue(Lait.getEtat() instanceof EtatIngredientLiquide);
-        }
 
-        ;
+            // Test le produit laitier
+            System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Lait'");
+            System.out.println(lait.getNom());
+            Assert.assertEquals(lait.getNom(), "Lait");
+
+            System.out.println("TestFactoryLaitier : valeur retour GOOD = '4L'");
+            System.out.println(lait.getQty() + "L");
+            Assert.assertEquals(lait.getQty(), 4, 0.05);
+
+            System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Liquide'");
+            Assert.assertTrue(lait.getEtat() instanceof EtatIngredientLiquide);
+        }
 
         public void TestCreerViande() {
             CreatorIngredient factory = new ConcreteCreatorViande();
