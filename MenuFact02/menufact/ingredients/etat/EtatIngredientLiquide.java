@@ -5,8 +5,8 @@ import menufact.ingredients.exceptions.IngredientException;
 public class EtatIngredientLiquide implements EtatIngredient {
     private double qtyL;
 
-    public EtatIngredientLiquide(double qty) {
-        qtyL = qty;
+    public EtatIngredientLiquide(double qty) throws IngredientException{
+        setQty(qty);
     }
 
     @Override

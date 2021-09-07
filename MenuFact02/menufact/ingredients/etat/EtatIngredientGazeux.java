@@ -1,13 +1,12 @@
 package menufact.ingredients.etat;
 
-import menufact.ingredients.Ingredient;
 import menufact.ingredients.exceptions.IngredientException;
 
 public class EtatIngredientGazeux implements EtatIngredient {
     private double qtyL;
 
-    public EtatIngredientGazeux(double qty) {
-        qtyL = qty;
+    public EtatIngredientGazeux(double qty) throws IngredientException {
+        setQty(qty);
     }
 
     @Override

@@ -177,7 +177,13 @@ public class TestMenuFact02 {
     private class TestFactoryIngredient {
         public void TestCreerFruit() {
             CreatorIngredient factory = new ConcreteCreatorFruit();
-            Ingredient pomme = factory.creer("pomme", new EtatIngredientSolide(0.2));
+            try {
+                Ingredient pomme = factory.creer("pomme", new EtatIngredientSolide(0.2));
+            }
+            catch (IngredientException pe){
+                System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
             System.out.println("TestFactoryFruit : valeur retour GOOD = 'pomme'");
             Assert.assertEquals(pomme.getNom(), "pomme");
             System.out.println("TestFactoryFruit : valeur retour GOOD = '0.2 kg'");
@@ -192,7 +198,13 @@ public class TestMenuFact02 {
 
         public void TestCreerLegume() {
             CreatorIngredient factory = new ConcreteCreatorLegume();
-            Ingredient concombre = factory.creer("concombre", new EtatIngredientSolide(0.5));
+            try {
+                Ingredient concombre = factory.creer("concombre", new EtatIngredientSolide(0.5));
+            }
+            catch (IngredientException pe){
+                System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
             System.out.println("TestFactoryLegumes : valeur retour GOOD = 'concombre'");
             Assert.assertEquals(concombre.getNom(), "concombre");
             System.out.println("TestFactoryLegumes : valeur retour GOOD = '0.5 kg'");
@@ -207,7 +219,13 @@ public class TestMenuFact02 {
 
         public void TestCreerEpice() {
             CreatorIngredient factory = new ConcreteCreatorEpice();
-            Ingredient Sriracha = factory.creer("Sriracha", new EtatIngredientLiquide(1));
+            try {
+                Ingredient Sriracha = factory.creer("Sriracha", new EtatIngredientLiquide(1));
+            }
+            catch (IngredientException pe){
+                System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
             System.out.println("TestFactoryEpice : valeur retour GOOD = 'Sriracha'");
             Assert.assertEquals(Sriracha.getNom(), "Sriracha");
             System.out.println("TestFactoryEpice : valeur retour GOOD = '1 L'");
@@ -221,7 +239,13 @@ public class TestMenuFact02 {
 
         public void TestCreerLaitier() {
             CreatorIngredient factory = new ConcreteCreatorLaitier();
-            Ingredient Lait = factory.creer("Lait", new EtatIngredientLiquide(4));
+            try {
+                Ingredient Lait = factory.creer("Lait", new EtatIngredientLiquide(4));
+            }
+            catch (IngredientException pe){
+                System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
             System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Lait'");
             Assert.assertEquals(Lait.getNom(), "Lait");
             System.out.println("TestFactoryLaitier : valeur retour GOOD = '4 L'");
@@ -235,7 +259,13 @@ public class TestMenuFact02 {
 
         public void TestCreerViande() {
             CreatorIngredient factory = new ConcreteCreatorViande();
-            Ingredient coteLevee = factory.creer("coteLevee", new EtatIngredientSolide(0.454));
+            try {
+                Ingredient coteLevee = factory.creer("coteLevee", new EtatIngredientSolide(0.454));
+            }
+            catch (IngredientException pe){
+                System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
             System.out.println("TestFactoryViande : valeur retour GOOD = 'coteLevee'");
             Assert.assertEquals(coteLevee.getNom(), "coteLevee");
             System.out.println("TestFactoryViande : valeur retour GOOD = '0.454 kg'");
@@ -278,9 +308,23 @@ public class TestMenuFact02 {
 
             piz = new Recette(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate});
 
-            PlatAuMenu pizz = new PlatAuMenu(69, "pizza pepperoni bacon", 60);
+            try{
+                PlatAuMenu pizz = new PlatAuMenu(69, "pizza pepperoni bacon", 60);
+            }
+            catch (PlatException pe){
+                System.out.println("Erreur dans le plat au menu"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
             pizz.setRecette(piz);
-            pizza2 = new PlatChoisi(pizz, 2);
+            try {
+                pizza2 = new PlatChoisi(pizz, 2);
+            }
+            catch (PlatException pe){
+                System.out.println("Erreur dans le plat choisie"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
+
+
 
             try {
                 congelateur.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate});
