@@ -1,12 +1,15 @@
 package menufact.facture;
 
+import menufact.Chef;
 import menufact.Client;
 import menufact.facture.exceptions.FactureException;
+import menufact.facture.state.FactureEtat;
 import menufact.facture.state.FactureEtatFermee;
 import menufact.facture.state.FactureEtatOuverte;
 import menufact.facture.state.FactureEtatPayee;
+import menufact.ingredients.exceptions.IngredientException;
 import menufact.plats.PlatChoisi;
-import menufact.facture.state.FactureEtat;
+import menufact.plats.exception.PlatException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +27,8 @@ public class Facture {
     private ArrayList<PlatChoisi> platchoisi = new ArrayList<PlatChoisi>();
     private int courant;
     private Client client;
+    private Chef chef;
+
 
     // TODO Chef Observer
 
@@ -127,12 +132,26 @@ public class Facture {
      * @param p un plat choisi
      * @throws FactureException Seulement si la facture est OUVERTE
      */
-    public void ajoutePlat(PlatChoisi p) throws FactureException {
+    public void ajoutePlat(PlatChoisi p) throws FactureException, PlatException {
         if (etat instanceof FactureEtatOuverte)
-            platchoisi.add(p);
+            if(chef == null){
+                throw new FactureException("Il n'y a pas de chef.");
+            }
+            else{
+                try {
+                    chef.cuisiner(p);
+                    platchoisi.add(p);
+                }
+                catch (IngredientException ie){
+                    System.out.println("Il n'y a pas assez d'ingrédient"+ ie.getMessage());
+                }
+
+            }
+
         else
             throw new FactureException("On peut ajouter un plat seulement sur une facture OUVERTE.");
     }
+
 
     /**
      * @return le contenu de la facture en chaîne de caracteres
@@ -175,5 +194,9 @@ public class Facture {
         factureGenere += "          Le total est de:   " + total() + "\n";
 
         return factureGenere;
+    }
+    public void Subscribe(Chef cook){
+        chef = cook;
+
     }
 }
