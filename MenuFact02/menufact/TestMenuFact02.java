@@ -26,7 +26,14 @@ public class TestMenuFact02 {
         @Test
         public void testNom() {
             // Création d'un ingrédient
-            Ingredient curcuma = new Epice("curcuma", new EtatIngredientSolide(0.1));
+            Ingredient curcuma = null;
+            try{
+                curcuma = new Epice("curcuma", new EtatIngredientSolide(0.1));
+            }
+            catch (IngredientException pe){
+                System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
+                Assert.assertTrue(false);
+            }
 
             // Test de la valeur donnée dans le constructeur
             System.out.println("TestGetNom : valeur retour GOOD = 'curcuma'");
