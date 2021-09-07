@@ -25,6 +25,7 @@ public class Facture {
     private int courant;
     private Client client;
 
+    // TODO Chef Observer
 
     /**********************Constantes ************/
     private final double TPS = 0.05;

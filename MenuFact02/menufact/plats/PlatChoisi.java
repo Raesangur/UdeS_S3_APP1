@@ -53,7 +53,7 @@ public class PlatChoisi {
         if (etat == null) {
             etat = etat2;
         }
-        if (etat.changerEtat(etat2)) {
+        else if (etat.changerEtat(etat2)) {
             this.etat = etat2;
         } else {
             throw new PlatException("Imposibilite de changer vers cette etat!!! :(");

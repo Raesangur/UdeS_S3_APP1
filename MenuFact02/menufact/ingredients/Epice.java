@@ -5,6 +5,7 @@ import menufact.ingredients.exceptions.IngredientException;
 
 public class Epice extends Ingredient {
     public Epice(String nom, EtatIngredient etat) {
+        setNom(nom);
         this.etat = etat;
     }
     public Epice(String nom, EtatIngredient etat, double qty) throws IngredientException {
