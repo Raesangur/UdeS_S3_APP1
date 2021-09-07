@@ -871,7 +871,6 @@ public class TestMenuFact02 {
             Assert.assertEquals(pate.getQty() / 2, congelo.getIngredient(pate.getNom()).getQty(), 0.05);
         }
     }
-<<<<<<< HEAD
 
     private static class TestBuilderPlat {
         public static void testBuilderPlat() {
@@ -901,6 +900,7 @@ public class TestMenuFact02 {
             }
             PlatAuMenu saladeFruit = pb.getResult();
 
+            // Vérification du plat construit
             System.out.println("TestPlatBuilder : valeur retour GOOD = 'Salade de fruit'");
             System.out.println(saladeFruit.getDescription());
             Assert.assertEquals("Salade de fruit", saladeFruit.getDescription());
@@ -909,8 +909,8 @@ public class TestMenuFact02 {
             System.out.println(saladeFruit.getPrix());
             Assert.assertEquals(12.5, saladeFruit.getPrix(), 0.5);
 
-
-
+            System.out.println("TestPlatBuilder : String JSON représentant la recette");
+            System.out.println(saladeFruit.getRecette());
         }
     }
     // TODO Test Facture?
