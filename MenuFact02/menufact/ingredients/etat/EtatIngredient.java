@@ -1,6 +1,10 @@
 package menufact.ingredients.etat;
 
+import menufact.ingredients.exceptions.IngredientException;
+
 public interface EtatIngredient {
-    double getQty();
-    void setQty(double qty);
+    public double getQty();
+    public void setQty(double qty) throws IngredientException;
+
+    public EtatIngredient copy();
 }

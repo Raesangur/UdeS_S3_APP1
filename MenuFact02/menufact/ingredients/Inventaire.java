@@ -17,14 +17,14 @@ public class Inventaire {
     private Inventaire() {
     }
 
-    public void ajouterIngredient(Ingredient[] ingredients) {
+    public void ajouterIngredient(Ingredient[] ingredients) throws IngredientException {
         // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
         for(Ingredient ingredient : ingredients)
         {
             ajouterIngredient(ingredient);
         }
     }
-    public void ajouterIngredient(Ingredient ingredient) {
+    public void ajouterIngredient(Ingredient ingredient) throws IngredientException {
         // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
         if (congelateur.containsKey(ingredient.getNom())) {
             Ingredient ing = congelateur.get(ingredient.getNom());

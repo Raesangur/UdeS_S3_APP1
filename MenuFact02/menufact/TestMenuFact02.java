@@ -205,38 +205,51 @@ public class TestMenuFact02 {
 
     private class testChef{
         Chef Zeff;
+        Inventaire congelateur;
+
         Ingredient tomatoSauce;
         Ingredient pepperoni;
         Ingredient bacon;
         Ingredient cheese;
         Ingredient pate;
+
         Recette piz;
         PlatAuMenu pizz;
         PlatChoisi pizza;
         PlatChoisi pizza2;
-        Inventaire congelateur;
+
 
         public testChef(){
             Zeff = Chef.getInstance();
-            congelateur = Inventaire.getInstance();
             Zeff.setNom("Zeff");
+            congelateur = Inventaire.getInstance();
+
             tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.5));
             pepperoni = new Viande("pepperoni",new EtatIngredientSolide(0.2));
             bacon = new Viande("bacon",new EtatIngredientSolide(0.2));
             cheese = new Laitier("cheese",new EtatIngredientSolide(1));
             pate = new Fruit("pate", new EtatIngredientSolide(0.454));
+
             piz = new Recette(new Ingredient[]{pepperoni, tomatoSauce, bacon,cheese,pate});
+
             PlatAuMenu pizz = new PlatAuMenu(69, "pizza pepperoni bacon",60);
             pizz.setRecette(piz);
             pizza2 = new PlatChoisi(pizz,2);
-            congelateur.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon,cheese,pate});
 
-
+            try {
+                congelateur.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon,cheese,pate});
+            }
+            catch(IngredientException ie) {
+                System.out.println("Erreur dans le test du chef: " + ie.getMessage());
+                Assert.assertTrue(false);
+            }
         };
         public void testNom() {
             System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
             Assert.assertEquals(Zeff.getNom(), "Zeff");
-        };
+            System.out.println(Zeff.getNom());
+        }
+
         public void testCuisiner() {
             System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Quantité d'ingredients insuffisant'");
             try {

@@ -1,13 +1,16 @@
 package menufact.ingredients;
 
 import menufact.ingredients.etat.EtatIngredient;
+import menufact.ingredients.exceptions.IngredientException;
 
 public abstract class Ingredient {
     protected EtatIngredient etat;
     private String nom;
 
+    public Ingredient() {}
     public Ingredient(Ingredient other) {
         nom = new String(other.nom);
+        etat = other.etat.copy();
     }
 
     public String getNom() {
@@ -20,7 +23,7 @@ public abstract class Ingredient {
     public double getQty() {
         return etat.getQty();
     }
-    public void setQty(double qty) {
+    public void setQty(double qty) throws IngredientException {
         etat.setQty(qty);
     }
     public EtatIngredient getEtat() {

@@ -1,12 +1,13 @@
 package menufact.ingredients;
 
 import menufact.ingredients.etat.EtatIngredient;
+import menufact.ingredients.exceptions.IngredientException;
 
 public class Legume extends Ingredient {
     public Legume(String nom, EtatIngredient etat) {
         this.etat = etat;
     }
-    public Legume(String nom, EtatIngredient etat, double qty) {
+    public Legume(String nom, EtatIngredient etat, double qty) throws IngredientException {
         this.etat = etat;
         this.etat.setQty(qty);
     }
