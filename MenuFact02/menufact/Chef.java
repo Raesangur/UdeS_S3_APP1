@@ -45,12 +45,12 @@ public class Chef {
         Recette recette = platAVerifier.getPlat().getRecette();
 
         for (Ingredient ingredient : recette.getIngredients()) {
-            double qtyRecquise = platAVerifier.getQty() * platAVerifier.getPlat().getProportion() * ingredient.getQty();
+            double qtyRequise = platAVerifier.getQty() * platAVerifier.getPlat().getProportion() * ingredient.getQty();
             double qtyDisponible = inventaire.getIngredient(ingredient.getNom()).getQty();
 
 
             // Vérifie que l'ingrédient est disponible en quantité suffisante
-            if (qtyDisponible < qtyRecquise) {
+            if (qtyDisponible < qtyRequise) {
                 platAVerifier.setEtat(new ErrorServir());
 
                 throw new IngredientException("Missing ingredient: " + ingredient.getNom());

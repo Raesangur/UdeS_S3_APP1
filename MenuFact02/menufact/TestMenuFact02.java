@@ -390,30 +390,38 @@ public class TestMenuFact02 {
             System.out.println(lait.getQty() + "L");
             Assert.assertEquals(lait.getQty(), 4, 0.05);
 
-            System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Liquide'");
+            System.out.println("TestFactoryLaitier : valeur retour GOOD = ''Liquide': {'Qty (L)': 4}'");
+            System.out.println(lait.getEtat());
             Assert.assertTrue(lait.getEtat() instanceof EtatIngredientLiquide);
         }
 
         public void TestCreerViande() {
+            // Crée une factory de viande
             CreatorIngredient factory = new ConcreteCreatorViande();
+            Ingredient coteLevee = null;
+
+            // Crée une viande avec la factory
             try {
-                Ingredient coteLevee = factory.creer("coteLevee", new EtatIngredientSolide(0.454));
+                coteLevee = factory.creer("coteLevee", new EtatIngredientSolide(0.454));
             }
             catch (IngredientException pe){
                 System.out.println("Erreur dans la quantite d'ingredient"+ pe.getMessage());
                 Assert.assertTrue(false);
             }
+
+            // Test la viande
             System.out.println("TestFactoryViande : valeur retour GOOD = 'coteLevee'");
+            System.out.println(coteLevee.getNom());
             Assert.assertEquals(coteLevee.getNom(), "coteLevee");
+
             System.out.println("TestFactoryViande : valeur retour GOOD = '0.454 kg'");
-            System.out.println(coteLevee.getQty());
+            System.out.println(coteLevee.getQty() + "kg");
             Assert.assertEquals(coteLevee.getQty(), 0.454, 0.05);
-            System.out.println("TestFactoryViande : valeur retour GOOD = 'Solide'");
+
+            System.out.println("TestFactoryViande : valeur retour GOOD = ''Solide': {'Qty (kg)': 0.454}''");
+            System.out.println(coteLevee.getEtat());
             Assert.assertTrue(coteLevee.getEtat() instanceof EtatIngredientSolide);
         }
-
-        ;
-
     }
 
     private class testChef {
