@@ -5,8 +5,10 @@ import menufact.ingredients.exceptions.IngredientException;
 
 public class Laitier extends Ingredient {
     public Laitier(String nom, EtatIngredient etat) {
+        setNom(nom);
         this.etat = etat;
     }
+
     public Laitier(String nom, EtatIngredient etat, double qty) throws IngredientException {
         this.etat = etat;
         this.etat.setQty(qty);

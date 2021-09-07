@@ -5,6 +5,7 @@ import menufact.ingredients.exceptions.IngredientException;
 
 public class Fruit extends Ingredient {
     public Fruit(String nom, EtatIngredient etat) {
+        setNom(nom);
         this.etat = etat;
     }
 

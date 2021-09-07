@@ -15,6 +15,7 @@ public class Inventaire {
     }
 
     private Inventaire() {
+        congelateur = new HashMap<>();
     }
 
     public void ajouterIngredient(Ingredient[] ingredients) throws IngredientException {
