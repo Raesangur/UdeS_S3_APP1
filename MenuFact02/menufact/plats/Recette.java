@@ -3,31 +3,32 @@ package menufact.plats;
 import menufact.ingredients.Ingredient;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Recette {
-    private List<Ingredient> ingredients;
+    private ArrayList<Ingredient> ingredients;
 
-    public Recette(List<Ingredient> ingredients) {
+    public Recette(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
     public Recette(Ingredient[] ingredients) {
-        this.ingredients = Arrays.asList(ingredients);
+        this.ingredients = new ArrayList<>(Arrays.asList(ingredients));
     }
 
-    public List<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
     public void setIngredients(Ingredient[] ingredients) {
-        this.ingredients = Arrays.asList(ingredients);
+        this.ingredients = new ArrayList<>(Arrays.asList(ingredients));
     }
 
+    // retourne une instance de recette pour pouvoir être utilisé comme un Builder
     public Recette addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
         return this;

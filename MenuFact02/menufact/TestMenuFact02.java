@@ -248,7 +248,7 @@ public class TestMenuFact02 {
                 System.out.println(spag.getEtat());
                 Assert.assertTrue(spag.getEtat() instanceof Commande);
             } catch (PlatException pe) {
-                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                System.out.println("TestEtat: " + pe.getMessage());
                 Assert.fail();
             }
 
@@ -260,7 +260,7 @@ public class TestMenuFact02 {
                 System.out.println("Error avec l'erreur");
                 Assert.fail();
             } catch (PlatException pe) {
-                System.out.println("Imposibilite de changer vers cette etat!!! :(");
+                System.out.println("Task Failed Successfully");
                 System.out.println("TestgetEtat : valeur retour GOOD = 'Commandé'");
                 System.out.println(spag.getEtat());
                 Assert.assertTrue(spag.getEtat() instanceof Commande);
@@ -275,7 +275,7 @@ public class TestMenuFact02 {
                 System.out.println(spag.getEtat());
                 Assert.assertTrue(spag.getEtat() instanceof EnPreparation);
             } catch (PlatException pe) {
-                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                System.out.println("TestEtat: " + pe.getMessage());
                 Assert.fail();
             }
 
@@ -288,21 +288,22 @@ public class TestMenuFact02 {
                 System.out.println(spag.getEtat());
                 Assert.assertTrue(spag.getEtat() instanceof Termine);
             } catch (PlatException pe) {
-                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                System.out.println("TestEtat: " + pe.getMessage());
                 Assert.fail();
             }
 
-            // Met l'état à terminé
+            // Met l'état à terminé à nouveau, ne devrait pas fonctionner
             try {
                 spag.setEtat(Termine);
 
-                // Test l'état
-                System.out.println("TestgetEtat : valeur retour GOOD = 'Termine'");
+                // On ne devrait pas être rendu ici
+                System.out.println("Error avec l'erreur");
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task failed successfully");
+                System.out.println("TestgetEtat : valeur retour GOOD = 'Terminé'");
                 System.out.println(spag.getEtat());
                 Assert.assertTrue(spag.getEtat() instanceof Termine);
-            } catch (PlatException pe) {
-                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
-                Assert.fail();
             }
 
             // Met l'état à servi
@@ -314,20 +315,20 @@ public class TestMenuFact02 {
                 System.out.println(spag.getEtat());
                 Assert.assertTrue(spag.getEtat() instanceof Servi);
             } catch (PlatException pe) {
-                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                System.out.println("TestEtat: " + pe.getMessage());
                 Assert.fail();
             }
 
-            // Met l'état à commandé
+            // Met l'état à d'erreur
             try {
                 spag.setEtat(Error);
 
                 // Test l'état
                 System.out.println("TestgetEtat : valeur retour GOOD = 'Error'");
                 System.out.println(spag.getEtat());
-                Assert.assertTrue(spag.getEtat() instanceof Error);
+                Assert.assertTrue(spag.getEtat() instanceof ErrorServir);
             } catch (PlatException pe) {
-                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                System.out.println("TestEtat: " + pe.getMessage());
                 Assert.fail();
             }
         }
