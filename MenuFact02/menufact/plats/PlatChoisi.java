@@ -7,12 +7,12 @@ public class PlatChoisi {
     private PlatAuMenu plat;
     private int quantite;
     private CommandeEtat etat;
-    public PlatChoisi(PlatAuMenu plat, int quantite) throws PlatException{
+
+    public PlatChoisi(PlatAuMenu plat, int quantite) throws PlatException {
         this.plat = plat;
-        if(quantite>=0) {
+        if (quantite >= 0) {
             this.quantite = quantite;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
         this.etat = null;
@@ -26,15 +26,14 @@ public class PlatChoisi {
                 '}';
     }
 
-    public int getQty(){
+    public int getQty() {
         return quantite;
     }
 
-    public void setQty(int quantite) throws PlatException{
-        if(quantite >= 0){
+    public void setQty(int quantite) throws PlatException {
+        if (quantite >= 0) {
             this.quantite = quantite;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
     }
@@ -43,19 +42,20 @@ public class PlatChoisi {
         return plat;
     }
 
-    public CommandeEtat getEtat(){
+    public CommandeEtat getEtat() {
         return etat;
-    };
+    }
 
-    public void setEtat(CommandeEtat etat2)  throws PlatException{
+    ;
+
+    public void setEtat(CommandeEtat etat2) throws PlatException {
         // Vérifie que l'état peut changer vers le nouvel état
-        if(etat == null) {
+        if (etat == null) {
             etat = etat2;
         }
-        if(etat.changerEtat(etat2)){
+        if (etat.changerEtat(etat2)) {
             this.etat = etat2;
-        }
-        else{
+        } else {
             throw new PlatException("Imposibilite de changer vers cette etat!!! :(");
         }
     }

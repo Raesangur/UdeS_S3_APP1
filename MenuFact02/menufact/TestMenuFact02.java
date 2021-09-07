@@ -94,31 +94,71 @@ public class TestMenuFact02 {
         private PlatChoisi spagError;
 
         public TestPlatChoisi() {
-
+            // Création d'ingrédients
             Ingredient spaghetti = new Legume("spaghetti", new EtatIngredientSolide(0.2));
             Ingredient tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.3));
             Ingredient meetBall = new Viande("steakHache", new EtatIngredientSolide(0.05));
+            // Création d'une recette
             Recette spagBoulDeViande = new Recette(new Ingredient[]{spaghetti, tomatoSauce, meetBall});
-            PlatAuMenu spagBoulette = new PlatAuMenu(22, "spag contenant des boulettes de viande et de la sauce tomate", 18.50);
-            spagBoulette.setRecette(spagBoulDeViande);
-            spag = new PlatChoisi(spagBoulette, 2);
-            spagError = new PlatChoisi(spagBoulette, 15623);
+
+            // Création du plat au menu
+            PlatAuMenu spagBoulette = null;
+            try {
+                spagBoulette = new PlatAuMenu(22, "spag contenant des boulettes de viande et de la sauce tomate", 18.50);
+                spagBoulette.setRecette(spagBoulDeViande);
+
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test du Plat Choisi (création du plat au menu): " + pe.getMessage());
+                Assert.assertTrue(false);
+            }
+
+            // Création de deux plats concrets à partir du plat au menu
+            try {
+
+                spag = new PlatChoisi(spagBoulette, 2);
+                spagError = new PlatChoisi(spagBoulette, 15623);
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test du Plat Choisi (création des plats): " + pe.getMessage());
+                Assert.assertTrue(false);
+            }
         }
 
         @Test
         public void testQty() {
-
+            // Test de la valeur donnée dans le constructeur
             System.out.println("TestGetQty : valeur retour GOOD = '2'");
             System.out.println(spag.getQty());
             Assert.assertEquals(spag.getQty(), 2);
-            spag.setQty(12);
+
+            // Changement de la valeur
+            try {
+                spag.setQty(12);
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test du Plat Choisi: " + pe.getMessage());
+                Assert.assertTrue(false);
+            }
+
+            // Test de la nouvelle valeur
             System.out.println("TestSetQty : valeur retour GOOD = '12'");
             System.out.println(spag.getQty());
             Assert.assertEquals(spag.getQty(), 12);
+
+            // Test d'une valeur négative (devrait throw un PlatException)
+            try {
+                spag.setQty(-20);
+                System.out.println("Erreur dans le test du Plat Choisi, une valeur négative ne peut pas être utilisée");
+                Assert.assertTrue(false);
+            } catch (PlatException ie) {
+                // Test de la nouvelle valeur (la valeur négative ne devrait pas avoir été enregistrée)
+                System.out.println("TestSetQty : valeur retour GOOD = '12'");
+                System.out.println(spag.getQty());
+                Assert.assertEquals(spag.getQty(), 12, 0.05);
+            }
         }
 
         @Test
         public void testPlat() {
+            // Test le contenu d'un plat au menu
             System.out.println("TestgetPlat : valeur retour GOOD = {'code':22,'description':'spag contenant des boulettes de viande et de la sauce tomate','prix':'18.50'}");
             System.out.println(spag.getPlat());
             Assert.assertEquals(spag.getPlat().getCode(), 22);
@@ -127,52 +167,113 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testEtat() throws PlatException {
+        public void testEtat() {
+            // Préparation des états
             Commande Commande = new Commande();
             EnPreparation EnPreparation = new EnPreparation();
             Servi Servi = new Servi();
             ErrorServir Error = new ErrorServir();
             Termine Termine = new Termine();
 
-            System.out.println("TestgetEtat : valeur retour GOOD = 'Commande'");
-            System.out.println(spag.getEtat());
-            System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+            // Vérifie si l'état est initialement à null
+            System.out.println("TestgetEtat : valeur retour GOOD = 'Null'");
+            System.out.println(spag.getEtat() == null ? "Null" : "Non-Null");
+            Assert.assertEquals(null, spag.getEtat());
+
+            // Met l'état à commandé
+            try {
+                spag.setEtat(Commande);
+                System.out.println(spag.getEtat());
+
+                // Test l'état
+                System.out.println("TestgetEtat : valeur retour GOOD = 'Commandé'");
+                System.out.println(spag.getEtat());
+                Assert.assertTrue(spag.getEtat() instanceof Commande);
+            } catch (PlatException pe) {
+                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                Assert.assertTrue(false);
+            }
+
+            // Met l'état à terminé (ne devrait pas être possible)
             try {
                 spag.setEtat(Termine);
+
+                // On ne devrait pas être rendu ici
                 System.out.println("Error avec l'erreur");
                 Assert.assertTrue(false);
-
             } catch (PlatException pe) {
                 System.out.println("Imposibilite de changer vers cette etat!!! :(");
-                System.out.println("ici on a commande");
+                System.out.println("TestgetEtat : valeur retour GOOD = 'Commandé'");
                 System.out.println(spag.getEtat());
                 Assert.assertTrue(spag.getEtat() instanceof Commande);
             }
 
-            System.out.println("TestsetEtat : valeur retour GOOD = 'En préparation'");
-            spag.setEtat(EnPreparation);
-            System.out.println(spag.getEtat());
-            Assert.assertTrue(spag.getEtat() instanceof EnPreparation);
+            // Met l'état à commandé
+            try {
+                spag.setEtat(EnPreparation);
 
-            System.out.println("TestsetEtat : valeur retour GOOD = 'Servi'");
-            spag.setEtat(Servi);
-            System.out.println(spag.getEtat());
-            Assert.assertTrue(spag.getEtat() instanceof Servi);
+                // Test l'état
+                System.out.println("TestgetEtat : valeur retour GOOD = 'En préparation'");
+                System.out.println(spag.getEtat());
+                Assert.assertTrue(spag.getEtat() instanceof EnPreparation);
+            } catch (PlatException pe) {
+                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                Assert.assertTrue(false);
+            }
 
-            System.out.println("TestsetEtat : valeur retour GOOD = 'Termine'");
-            spag.setEtat(Termine);
-            System.out.println(spag.getEtat());
-            Assert.assertTrue(spag.getEtat() instanceof Termine);
+            // Met l'état à Terminé
+            try {
+                spag.setEtat(Termine);
 
-            System.out.println("TestsetEtat : valeur retour GOOD = 'Error'");
-            spag.setEtat(Error);
-            System.out.println(spag.getEtat());
-            Assert.assertTrue(spag.getEtat() instanceof Error);
+                // Test l'état
+                System.out.println("TestgetEtat : valeur retour GOOD = 'Terminé'");
+                System.out.println(spag.getEtat());
+                Assert.assertTrue(spag.getEtat() instanceof Termine);
+            } catch (PlatException pe) {
+                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                Assert.assertTrue(false);
+            }
 
+            // Met l'état à terminé
+            try {
+                spag.setEtat(Termine);
+
+                // Test l'état
+                System.out.println("TestgetEtat : valeur retour GOOD = 'Termine'");
+                System.out.println(spag.getEtat());
+                Assert.assertTrue(spag.getEtat() instanceof Termine);
+            } catch (PlatException pe) {
+                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                Assert.assertTrue(false);
+            }
+
+            // Met l'état à servi
+            try {
+                spag.setEtat(Servi);
+
+                // Test l'état
+                System.out.println("TestgetEtat : valeur retour GOOD = 'Servi'");
+                System.out.println(spag.getEtat());
+                Assert.assertTrue(spag.getEtat() instanceof Servi);
+            } catch (PlatException pe) {
+                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                Assert.assertTrue(false);
+            }
+
+            // Met l'état à commandé
+            try {
+                spag.setEtat(Error);
+
+                // Test l'état
+                System.out.println("TestgetEtat : valeur retour GOOD = 'Error'");
+                System.out.println(spag.getEtat());
+                Assert.assertTrue(spag.getEtat() instanceof Error);
+            } catch (PlatException pe) {
+                System.out.println("TestError : valeur retour GOOD = 'Imposibilite de changer vers cette etat!!! :('");
+                Assert.assertTrue(false);
+            }
         }
-
     }
-
 
     private class TestFactoryIngredient {
         public void TestCreerFruit() {
@@ -185,10 +286,7 @@ public class TestMenuFact02 {
             Assert.assertEquals(pomme.getQty(), 0.2, 0.05);
             System.out.println("TestFactoryFruit : valeur retour GOOD = 'Solide'");
             Assert.assertTrue(pomme.getEtat() instanceof EtatIngredientSolide);
-
         }
-
-        ;
 
         public void TestCreerLegume() {
             CreatorIngredient factory = new ConcreteCreatorLegume();
