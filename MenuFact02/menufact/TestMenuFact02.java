@@ -1,26 +1,21 @@
 package menufact;
 
 import menufact.exceptions.MenuException;
-import menufact.plats.exception.PlatException;
-import menufact.facture.exceptions.FactureException;
-
 import menufact.facture.Facture;
-
+import menufact.facture.exceptions.FactureException;
 import menufact.ingredients.*;
 import menufact.ingredients.etat.EtatIngredientGazeux;
 import menufact.ingredients.etat.EtatIngredientLiquide;
 import menufact.ingredients.etat.EtatIngredientSolide;
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.ingredients.factory.*;
-
 import menufact.plats.PlatAuMenu;
 import menufact.plats.PlatChoisi;
 import menufact.plats.PlatSante;
 import menufact.plats.Recette;
+import menufact.plats.exception.PlatException;
 import menufact.plats.state.*;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -641,7 +636,8 @@ public class TestMenuFact02 {
         @Test
         public void testRecette() {
             System.out.println("===Test Recette Steak + Sel/Poivre");
-            System.out.println(recetteSteak);       // TODO marquer valeur de print good
+            System.out.println("testRecetteAfficher : valeur retour GOOD = Objet JSON contenant la recette du steak sel et poivre");
+            System.out.println(recetteSteak);
 
             // Vérification que la recette contient les bons ingrédients et les bonnes valeurs
             List<Ingredient> listeIngredient = recetteSteak.getIngredients();
@@ -796,6 +792,7 @@ public class TestMenuFact02 {
                 try {
                     Ingredient nullIngredient = null;
                     congelo.ajouterIngredient(nullIngredient);
+
                     Assert.fail();      // On devrait avoir throw
                 } catch (IngredientException ie) {
                     System.out.println(ie.getMessage());
@@ -819,7 +816,7 @@ public class TestMenuFact02 {
             }
 
             // Les qty devraient être de moitié
-            System.out.println();   // TODO Affichage des valeurs normales
+            System.out.println("Test Consommation : valeur retour GOOD = Objet JSON contenant l'inverntaire et la recette suite à la consommation");
             System.out.println(congelo);
             System.out.println(recettePizza);
             Assert.assertEquals(pepperoni.getQty() / 2, congelo.getIngredient(pepperoni.getNom()).getQty(), 0.05);
@@ -839,7 +836,7 @@ public class TestMenuFact02 {
             }
 
             // Les qty devraient être encore les mêmes
-            System.out.println();   // TODO Affichage des valeurs normales
+            System.out.println("Test Consommation : valeur retour GOOD = Objet JSON contenant l'inverntaire et la recette suite à la consommation");
             System.out.println(congelo);
             System.out.println(recettePizza);
             Assert.assertEquals(pepperoni.getQty() / 2, congelo.getIngredient(pepperoni.getNom()).getQty(), 0.05);
@@ -850,6 +847,7 @@ public class TestMenuFact02 {
         }
     }
     // TODO Test Builder Plat
+
     // TODO Test Facture?
     // TODO Test Menu?
 
