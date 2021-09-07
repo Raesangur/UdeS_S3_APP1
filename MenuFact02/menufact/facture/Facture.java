@@ -30,7 +30,6 @@ public class Facture {
     private Chef chef;
 
 
-    // TODO Chef Observer
 
     /**********************Constantes ************/
     private final double TPS = 0.05;
@@ -145,9 +144,7 @@ public class Facture {
                 catch (IngredientException ie){
                     System.out.println("Il n'y a pas assez d'ingrédient"+ ie.getMessage());
                 }
-
             }
-
         else
             throw new FactureException("On peut ajouter un plat seulement sur une facture OUVERTE.");
     }
@@ -197,6 +194,5 @@ public class Facture {
     }
     public void Subscribe(Chef cook){
         chef = cook;
-
     }
 }

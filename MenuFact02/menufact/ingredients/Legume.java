@@ -21,6 +21,6 @@ public class Legume extends Ingredient {
 
     @Override
     public String toString() {
-        return "Ingrédient 'legume': {\n\t État " + etat + "\n}";
+        return "{Ingrédient 'legume': {\n\t État " + etat + "\n}}";
     }
 }

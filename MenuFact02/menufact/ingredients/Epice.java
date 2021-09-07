@@ -22,6 +22,6 @@ public class Epice extends Ingredient {
 
     @Override
     public String toString() {
-        return "Ingrédient 'epice': {\n\t État " + etat + "\n}";
+        return "{Ingrédient 'epice': {\n\t État " + etat + "\n}}";
     }
 }
