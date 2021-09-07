@@ -1,14 +1,19 @@
 package menufact.plats;
 
+import menufact.plats.exception.PlatException;
+
 public class PlatSante extends PlatAuMenu {
     private double kcal;
     private double chol;
     private double gras;
 
-    public PlatSante(int code, String description, double prix, double kcal, double chol, double gras) {
+    public PlatSante(int code, String description, double prix, double kcal, double chol, double gras) throws PlatException {
         super(code, description, prix);
         if(kcal >=0){
             this.kcal = kcal;
+        }
+        else{
+            throw new PlatException("negative Number");
         }
         this.setChol(chol);
         this.setGras(gras);
@@ -31,9 +36,12 @@ public class PlatSante extends PlatAuMenu {
         return kcal;
     }
 
-    public void setKcal(double kcal) {
+    public void setKcal(double kcal) throws PlatException {
         if(kcal >=0){
             this.kcal = kcal;
+        }
+        else{
+            throw new PlatException("negative Number");
         }
     }
 
@@ -41,9 +49,12 @@ public class PlatSante extends PlatAuMenu {
         return chol;
     }
 
-    public void setChol(double chol) {
+    public void setChol(double chol) throws PlatException {
         if(chol >= 0){
             this.chol = chol;
+        }
+        else{
+            throw new PlatException("negative Number");
         }
     }
 
@@ -51,9 +62,12 @@ public class PlatSante extends PlatAuMenu {
         return gras;
     }
 
-    public void setGras(double gras) {
+    public void setGras(double gras) throws PlatException {
         if(gras >= 0){
             this.gras = gras;
+        }
+        else{
+            throw new PlatException("negative Number");
         }
     }
 }

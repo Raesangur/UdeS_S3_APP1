@@ -37,7 +37,7 @@ public class TestMenuFact02 {
         }
 
         @Test
-        public void testQty() {
+        public void testQty() throws IngredientException {
             Ingredient kobeSteak = new Viande("kobe", new EtatIngredientSolide(1.5));
             System.out.println("TestGetQty : valeur retour GOOD = '1.5kg'");
             System.out.println(kobeSteak.getQty());
