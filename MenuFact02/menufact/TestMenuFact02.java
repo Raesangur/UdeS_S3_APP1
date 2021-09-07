@@ -4,24 +4,21 @@ import menufact.exceptions.MenuException;
 import menufact.plats.builder.PlatBuilder;
 import menufact.plats.exception.PlatException;
 import menufact.facture.exceptions.FactureException;
-
 import menufact.facture.Facture;
-
+import menufact.facture.exceptions.FactureException;
 import menufact.ingredients.*;
 import menufact.ingredients.etat.EtatIngredientGazeux;
 import menufact.ingredients.etat.EtatIngredientLiquide;
 import menufact.ingredients.etat.EtatIngredientSolide;
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.ingredients.factory.*;
-
 import menufact.plats.PlatAuMenu;
 import menufact.plats.PlatChoisi;
 import menufact.plats.PlatSante;
 import menufact.plats.Recette;
+import menufact.plats.exception.PlatException;
 import menufact.plats.state.*;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -77,6 +74,12 @@ public class TestMenuFact02 {
             System.out.println("TestSetNom : valeur retour GOOD = 'Curcuma'");
             System.out.println(curcuma.getNom());
             Assert.assertEquals("Curcuma", curcuma.getNom());
+
+            //Test d'une nouvelle valeur nulle
+            curcuma.setNom(null);
+            System.out.println("TestSetNull : valeur retour GOOD = 'Curcuma'");
+            System.out.println(curcuma.getNom());
+            Assert.assertEquals("Curcuma", curcuma.getNom());
         }
 
         @Test
@@ -108,16 +111,32 @@ public class TestMenuFact02 {
             System.out.println(kobeSteak.getQty());
             Assert.assertEquals(1, kobeSteak.getQty(), 0.05);
 
+            //changement de la valeur de 0
+            try {
+                kobeSteak.setQty(0);
+            } catch (IngredientException ie) {
+                System.out.println("Erreur dans le test d'ingrédient: " + ie.getMessage());
+                Assert.fail();
+            }
+
+            // Test de la nouvelle valeur 0
+            System.out.println("TestSet0 : valeur retour GOOD = '0' (kg)");
+            System.out.println(kobeSteak.getQty());
+            Assert.assertEquals(0, kobeSteak.getQty(), 0.05);
+
+            //changement de la valeur de -1
+            System.out.println("TestSetNégatif : valeur retour GOOD = 'Task Failed Successfully'");
             // Test avec une valeur négative (devrait throw une IngredientException)
             try {
                 kobeSteak.setQty(-1);
-                System.out.println("Erreur dans le test d'ingrédient, une valeur négative ne peut pas être utilisée");
+                System.out.println("Error dans L'Erreur");
                 Assert.fail();
             } catch (IngredientException ie) {
                 // Test de la nouvelle valeur (la valeur négative ne devrait pas avoir été enregistrée)
-                System.out.println("TestSetQty : valeur retour GOOD = '1' (kg)");
+                System.out.println("Task Failed Successfully");
+                System.out.println("TestSetQty : valeur retour GOOD = '0' (kg)");
                 System.out.println(kobeSteak.getQty());
-                Assert.assertEquals(1, kobeSteak.getQty(), 0.05);
+                Assert.assertEquals(0, kobeSteak.getQty(), 0.05);
             }
         }
 
@@ -642,7 +661,8 @@ public class TestMenuFact02 {
         @Test
         public void testRecette() {
             System.out.println("===Test Recette Steak + Sel/Poivre");
-            System.out.println(recetteSteak);       // TODO marquer valeur de print good
+            System.out.println("testRecetteAfficher : valeur retour GOOD = Objet JSON contenant la recette du steak sel et poivre");
+            System.out.println(recetteSteak);
 
             // Vérification que la recette contient les bons ingrédients et les bonnes valeurs
             List<Ingredient> listeIngredient = recetteSteak.getIngredients();
@@ -797,6 +817,7 @@ public class TestMenuFact02 {
                 try {
                     Ingredient nullIngredient = null;
                     congelo.ajouterIngredient(nullIngredient);
+
                     Assert.fail();      // On devrait avoir throw
                 } catch (IngredientException ie) {
                     System.out.println(ie.getMessage());
@@ -820,7 +841,7 @@ public class TestMenuFact02 {
             }
 
             // Les qty devraient être de moitié
-            System.out.println();   // TODO Affichage des valeurs normales
+            System.out.println("Test Consommation : valeur retour GOOD = Objet JSON contenant l'inverntaire et la recette suite à la consommation");
             System.out.println(congelo);
             System.out.println(recettePizza);
             Assert.assertEquals(pepperoni.getQty() / 2, congelo.getIngredient(pepperoni.getNom()).getQty(), 0.05);
@@ -840,7 +861,7 @@ public class TestMenuFact02 {
             }
 
             // Les qty devraient être encore les mêmes
-            System.out.println();   // TODO Affichage des valeurs normales
+            System.out.println("Test Consommation : valeur retour GOOD = Objet JSON contenant l'inverntaire et la recette suite à la consommation");
             System.out.println(congelo);
             System.out.println(recettePizza);
             Assert.assertEquals(pepperoni.getQty() / 2, congelo.getIngredient(pepperoni.getNom()).getQty(), 0.05);
@@ -850,6 +871,7 @@ public class TestMenuFact02 {
             Assert.assertEquals(pate.getQty() / 2, congelo.getIngredient(pate.getNom()).getQty(), 0.05);
         }
     }
+<<<<<<< HEAD
 
     private static class TestBuilderPlat {
         public static void testBuilderPlat() {
