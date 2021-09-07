@@ -1,6 +1,9 @@
 package menufact;
 
 import menufact.exceptions.MenuException;
+import menufact.plats.builder.PlatBuilder;
+import menufact.plats.exception.PlatException;
+import menufact.facture.exceptions.FactureException;
 import menufact.facture.Facture;
 import menufact.facture.exceptions.FactureException;
 import menufact.ingredients.*;
@@ -564,11 +567,11 @@ public class TestMenuFact02 {
             // Création d'un nouveau plat au menu avec la recette
             try {
                 pizzMenu = new PlatAuMenu(69, "pizza pepperoni bacon", 60);
+                pizzMenu.setRecette(pizzaRecette);
             } catch (PlatException pe) {
                 System.out.println("Erreur dans le plat au menu" + pe.getMessage());
-                Assert.assertTrue(false);
+                Assert.fail();
             }
-            pizzMenu.setRecette(pizzaRecette);
 
             // Création d'un plat à l'aide du menu
             try {
@@ -576,7 +579,7 @@ public class TestMenuFact02 {
                 pizza2 = new PlatChoisi(pizzMenu, 2);   // Il n'y aura pas assez d'ingrédients pour cette pizza.
             } catch (PlatException pe) {
                 System.out.println("Erreur dans le plat choisie" + pe.getMessage());
-                Assert.assertTrue(false);
+                Assert.fail();
             }
 
             // Ajout des ingrédiens suffisants pour faire une pizza dans l'inventaire
@@ -584,7 +587,7 @@ public class TestMenuFact02 {
                 congelateur.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate});
             } catch (IngredientException ie) {
                 System.out.println("Erreur dans le test du chef: " + ie.getMessage());
-                Assert.assertTrue(false);
+                Assert.fail();
             }
         }
 
@@ -881,8 +884,48 @@ public class TestMenuFact02 {
             Assert.assertEquals(pate.getQty() / 2, congelo.getIngredient(pate.getNom()).getQty(), 0.05);
         }
     }
-    // TODO Test Builder Plat
 
+    private static class TestBuilderPlat {
+        public static void testBuilderPlat() {
+
+            // Création des ingrédients de la recette
+            Ingredient poire, cerise, pomme, jus;
+            poire = cerise = pomme = jus = null;
+            try {
+                poire = new Fruit("Poire", new EtatIngredientSolide(0.1));
+                cerise = new Fruit("Cerise", new EtatIngredientSolide(0.1));
+                pomme = new Fruit("Pomme", new EtatIngredientSolide(0.1));
+                jus = new Fruit("Jus", new EtatIngredientLiquide(1));
+            } catch (IngredientException ie) {
+                System.out.println("TestBuilderPlat: Erreur création d'ingrédient : " + ie.getMessage());
+                Assert.fail();
+            }
+
+            // Building du plat
+            PlatBuilder pb = new PlatBuilder();
+            try {
+                pb.buildDescription("Salade de fruit")
+                        .buildPrix(12.50)
+                        .buildRecette(new Ingredient[]{poire, cerise, pomme, jus});
+            } catch (PlatException pe) {
+                System.out.println("TestBuilderPlat : " + pe.getMessage());
+                Assert.fail();
+            }
+            PlatAuMenu saladeFruit = pb.getResult();
+
+            // Vérification du plat construit
+            System.out.println("TestPlatBuilder : valeur retour GOOD = 'Salade de fruit'");
+            System.out.println(saladeFruit.getDescription());
+            Assert.assertEquals("Salade de fruit", saladeFruit.getDescription());
+
+            System.out.println("TestPlatBuilder : valeur retour GOOD = '12.5'");
+            System.out.println(saladeFruit.getPrix());
+            Assert.assertEquals(12.5, saladeFruit.getPrix(), 0.5);
+
+            System.out.println("TestPlatBuilder : String JSON représentant la recette");
+            System.out.println(saladeFruit.getRecette());
+        }
+    }
     // TODO Test Facture?
     // TODO Test Menu?
 
