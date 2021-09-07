@@ -9,7 +9,9 @@ public class PlatChoisi {
     private CommandeEtat etat;
     public PlatChoisi(PlatAuMenu plat, int quantite) {
         this.plat = plat;
-        this.quantite = quantite;
+        if(quantite>=0) {
+            this.quantite = quantite;
+        }
         this.etat = null;
     }
 
@@ -26,7 +28,9 @@ public class PlatChoisi {
     }
 
     public void setQty(int quantite) {
-        this.quantite = quantite;
+        if(quantite >= 0){
+            this.quantite = quantite;
+        }
     }
 
     public PlatAuMenu getPlat() {

@@ -29,7 +29,8 @@ public class Recette {
     }
 
     public Recette addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient); return this;
+        ingredients.add(ingredient);
+        return this;
     }
 
     @Override

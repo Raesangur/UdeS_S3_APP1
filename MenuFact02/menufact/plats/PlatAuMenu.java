@@ -9,7 +9,9 @@ public class PlatAuMenu {
     public PlatAuMenu(int code, String description, double prix) {
         this.code = code;
         this.description = description;
-        this.prix = prix;
+        if(prix >=0){
+            this.prix = prix;
+        }
     }
 
     public PlatAuMenu() {
@@ -49,7 +51,10 @@ public class PlatAuMenu {
     }
 
     public void setPrix(double prix) {
-        this.prix = prix;
+        if(prix >=0){
+            this.prix = prix;
+        }
+
     }
 
     public Recette getRecette() {

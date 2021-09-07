@@ -7,7 +7,9 @@ public class PlatSante extends PlatAuMenu {
 
     public PlatSante(int code, String description, double prix, double kcal, double chol, double gras) {
         super(code, description, prix);
-        this.kcal = kcal;
+        if(kcal >=0){
+            this.kcal = kcal;
+        }
         this.setChol(chol);
         this.setGras(gras);
     }
@@ -30,7 +32,9 @@ public class PlatSante extends PlatAuMenu {
     }
 
     public void setKcal(double kcal) {
-        this.kcal = kcal;
+        if(kcal >=0){
+            this.kcal = kcal;
+        }
     }
 
     public double getChol() {
@@ -38,7 +42,9 @@ public class PlatSante extends PlatAuMenu {
     }
 
     public void setChol(double chol) {
-        this.chol = chol;
+        if(chol >= 0){
+            this.chol = chol;
+        }
     }
 
     public double getGras() {
@@ -46,6 +52,8 @@ public class PlatSante extends PlatAuMenu {
     }
 
     public void setGras(double gras) {
-        this.gras = gras;
+        if(gras >= 0){
+            this.gras = gras;
+        }
     }
 }
