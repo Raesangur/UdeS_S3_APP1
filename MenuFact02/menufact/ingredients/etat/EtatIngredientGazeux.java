@@ -1,5 +1,8 @@
 package menufact.ingredients.etat;
 
+import menufact.ingredients.Ingredient;
+import menufact.ingredients.exceptions.IngredientException;
+
 public class EtatIngredientGazeux implements EtatIngredient {
     private double qtyL;
 
@@ -13,13 +16,16 @@ public class EtatIngredientGazeux implements EtatIngredient {
     }
 
     @Override
-    public void setQty(double qty) {
-        qtyL = qty;
+    public void setQty(double qty) throws IngredientException {
+        if (qty < 0) {
+            throw new IngredientException("Quantité d'ingrédient ne peut pas être négative");
+        } else {
+            qtyL = qty;
+        }
     }
 
     @Override
-    public EtatIngredient copy()
-    {
+    public EtatIngredient copy() {
         return new EtatIngredientGazeux(getQty());
     }
 
