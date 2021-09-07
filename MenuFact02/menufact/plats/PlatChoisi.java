@@ -7,9 +7,14 @@ public class PlatChoisi {
     private PlatAuMenu plat;
     private int quantite;
     private CommandeEtat etat;
-    public PlatChoisi(PlatAuMenu plat, int quantite) {
+    public PlatChoisi(PlatAuMenu plat, int quantite) throws PlatException{
         this.plat = plat;
-        this.quantite = quantite;
+        if(quantite>=0) {
+            this.quantite = quantite;
+        }
+        else{
+            throw new PlatException("negative Number");
+        }
         this.etat = null;
     }
 
@@ -25,8 +30,13 @@ public class PlatChoisi {
         return quantite;
     }
 
-    public void setQty(int quantite) {
-        this.quantite = quantite;
+    public void setQty(int quantite) throws PlatException{
+        if(quantite >= 0){
+            this.quantite = quantite;
+        }
+        else{
+            throw new PlatException("negative Number");
+        }
     }
 
     public PlatAuMenu getPlat() {

@@ -3,6 +3,7 @@ package menufact.plats.builder;
 import menufact.ingredients.Ingredient;
 import menufact.plats.PlatAuMenu;
 import menufact.plats.Recette;
+import menufact.plats.exception.PlatException;
 
 public class PlatBuilder {
     protected PlatAuMenu plat;
@@ -20,7 +21,7 @@ public class PlatBuilder {
         return this;
     }
 
-    public PlatBuilder buildPrix(double prix) {
+    public PlatBuilder buildPrix(double prix) throws PlatException {
         plat.setPrix(prix);
         return this;
     }

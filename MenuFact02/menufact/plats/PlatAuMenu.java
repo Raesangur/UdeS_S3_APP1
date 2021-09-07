@@ -1,15 +1,23 @@
 package menufact.plats;
 
+import menufact.plats.exception.PlatException;
+
 public class PlatAuMenu {
     private int code;
     private String description;
     private double prix;
     private Recette recette;
 
-    public PlatAuMenu(int code, String description, double prix) {
+    public PlatAuMenu(int code, String description, double prix) throws PlatException {
         this.code = code;
         this.description = description;
-        this.prix = prix;
+        if(prix >=0){
+            this.prix = prix;
+        }
+        else{
+            throw new PlatException("negative Number");
+        }
+
     }
 
     public PlatAuMenu() {
@@ -48,8 +56,14 @@ public class PlatAuMenu {
         return prix;
     }
 
-    public void setPrix(double prix) {
-        this.prix = prix;
+    public void setPrix(double prix) throws PlatException {
+        if(prix >=0){
+            this.prix = prix;
+        }
+        else{
+            throw new PlatException("negative Number");
+        }
+
     }
 
     public Recette getRecette() {
