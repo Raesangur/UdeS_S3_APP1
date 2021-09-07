@@ -141,6 +141,7 @@ public class TestMenuFact02 {
         public static void testEtat() {
             // Création d'un ingrédient
             Ingredient chipsLays = null;
+            Ingredient merde = null;
             try {
                 // Les sacs de chips sont à 90% pleins de gaz donc comptent comme gazeux
                 chipsLays = new Legume("lays", new EtatIngredientGazeux(8));
@@ -153,6 +154,18 @@ public class TestMenuFact02 {
             System.out.println("TestEtat : valeur retour GOOD = 'Gazeux'");
             System.out.println(chipsLays.getEtat());
             Assert.assertTrue(chipsLays.getEtat() instanceof EtatIngredientGazeux);
+
+            //test avec État null
+            System.out.println("TestEtatNULL : valeur retour GOOD = 'Task Failed Successfully'");
+            try{
+                merde = new Legume("vide", null);
+                System.out.println("Error dans L'Erreur");
+                Assert.fail();
+            }
+            catch (IngredientException ie){
+                System.out.println("Task Failed Successfully");
+            }
+
         }
     }
 
