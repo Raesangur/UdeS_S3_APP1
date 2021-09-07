@@ -70,7 +70,10 @@ public class PlatAuMenu {
         return recette;
     }
 
-    public void setRecette(Recette recette) {
+    public void setRecette(Recette recette) throws PlatException {
+        if (recette == null) {
+            throw new PlatException("Une recette ne peux pas être null");
+        }
         this.recette = recette;
     }
 }

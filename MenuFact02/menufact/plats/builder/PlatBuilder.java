@@ -26,12 +26,12 @@ public class PlatBuilder {
         return this;
     }
 
-    public PlatBuilder buildRecette(Recette recette) {
+    public PlatBuilder buildRecette(Recette recette) throws PlatException {
         plat.setRecette(recette);
         return this;
     }
 
-    public PlatBuilder buildRecette(Ingredient[] recette) {
+    public PlatBuilder buildRecette(Ingredient[] recette) throws PlatException {
         plat.setRecette(new Recette(recette));
         return this;
     }
