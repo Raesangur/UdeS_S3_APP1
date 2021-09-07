@@ -129,7 +129,7 @@ public class TestMenuFact02 {
                 Assert.assertTrue(false);
             }
         }
-
+        
         @Test
         public void testQty() {
             // Test de la valeur donnée dans le constructeur

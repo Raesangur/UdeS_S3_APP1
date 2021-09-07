@@ -24,7 +24,7 @@ public class EtatIngredientLiquide implements EtatIngredient {
     }
 
     @Override
-    public EtatIngredient copy() {
+    public EtatIngredient copy() throws IngredientException {
         return new EtatIngredientLiquide(getQty());
     }
 
