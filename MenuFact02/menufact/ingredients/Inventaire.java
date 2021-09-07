@@ -35,8 +35,12 @@ public class Inventaire {
         }
     }
 
-    public Ingredient getIngredient(String nomIngredient) {
-        return congelateur.get(nomIngredient);
+    public Ingredient getIngredient(String nomIngredient) throws IngredientException {
+        if (congelateur.containsKey(nomIngredient)) {
+            return congelateur.get(nomIngredient);
+        } else {
+            throw new IngredientException("Élément n'existe pas dans l'inventaire");
+        }
     }
 
     public void consommerRecette(Recette recette, int qtyPlats, double proportion) throws IngredientException {

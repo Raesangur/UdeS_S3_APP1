@@ -40,7 +40,14 @@ public class TestMenuFact02 {
     }
 
 
+    /**
+     * Classe de test pour tester les ingrédients
+     */
     private static class TestIngredient {
+
+        /**
+         * Roule tous les tests sur les ingrédients
+         */
         @Test
         public void runTests() {
             testNom();
