@@ -38,13 +38,18 @@ public class Client {
     }
 
     public void setNumeroCarteCredit(String numeroCarteCredit) throws FactureException {
-        // https://stackoverflow.com/a/9315696/10827197
-        Pattern creditCardPattern = Pattern.compile("\\b(?:\\d{4}[ -]?){3}(?=\\d{4}\\b)(?:\\d{4})");
-        Matcher creditCardPatternMatcher = creditCardPattern.matcher(numeroCarteCredit);
-        if (creditCardPatternMatcher.matches()) {
-            this.numeroCarteCredit = numeroCarteCredit;
-        } else {
-            throw new FactureException("Mauvais numéro de carte de crédit");
+        if(numeroCarteCredit != null){
+            // https://stackoverflow.com/a/9315696/10827197
+            Pattern creditCardPattern = Pattern.compile("\\b(?:\\d{4}[ -]?){3}(?=\\d{4}\\b)(?:\\d{4})");
+            Matcher creditCardPatternMatcher = creditCardPattern.matcher(numeroCarteCredit);
+            if (creditCardPatternMatcher.matches()) {
+                this.numeroCarteCredit = numeroCarteCredit;
+            } else {
+                throw new FactureException("Mauvais numéro de carte de crédit");
+            }
+        }
+        else{
+            throw new FactureException("Numéros de carte de Crédit null");
         }
     }
 
