@@ -23,21 +23,35 @@ import java.util.List;
 public class TestMenuFact02 {
 
     public static void main(String[] args) throws FactureException {
-        // Les tests de base qui venaient avec le code fourni
-
-
+        System.out.println("=== TESTS UNITAIRES ===");
+        System.out.println("=== TESTS INGRÉDIENTS ===");
         TestIngredient.runTests();
+
+        System.out.println("\n=== TESTS PLAT CHOISI ===");
         TestPlatChoisi.runTests();
+
+        System.out.println("\n=== TESTS FACTORY D'INGRÉDIENTS ===");
         TestFactoryIngredient.runTests();
+
+        System.out.println("\n=== TESTS CHEF ===");
         TestChef.runTests();
+
+        System.out.println("\n=== TESTS RECETTE ===");
         TestRecette.runTests();
+
+        System.out.println("\n=== TESTS INVENTAIRE ===");
         TestInventaire.runTests();
+
+        System.out.println("\n=== TESTS PLATS & PLAT BUILDER ===");
         TestPlat.runTests();
+
+        System.out.println("\n=== TESTS CLIENT ===");
         TestClient.runTests();
 
 
+        System.out.println("\n=== FIN DES TESTS ===");
 
-        test0_base();
+        //test0_base();
     }
 
 
@@ -1301,7 +1315,7 @@ public class TestMenuFact02 {
             System.out.println("TestIdClient : valeur retour GOOD = '0000-0000-0000-0000'");
             try {
                 nouveauClient.setNumeroCarteCredit("0000-0000-0000-0000");
-            } catch(FactureException fe) {
+            } catch (FactureException fe) {
                 System.out.println("Erreur dans le # de carte de crédit: " + fe.getMessage());
                 Assert.fail();
             }
@@ -1310,45 +1324,41 @@ public class TestMenuFact02 {
 
             //passer un numéro null
             System.out.println("TestSet#CarteNUll : valeur retour GOOD = 'Task failed successfully'");
-            try{
+            try {
                 nouveauClient.setNumeroCarteCredit(null);
                 System.out.println("Error dans L'Erreur");
                 Assert.fail();
-            }
-            catch (FactureException fe){
+            } catch (FactureException fe) {
                 System.out.println("Task failed successfully");
             }
             //passer un numéro faux avec des lettres
             System.out.println("TestSetMauvaisNumeros : valeur retour GOOD = 'Task failed successfully'");
-            try{
+            try {
                 nouveauClient.setNumeroCarteCredit("fasdfasdasfdsGVSD 1213123 12 3123");
                 System.out.println("Error dans L'Erreur");
                 Assert.fail();
-            }
-            catch (FactureException fe){
+            } catch (FactureException fe) {
                 System.out.println("Task failed successfully");
             }
             //passer un numéro faux sans le bon nombre de chiffres
             System.out.println("TestSetPasAssezDeChiffre : valeur retour GOOD = 'Task failed successfully'");
-            try{
+            try {
                 nouveauClient.setNumeroCarteCredit("1234");
                 System.out.println("Error dans L'Erreur");
                 Assert.fail();
-            }
-            catch (FactureException fe){
+            } catch (FactureException fe) {
                 System.out.println("Task failed successfully");
             }
             //passer un numéro faux sans le bon nombre de chiffres
             System.out.println("TestSetTropDeChiffre : valeur retour GOOD = 'Task failed successfully'");
-            try{
+            try {
                 nouveauClient.setNumeroCarteCredit("1234 1566 1566 5165 6541");
                 System.out.println("Error dans L'Erreur");
                 Assert.fail();
-            }
-            catch (FactureException fe){
+            } catch (FactureException fe) {
                 System.out.println("Task failed successfully");
             }
-            
+
         }
     }
 
@@ -1434,8 +1444,7 @@ public class TestMenuFact02 {
                 pb.buildPrix(24.99)
                         .buildDescription("Viande hachée autour d'un os")
                         .buildRecette(recetteOsViande);
-            }
-            catch (PlatException pe) {
+            } catch (PlatException pe) {
                 System.out.println("Erreur dans la création du plat: " + pe.getMessage());
             }
             PlatAuMenu platOsViande = pb.getResult();
@@ -1446,8 +1455,7 @@ public class TestMenuFact02 {
                         .buildPrix(18.99)
                         .buildDescription("Tarte au devil fruit")
                         .buildRecette(recetteTarteGomuFruit);
-            }
-            catch (PlatException pe) {
+            } catch (PlatException pe) {
                 System.out.println("Erreur dans la création du plat enfant: " + pe.getMessage());
             }
             PlatEnfant tarteGomuFruit = peb.getResult();
@@ -1460,8 +1468,7 @@ public class TestMenuFact02 {
                         .buildPrix(16.99)
                         .buildDescription("Saumon au four")
                         .buildRecette(recetteTarteGomuFruit);
-            }
-            catch (PlatException pe) {
+            } catch (PlatException pe) {
                 System.out.println("Erreur dans la création du plat enfant: " + pe.getMessage());
             }
             PlatSante platPoisson = psb.getResult();
@@ -1536,7 +1543,6 @@ public class TestMenuFact02 {
         } catch (PlatException pe) {
             Assert.fail();
         }
-
 
 
         Menu m1 = Menu.getInstance();
