@@ -25,6 +25,13 @@ public class PlatSanteBuilder extends PlatBuilder {
     }
 
     @Override
+    public PlatBuilder clear()
+    {
+        plat = new PlatSante();
+        return this;
+    }
+
+    @Override
     public PlatSante getResult() {
         return (PlatSante) plat;
     }

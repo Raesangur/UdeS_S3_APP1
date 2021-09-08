@@ -1378,20 +1378,51 @@ public class TestMenuFact02 {
             }
 
             Recette recetteOsViande = new Recette(new Ingredient[]{os, viandeHachee});
-            Recette recettetarteGomuFruit = new Recette(new Ingredient[]{gomuFruit, pateTarte});
+            Recette recetteTarteGomuFruit = new Recette(new Ingredient[]{gomuFruit, pateTarte});
             Recette recettePoisson = new Recette(new Ingredient[]{poisson, jusCitron});
-            Recette recettePizzza = new Recette(new Ingredient[]{tomatoSauce, pepperoni, bacon, cheese, patePizza});
+            Recette recettePizza = new Recette(new Ingredient[]{tomatoSauce, pepperoni, bacon, cheese, patePizza});
 
             PlatBuilder pb = new PlatBuilder();
 
             try {
-                pb.buildPrix(24.99).buildDescription("Viande hachée autour d'un os").buildRecette(recetteOsViande);
+                pb.buildPrix(24.99)
+                        .buildDescription("Viande hachée autour d'un os")
+                        .buildRecette(recetteOsViande);
             }
             catch (PlatException pe) {
                 System.out.println("Erreur dans la création du plat: " + pe.getMessage());
             }
             PlatAuMenu platOsViande = pb.getResult();
 
+            PlatEnfantBuilder peb = new PlatEnfantBuilder();
+            try {
+                peb.buildProportion(0.25)
+                        .buildPrix(18.99)
+                        .buildDescription("Tarte au devil fruit")
+                        .buildRecette(recetteTarteGomuFruit);
+            }
+            catch (PlatException pe) {
+                System.out.println("Erreur dans la création du plat enfant: " + pe.getMessage());
+            }
+            PlatEnfant tarteGomuFruit = peb.getResult();
+
+            PlatSanteBuilder psb = new PlatSanteBuilder();
+            try {
+                psb.buildKCal(0.54)
+                        .buildChol(0.001)
+                        .buildGras(0.04)
+                        .buildPrix(16.99)
+                        .buildDescription("Saumon au four")
+                        .buildRecette(recetteTarteGomuFruit);
+            }
+            catch (PlatException pe) {
+                System.out.println("Erreur dans la création du plat enfant: " + pe.getMessage());
+            }
+            PlatSante platPoisson = psb.getResult();
+
+            menu.ajoute(platOsViande);
+            menu.ajoute(tarteGomuFruit);
+            menu.ajoute(platPoisson);
         }
 
         public void testCreationInventaire() {

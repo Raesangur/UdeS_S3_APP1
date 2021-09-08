@@ -38,7 +38,7 @@ public class Client {
     }
 
     public void setNumeroCarteCredit(String numeroCarteCredit) throws FactureException {
-        // https://stackoverflow.com/a/9315696/10827197
+        // https://www.regextester.com/113011
         Pattern creditCardPattern = Pattern.compile("\\b(?:\\d{4}[ -]?){3}(?=\\d{4}\\b)(?:\\d{4})");
         Matcher creditCardPatternMatcher = creditCardPattern.matcher(numeroCarteCredit);
         if (creditCardPatternMatcher.matches()) {
