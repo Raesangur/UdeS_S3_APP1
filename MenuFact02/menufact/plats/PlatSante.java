@@ -9,10 +9,9 @@ public class PlatSante extends PlatAuMenu {
 
     public PlatSante(int code, String description, double prix, double kcal, double chol, double gras) throws PlatException {
         super(code, description, prix);
-        if(kcal >=0){
+        if (kcal >= 0) {
             this.kcal = kcal;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
         this.setChol(chol);
@@ -37,10 +36,9 @@ public class PlatSante extends PlatAuMenu {
     }
 
     public void setKcal(double kcal) throws PlatException {
-        if(kcal >=0){
+        if (kcal >= 0) {
             this.kcal = kcal;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
     }
@@ -50,10 +48,9 @@ public class PlatSante extends PlatAuMenu {
     }
 
     public void setChol(double chol) throws PlatException {
-        if(chol >= 0){
+        if (chol >= 0) {
             this.chol = chol;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
     }
@@ -63,11 +60,22 @@ public class PlatSante extends PlatAuMenu {
     }
 
     public void setGras(double gras) throws PlatException {
-        if(gras >= 0){
+        if (gras >= 0) {
             this.gras = gras;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
+        }
+    }
+
+    @Override
+    public PlatAuMenu makeCopy() {
+        try {
+            PlatSante pm = new PlatSante(getCode(), new String(getDescription()), getPrix(), getKcal(), getChol(), getGras());
+            pm.setRecette(getRecette().makeCopy());
+            return pm;
+        } catch (PlatException pe) {
+            pe.printStackTrace();
+            return null;
         }
     }
 }

@@ -11,10 +11,9 @@ public class PlatAuMenu {
     public PlatAuMenu(int code, String description, double prix) throws PlatException {
         this.code = code;
         this.description = description;
-        if(prix >=0){
+        if (prix >= 0) {
             this.prix = prix;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
 
@@ -57,10 +56,9 @@ public class PlatAuMenu {
     }
 
     public void setPrix(double prix) throws PlatException {
-        if(prix >=0){
+        if (prix >= 0) {
             this.prix = prix;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
 
@@ -74,6 +72,17 @@ public class PlatAuMenu {
         if (recette == null) {
             throw new PlatException("Une recette ne peux pas être null");
         }
-        this.recette = recette;
+        this.recette = recette.makeCopy();
+    }
+
+    public PlatAuMenu makeCopy() {
+        try {
+            PlatAuMenu pm = new PlatAuMenu(code, new String(description), prix);
+            pm.setRecette(recette.makeCopy());
+            return pm;
+        } catch (PlatException pe) {
+            pe.printStackTrace();
+            return null;
+        }
     }
 }

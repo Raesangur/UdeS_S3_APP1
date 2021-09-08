@@ -48,6 +48,20 @@ public class Inventaire {
     }
 
     public void consommerRecette(Recette recette, int qtyPlats, double proportion) throws IngredientException {
+        // Guards
+        if (recette == null) {
+            throw new IngredientException("Recette ne peut pas être null");
+        }
+        if (qtyPlats < 0) {
+            throw new IngredientException("Impossible de consommer une quantité négative de plats");
+        }
+        if (proportion < 0) {
+            throw new IngredientException("Impossible de consommer des plats à proportion négative");
+        }
+        if (proportion > 1) {
+            throw new IngredientException("Proportion de la recette ne peut pas être > 1");
+        }
+
         // Parcours tous les plats
         for (Ingredient ingredientRecette : recette.getIngredients()) {
             Ingredient ingredientCongelateur = congelateur.get(ingredientRecette.getNom());

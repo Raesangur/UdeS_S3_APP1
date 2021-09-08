@@ -50,8 +50,33 @@ public class Recette {
         return this;
     }
 
+    public Recette makeCopy() {
+        ArrayList<Ingredient> nouvelleListe = new ArrayList<>();
+        for (Ingredient ing : ingredients) {
+            nouvelleListe.add(ing.makeCopy());
+        }
+        return new Recette(nouvelleListe);
+    }
+
     @Override
     public String toString() {
         return "Recette: " + ingredients;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (other instanceof Recette) {
+            if (((Recette) other).getIngredients().size() != getIngredients().size()) {
+                return false;
+            } else {
+                return getIngredients().equals(((Recette) other).getIngredients());
+            }
+        } else {
+            return false;
+        }
     }
 }

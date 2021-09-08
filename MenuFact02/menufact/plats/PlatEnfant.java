@@ -10,10 +10,9 @@ public class PlatEnfant extends PlatAuMenu {
 
     public PlatEnfant(int code, String description, double prix, double proportion) throws PlatException {
         super(code, description, prix);
-        if(proportion >=0){
+        if (proportion >= 0) {
             this.proportion = proportion;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
     }
@@ -24,10 +23,9 @@ public class PlatEnfant extends PlatAuMenu {
     }
 
     public void setProportion(double proportion) throws PlatException {
-        if(proportion >=0){
+        if (proportion >= 0) {
             this.proportion = proportion;
-        }
-        else{
+        } else {
             throw new PlatException("negative Number");
         }
     }
@@ -37,5 +35,17 @@ public class PlatEnfant extends PlatAuMenu {
         return "PlatEnfant{" +
                 "proportion=" + proportion +
                 "} " + super.toString();
+    }
+
+    @Override
+    public PlatAuMenu makeCopy() {
+        try {
+            PlatEnfant pm = new PlatEnfant(getCode(), new String(getDescription()), getPrix(), getProportion());
+            pm.setRecette(getRecette().makeCopy());
+            return pm;
+        } catch (PlatException pe) {
+            pe.printStackTrace();
+            return null;
+        }
     }
 }

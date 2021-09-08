@@ -14,6 +14,7 @@ import menufact.plats.PlatChoisi;
 import menufact.plats.PlatSante;
 import menufact.plats.Recette;
 import menufact.plats.builder.PlatBuilder;
+import menufact.plats.builder.PlatEnfantBuilder;
 import menufact.plats.exception.PlatException;
 import menufact.plats.state.*;
 import org.junit.Assert;
@@ -908,7 +909,6 @@ public class TestMenuFact02 {
 
     private static class TestBuilderPlat {
         public static void testBuilderPlat() {
-
             // Création des ingrédients de la recette
             Ingredient poire, cerise, pomme, jus;
             poire = cerise = pomme = jus = null;
@@ -924,10 +924,12 @@ public class TestMenuFact02 {
 
             // Building du plat
             PlatBuilder pb = new PlatBuilder();
+            Recette recetteSaladeFruit = null;
             try {
+                recetteSaladeFruit = new Recette(new Ingredient[]{poire, cerise, pomme, jus})
                 pb.buildDescription("Salade de fruit")
                         .buildPrix(12.50)
-                        .buildRecette(new Ingredient[]{poire, cerise, pomme, jus});
+                        .buildRecette(recetteSaladeFruit);
             } catch (PlatException pe) {
                 System.out.println("TestBuilderPlat : " + pe.getMessage());
                 Assert.fail();
@@ -945,6 +947,26 @@ public class TestMenuFact02 {
 
             System.out.println("TestPlatBuilder : String JSON représentant la recette");
             System.out.println(saladeFruit.getRecette());
+            Assert.assertEquals(recetteSaladeFruit, saladeFruit.getRecette());
+
+            // Test avec une recette null
+            try {
+                Recette nullRecette = null;
+                pb.buildRecette(nullRecette);
+                Assert.fail();
+            } catch(PlatException pe) {
+                System.out.println("Task failed successfully");
+            }
+
+            // La recette ne devrait pas avoir changée
+            PlatAuMenu saladeFruit2 = pb.getResult();
+            System.out.println("TestPlatBuilder : String JSON représentant la recette");
+            System.out.println(saladeFruit.getRecette());
+            Assert.assertEquals(saladeFruit, saladeFruit2);
+
+
+            // Test du builder de plat enfant
+            PlatEnfantBuilder peb = new PlatEnfantBuilder();
         }
     }
     // TODO Test Facture?
