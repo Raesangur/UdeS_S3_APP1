@@ -9,12 +9,10 @@ import menufact.ingredients.etat.EtatIngredientLiquide;
 import menufact.ingredients.etat.EtatIngredientSolide;
 import menufact.ingredients.exceptions.IngredientException;
 import menufact.ingredients.factory.*;
-import menufact.plats.PlatAuMenu;
-import menufact.plats.PlatChoisi;
-import menufact.plats.PlatSante;
-import menufact.plats.Recette;
+import menufact.plats.*;
 import menufact.plats.builder.PlatBuilder;
 import menufact.plats.builder.PlatEnfantBuilder;
+import menufact.plats.builder.PlatSanteBuilder;
 import menufact.plats.exception.PlatException;
 import menufact.plats.state.*;
 import org.junit.Assert;
@@ -34,6 +32,7 @@ public class TestMenuFact02 {
         TestChef.runTests();
         TestRecette.runTests();
         TestInventaire.runTests();
+        TestPlat.runTests();
     }
 
 
@@ -159,12 +158,11 @@ public class TestMenuFact02 {
 
             //test avec État null
             System.out.println("TestEtatNULL : valeur retour GOOD = 'Task Failed Successfully'");
-            try{
+            try {
                 merde = new Legume("vide", null);
                 System.out.println("Error dans L'Erreur");
                 Assert.fail();
-            }
-            catch (IngredientException ie){
+            } catch (IngredientException ie) {
                 System.out.println("Task Failed Successfully");
             }
 
@@ -777,7 +775,7 @@ public class TestMenuFact02 {
 
         @Test
         public void testRecette() {
-            System.out.println("===Test Recette Steak + Sel/Poivre");
+            System.out.println("Test Recette Steak + Sel/Poivre");
             System.out.println("testRecetteAfficher : valeur retour GOOD = Objet JSON contenant la recette du steak sel et poivre");
             System.out.println(recetteSteak);
 
@@ -794,7 +792,7 @@ public class TestMenuFact02 {
         public void testAddIngredient() {
             // Ajoute une tomate à la fin de la recette
             recetteSteak.addIngredient(tomate);
-            System.out.println("===Test Recette Ajout de tomate");
+            System.out.println("Test Recette Ajout de tomate");
             System.out.println(recetteSteak);
 
             // Vérification que la recette contient maintenant une tomate en dernière position
@@ -807,7 +805,7 @@ public class TestMenuFact02 {
             // Remplace les anciens ingrédients par une nouvelle liste d'ingrédients
             recetteSteak.setIngredients(new Ingredient[]{laitue, tomate, sel});
 
-            System.out.println("===Test Recette plat steak végétarien");
+            System.out.println("Test Recette plat steak végétarien");
             System.out.println(recetteSteak);
 
             // La nouvelle liste d'ingrédient ne devrait pas contenir de steak ni de poivre
@@ -956,7 +954,7 @@ public class TestMenuFact02 {
                 Assert.fail();
             }
 
-            //Consommation nulle
+            //Consommation null
             System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
             try {
                 congelo.consommerRecette(null, 1, 0.5);
@@ -964,24 +962,27 @@ public class TestMenuFact02 {
             } catch (IngredientException ie) {
                 System.out.println("Task Failed Successfully");
             }
-            //Consommation quantité négative
-            System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
+
+            //Test quantité négative
+            System.out.println("Test Quantité négative : valeur retour GOOD = 'Task Failed Successfully'");
             try {
                 congelo.consommerRecette(recettePizza, -1, 0.5);
                 Assert.fail();
             } catch (IngredientException ie) {
                 System.out.println("Task Failed Successfully");
             }
-            //Consommation quantité négative
-            System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
+
+            //Test proportion négative
+            System.out.println("Test Proportion négative : valeur retour GOOD = 'Task Failed Successfully'");
             try {
                 congelo.consommerRecette(recettePizza, 1, -1);
                 Assert.fail();
             } catch (IngredientException ie) {
                 System.out.println("Task Failed Successfully");
             }
-            //Consommation quantité négative
-            System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
+
+            //Test proportion trop grande
+            System.out.println("Test Proportion > 1 : valeur retour GOOD = 'Task Failed Successfully'");
             try {
                 congelo.consommerRecette(recettePizza, 1, 3);
                 Assert.fail();
@@ -1021,8 +1022,8 @@ public class TestMenuFact02 {
         }
     }
 
-    private static class TestBuilderPlat {
-        public static void testBuilderPlat() {
+    private static class TestPlat {
+        public static void testPlat() {
             // Création des ingrédients de la recette
             Ingredient poire, cerise, pomme, jus;
             poire = cerise = pomme = jus = null;
@@ -1040,7 +1041,7 @@ public class TestMenuFact02 {
             PlatBuilder pb = new PlatBuilder();
             Recette recetteSaladeFruit = null;
             try {
-                recetteSaladeFruit = new Recette(new Ingredient[]{poire, cerise, pomme, jus})
+                recetteSaladeFruit = new Recette(new Ingredient[]{poire, cerise, pomme, jus});
                 pb.buildDescription("Salade de fruit")
                         .buildPrix(12.50)
                         .buildRecette(recetteSaladeFruit);
@@ -1068,7 +1069,7 @@ public class TestMenuFact02 {
                 Recette nullRecette = null;
                 pb.buildRecette(nullRecette);
                 Assert.fail();
-            } catch(PlatException pe) {
+            } catch (PlatException pe) {
                 System.out.println("Task failed successfully");
             }
 
@@ -1081,6 +1082,159 @@ public class TestMenuFact02 {
 
             // Test du builder de plat enfant
             PlatEnfantBuilder peb = new PlatEnfantBuilder();
+            try {
+                peb.buildProportion(0.5)
+                        .buildDescription("Salade de fruit pour enfants")
+                        .buildPrix(10.75)
+                        .buildRecette(recetteSaladeFruit);
+            } catch (PlatException pe) {
+                System.out.println("TestBuilderPlatEnfant Erreur: " + pe.getMessage());
+                Assert.fail();
+            }
+
+            PlatEnfant saladeFruitEnfant = peb.getResult();
+
+            // Test de proportion négative & > 1, ne devrait pas changer les résultats de la validation
+            System.out.println("TestPlatEnfant setProportion < 0 : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                saladeFruitEnfant.setProportion(-4);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
+            System.out.println("TestPlatEnfant setProportion > 1 : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                saladeFruitEnfant.setProportion(7);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
+            // Vérification du plat construit
+            System.out.println("TestPlatEnfantBuilder : valeur retour GOOD = 'Salade de fruit pour enfants'");
+            System.out.println(saladeFruitEnfant.getDescription());
+            Assert.assertEquals("Salade de fruit pour enfants", saladeFruitEnfant.getDescription());
+
+            System.out.println("TestPlatEnfantBuilder : valeur retour GOOD = '10.75'");
+            System.out.println(saladeFruitEnfant.getPrix());
+            Assert.assertEquals(10.75, saladeFruitEnfant.getPrix(), 0.5);
+
+            System.out.println("TestPlatEnfantBuilder: valeur retour GOOD = '0.5'");
+            System.out.println(saladeFruitEnfant.getProportion());
+            Assert.assertEquals(0.5, saladeFruitEnfant.getProportion(), 0.05);
+
+            System.out.println("TestPlatEnfantBuilder : String JSON représentant la recette");
+            System.out.println(saladeFruitEnfant.getRecette());
+            Assert.assertEquals(recetteSaladeFruit, saladeFruitEnfant.getRecette());
+
+            // Test du builder de plat santé
+            PlatSanteBuilder psb = new PlatSanteBuilder();
+            try {
+                psb.buildKCal(0.65)
+                        .buildGras(0.05)
+                        .buildChol(0)
+                        .buildDescription("Salade de fruit")
+                        .buildPrix(12.50)
+                        .buildRecette(recetteSaladeFruit);
+            } catch (PlatException pe) {
+                System.out.println("TestBuilderPlatSanté Erreur: " + pe.getMessage());
+                Assert.fail();
+            }
+
+            PlatSante saladeFruitSante = psb.getResult();
+
+            // Test de valeurs impossibles, ne devrait pas affecter les résultats de la vérification
+            System.out.println("TestPlatSanté setKcal négatif : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                saladeFruitSante.setKcal(-3.1415926535897953);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
+            System.out.println("TestPlatSanté setGras négatif : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                saladeFruitSante.setGras(-120.8);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
+            System.out.println("TestPlatSanté setChol négatif : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                saladeFruitSante.setChol(-65537);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
+            System.out.println("TestPlatSanté setRecette null : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                saladeFruitSante.setRecette(null);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
+            System.out.println("TestPlatSanté setPrix négatif : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                saladeFruitSante.setPrix(-0.00000001);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
+            // Vérification du plat construit
+            System.out.println("TestPlatSantéBuilder : valeur retour GOOD = 'Salade de fruit'");
+            System.out.println(saladeFruitSante.getDescription());
+            Assert.assertEquals("Salade de fruit", saladeFruitSante.getDescription());
+
+            System.out.println("TestPlatSantéBuilder : valeur retour GOOD = '12.5'");
+            System.out.println(saladeFruitSante.getPrix());
+            Assert.assertEquals(12.5, saladeFruitSante.getPrix(), 0.005);
+
+            System.out.println("TestPlatSantéBuilder : valeur retour GOOD = '0.65'");
+            System.out.println(saladeFruitSante.getKcal());
+            Assert.assertEquals(0.65, saladeFruitSante.getKcal(), 0.005);
+
+            System.out.println("TestPlatSantéBuilder : valeur retour GOOD = '0.05'");
+            System.out.println(saladeFruitSante.getGras());
+            Assert.assertEquals(0.05, saladeFruitSante.getGras(), 0.005);
+
+            System.out.println("TestPlatSantéBuilder : valeur retour GOOD = '0'");
+            System.out.println(saladeFruitSante.getChol());
+            Assert.assertEquals(0, saladeFruitSante.getChol(), 0.005);
+
+            System.out.println("TestPlatSantéBuilder : String JSON représentant la recette");
+            System.out.println(saladeFruitSante.getRecette());
+            Assert.assertEquals(recetteSaladeFruit, saladeFruitSante.getRecette());
+
+
+            // Test de la fonctionalité de copie
+            PlatAuMenu saladeFruit3 = saladeFruit.makeCopy();
+            try {
+                saladeFruit.setDescription("Salade de fruit modifiee");
+                saladeFruit.setPrix(0);
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans la copie de plats: " + pe.getMessage());
+                Assert.fail();
+            }
+
+            // Vérification des valeurs, elles devraient toutes être différentes
+            System.out.println("TestPlatCopy : valeur retour GOOD = 'Salade de fruit'");
+            System.out.println(saladeFruit3.getDescription());
+            Assert.assertEquals("Salade de fruit", saladeFruit3.getDescription());
+            Assert.assertNotEquals(saladeFruit.getDescription(), saladeFruit3.getDescription());
+
+            System.out.println("TestPlatCopy : valeur retour GOOD = '12.5'");
+            System.out.println(saladeFruit3.getPrix());
+            Assert.assertEquals(12.5, saladeFruit3.getPrix(), 0.5);
+            Assert.assertNotEquals(saladeFruit.getPrix(), saladeFruit3.getPrix());
+        }
+
+        public static void runTests() {
+            TestPlat.testPlat();
         }
     }
     // TODO Test Facture?

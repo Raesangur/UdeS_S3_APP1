@@ -9,13 +9,9 @@ public class PlatSante extends PlatAuMenu {
 
     public PlatSante(int code, String description, double prix, double kcal, double chol, double gras) throws PlatException {
         super(code, description, prix);
-        if (kcal >= 0) {
-            this.kcal = kcal;
-        } else {
-            throw new PlatException("negative Number");
-        }
-        this.setChol(chol);
-        this.setGras(gras);
+        setKcal(kcal);
+        setChol(chol);
+        setGras(gras);
     }
 
     public PlatSante() {
@@ -39,7 +35,7 @@ public class PlatSante extends PlatAuMenu {
         if (kcal >= 0) {
             this.kcal = kcal;
         } else {
-            throw new PlatException("negative Number");
+            throw new PlatException("Impossible d'avoir des calories négatives");
         }
     }
 
@@ -51,7 +47,7 @@ public class PlatSante extends PlatAuMenu {
         if (chol >= 0) {
             this.chol = chol;
         } else {
-            throw new PlatException("negative Number");
+            throw new PlatException("Impossible d'avoir un cholesterol négatif");
         }
     }
 
@@ -63,7 +59,7 @@ public class PlatSante extends PlatAuMenu {
         if (gras >= 0) {
             this.gras = gras;
         } else {
-            throw new PlatException("negative Number");
+            throw new PlatException("Impossible d'avoir un gras négatif");
         }
     }
 

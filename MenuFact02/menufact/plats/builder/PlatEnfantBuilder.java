@@ -8,8 +8,14 @@ public class PlatEnfantBuilder extends PlatBuilder {
         plat = new PlatEnfant();
     }
 
+
     public PlatEnfantBuilder buildProportion(double proportion) throws PlatException {
-        ((PlatEnfant)plat).setProportion(proportion);
+        ((PlatEnfant) plat).setProportion(proportion);
         return this;
+    }
+
+    @Override
+    public PlatEnfant getResult() {
+        return (PlatEnfant) plat;
     }
 }

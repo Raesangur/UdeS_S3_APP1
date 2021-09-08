@@ -10,11 +10,7 @@ public class PlatEnfant extends PlatAuMenu {
 
     public PlatEnfant(int code, String description, double prix, double proportion) throws PlatException {
         super(code, description, prix);
-        if (proportion >= 0) {
-            this.proportion = proportion;
-        } else {
-            throw new PlatException("negative Number");
-        }
+        setProportion(proportion);
     }
 
     @Override
@@ -23,11 +19,13 @@ public class PlatEnfant extends PlatAuMenu {
     }
 
     public void setProportion(double proportion) throws PlatException {
-        if (proportion >= 0) {
-            this.proportion = proportion;
-        } else {
-            throw new PlatException("negative Number");
+        if (proportion < 0) {
+            throw new PlatException("Impossible d'avoir une proportion négative");
         }
+        if (proportion > 1) {
+            throw new PlatException("La proportion doit rester < 1");
+        }
+        this.proportion = proportion;
     }
 
     @Override
