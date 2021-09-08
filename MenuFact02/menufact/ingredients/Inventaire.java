@@ -6,25 +6,56 @@ import menufact.plats.builder.PlatBuilder;
 
 import java.util.HashMap;
 
+/**
+ * Classe Singleton qui contient les différents ingrédients en stock dans le restaurant, dans une <code>HashMap</code>.
+ * Cette classe peut ajouter des nouveaux ingrédients et actualiser leur quantités.
+ */
 public class Inventaire {
     private static Inventaire instance;
     private HashMap<String, Ingredient> congelateur;
 
+    /**
+     * Permet l'accès au Singleton de l'inventaire.
+     * Si l'inventaire n'est pas encore créé, crée une instance de l'inventaire, sinon retourne l'instance déjà existante.
+     *
+     * @return Instance unique de l'inventaire
+     */
     public static synchronized Inventaire getInstance() {
         return instance == null ? instance = new Inventaire() : instance;
     }
 
+    /**
+     * Constructeur privé pour éviter la construction d'objets inventaires en dehors du contrôle
+     * de la méthode <code>getInstance</code>.
+     */
     private Inventaire() {
         congelateur = new HashMap<>();
     }
 
+    /**
+     * Ajoute un tableau d'ingrédients à l'inventaire.
+     * Appelle la méthode <code>ajouterIngredient</code> sur chaque objet du tableau.
+     *
+     * @param ingredients Tableau d'ingrédients à rajouter à l'inventaire.
+     * @throws IngredientException Si un ingrédient ou le tableau d'ingrédient est null.
+     */
     public void ajouterIngredient(Ingredient[] ingredients) throws IngredientException {
+        if (ingredients == null) {
+            throw new IngredientException("Impossible de rajouter un ingrédient null à l'inventaire");
+        }
         // Si l'ingrédient est déjà dans l'inventaire, ajoute la quantité à l'ingrédient existant
         for (Ingredient ingredient : ingredients) {
             ajouterIngredient(ingredient);
         }
     }
 
+    /**
+     * Ajoute un ingrédient à l'inventaire.
+     * Si l'ingrédient est déjà dans l'inventaire, additionne les quantités.
+     *
+     * @param ingredient Ingrédient à rajouter à l'inventaire.
+     * @throws IngredientException Si l'ingrédient est null.
+     */
     public void ajouterIngredient(Ingredient ingredient) throws IngredientException {
         if (ingredient == null) {
             throw new IngredientException("Impossible de rajouter un ingrédient null à l'inventaire");
@@ -39,14 +70,39 @@ public class Inventaire {
         }
     }
 
+    /**
+     * Récupère un ingrédient dans l'inventaire par son nom.
+     *
+     * @param nomIngredient Nom de l'ingrédient à chercher
+     * @return Ingrédient recherché,
+     * ou <code>null</code> si l'ingrédient ne fait pas partie de l'inventaire.
+     */
     public Ingredient getIngredient(String nomIngredient) {
         return congelateur.get(nomIngredient);
     }
 
+    /**
+     * Récupère la quantité d'ingrédients différents dans l'inventaire.
+     *
+     * @return Quantité d'ingrédients différents dans l'inventaire.
+     */
     public int getIngredientSize() {
         return congelateur.size();
     }
 
+    /**
+     * Consomme les ingrédients d'une recette dans l'inventaire.
+     *
+     * @param recette    Recette à consommer
+     * @param qtyPlats   Nombre de plats à consommer
+     * @param proportion Proportion de la recette à consommer
+     * @throws IngredientException Si la recette est <code>null</code>
+     * @throws IngredientException Si la quantité de plats est négative.
+     * @throws IngredientException Si la proportion de la recette est négative.
+     * @throws IngredientException Si la proportion de la recette est plus grande que 1.
+     * @throws IngredientException Si un ingrédient de la recette n'est pas dans l'inventaire.
+     * @throws IngredientException Si on manque d'ingrédients à l'inventaire.
+     */
     public void consommerRecette(Recette recette, int qtyPlats, double proportion) throws IngredientException {
         // Guards
         if (recette == null) {
@@ -83,6 +139,9 @@ public class Inventaire {
         }
     }
 
+    /**
+     * Vide l'inventaire
+     */
     public static void clear() {
         if (instance != null) {
             instance.congelateur.clear();
@@ -90,6 +149,11 @@ public class Inventaire {
         }
     }
 
+    /**
+     * Converti le contenu de l'inventaire en <code>String</code>.
+     *
+     * @return Une <code>String</code> qui représente l'inventaire.
+     */
     @Override
     public String toString() {
         return "Inventaire: " + congelateur;
