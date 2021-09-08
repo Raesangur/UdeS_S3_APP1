@@ -16,6 +16,12 @@ public class PlatBuilder {
         return plat;
     }
 
+    public PlatBuilder clear()
+    {
+        plat = new PlatAuMenu();
+        return this;
+    }
+
     public PlatBuilder buildDescription(String description) {
         plat.setDescription(description);
         return this;

@@ -6,15 +6,29 @@ import menufact.plats.PlatAuMenu;
 import java.util.ArrayList;
 
 public class Menu {
+    private static Menu instance;
     private String description;
     private int courant;
     private ArrayList<PlatAuMenu> plat = new ArrayList<PlatAuMenu>();
 
-    public Menu(String description) {
+    private Menu(String description) {
         this.description = description;
     }
 
-    void ajoute(PlatAuMenu p)
+    public synchronized static Menu getInstance() {
+        return instance == null ? instance = new Menu(null) : instance;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        if (description != null) {
+            this.description = description;
+        }
+    }
+
+    public void ajoute(PlatAuMenu p)
     {
         plat.add(p);
     }
