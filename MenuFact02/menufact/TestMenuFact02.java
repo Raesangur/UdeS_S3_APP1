@@ -1,9 +1,6 @@
 package menufact;
 
 import menufact.exceptions.MenuException;
-import menufact.plats.builder.PlatBuilder;
-import menufact.plats.exception.PlatException;
-import menufact.facture.exceptions.FactureException;
 import menufact.facture.Facture;
 import menufact.facture.exceptions.FactureException;
 import menufact.ingredients.*;
@@ -16,6 +13,7 @@ import menufact.plats.PlatAuMenu;
 import menufact.plats.PlatChoisi;
 import menufact.plats.PlatSante;
 import menufact.plats.Recette;
+import menufact.plats.builder.PlatBuilder;
 import menufact.plats.exception.PlatException;
 import menufact.plats.state.*;
 import org.junit.Assert;
@@ -212,6 +210,16 @@ public class TestMenuFact02 {
                 System.out.println("Erreur dans le test du Plat Choisi (création des plats): " + pe.getMessage());
                 Assert.fail();
             }
+
+            //quantité négative de plat
+            System.out.println("TestNbrPlatNégatif : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+
+                spag = new PlatChoisi(spagBoulette, -1);
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Task Failed Successfully");
+            }
         }
 
         @Test
@@ -252,6 +260,19 @@ public class TestMenuFact02 {
                 System.out.println(spag.getQty());
                 Assert.assertEquals(12, spag.getQty(), 0.05);
             }
+
+            //test de la nouvelle valeur de 0
+            try {
+                spag.setQty(0);
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test du Plat Choisi: " + pe.getMessage());
+                Assert.fail();
+            }
+
+            // Test de la nouvelle valeur
+            System.out.println("TestSetQty : valeur retour GOOD = '0'");
+            System.out.println(spag.getQty());
+            Assert.assertEquals(0, spag.getQty());
         }
 
         @Test
