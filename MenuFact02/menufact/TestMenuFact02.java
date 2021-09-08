@@ -1237,6 +1237,95 @@ public class TestMenuFact02 {
             TestPlat.testPlat();
         }
     }
+
+    private static class TestClient {
+        public TestClient() {
+
+        }
+
+        public static void runTests() {
+            TestClient testClient = new TestClient();
+            testClient.testIdClient();
+            testClient.testNomClient();
+            testClient.testNoCarteCredit();
+        }
+
+        public void testIdClient() {
+
+        }
+
+        public void testNomClient() {
+
+        }
+
+        public void testNoCarteCredit() {
+
+        }
+    }
+
+    private static class TestMenuFact {
+        public TestMenuFact () {
+            testCreationClient();
+            testCreationChef();
+            testCreationMenu();
+            testCreationInventaire();
+            testCreationFacture();
+        }
+        public static void runTests() {
+            TestMenuFact testMenuFact = new TestMenuFact();
+            testMenuFact.testAjoutMenu();
+            testMenuFact.testPlatCorrect();
+            testMenuFact.testPlatSante();
+            testMenuFact.testPlatEnfant();
+            testMenuFact.testPlatInnexistant();
+            testMenuFact.testPlatInsuffisant();
+        }
+
+        public void testCreationClient() {
+
+        }
+
+        public void testCreationChef() {
+
+        }
+
+        public void testCreationMenu() {
+
+        }
+
+        public void testCreationInventaire() {
+
+        }
+
+        public void testCreationFacture() {
+
+        }
+
+        public void testAjoutMenu() {
+
+        }
+
+        public void testPlatCorrect() {
+
+        }
+
+        public void testPlatSante() {
+
+        }
+
+        public void testPlatEnfant() {
+
+        }
+
+        public void testPlatInnexistant() {
+
+        }
+
+        public void testPlatInsuffisant() {
+
+        }
+
+    }
     // TODO Test Facture?
     // TODO Test Menu?
 
