@@ -85,10 +85,19 @@ public class PlatAuMenu {
         return 1.0;
     }
 
+    /**
+     * Donne le prix du plat
+     * @return Prix du plat
+     */
     public double getPrix() {
         return prix;
     }
 
+    /**
+     * Modifie le prix du plat
+     * @param prix Nouveau prix du plat
+     * @throws PlatException Si le nouveau prix est négatif
+     */
     public void setPrix(double prix) throws PlatException {
         if (prix >= 0) {
             this.prix = prix;
@@ -98,10 +107,19 @@ public class PlatAuMenu {
 
     }
 
+    /**
+     * Retourne la <code>Recette</code> du plat
+     * @return Recette du plat
+     */
     public Recette getRecette() {
         return recette;
     }
 
+    /**
+     * Modifie ou assigne une <code>Recette</code> au plat
+     * @param recette        Recette représentant les ingrédients composant le plat
+     * @throws PlatException Si la recette passée est <code>null</code>
+     */
     public void setRecette(Recette recette) throws PlatException {
         if (recette == null) {
             throw new PlatException("Une recette ne peux pas être null");
@@ -109,6 +127,10 @@ public class PlatAuMenu {
         this.recette = recette.makeCopy();
     }
 
+    /**
+     * Fait une deep-copy du plat
+     * @return Une copie du plat.
+     */
     public PlatAuMenu makeCopy() {
         try {
             PlatAuMenu pm = new PlatAuMenu(code, new String(description), prix);
