@@ -1296,20 +1296,21 @@ public class TestMenuFact02 {
             System.out.println("TestIdClient : valeur retour GOOD = '0000-0000-0000-0000'");
             try {
                 nouveauClient.setNumeroCarteCredit("0000-0000-0000-0000");
-            } catch(FactureException fe) {
+            } catch (FactureException fe) {
                 System.out.println("Erreur dans le # de carte de crédit: " + fe.getMessage());
                 Assert.fail();
             }
             System.out.println(nouveauClient.getNumeroCarteCredit());
             Assert.assertEquals("0000-0000-0000-0000", nouveauClient.getNumeroCarteCredit());
 
-            
+
         }
     }
 
     private static class TestMenuFact {
         Chef zeff;
         Client luffy;
+        Menu menu;
 
         public TestMenuFact() {
             testCreationClient();
@@ -1344,10 +1345,52 @@ public class TestMenuFact02 {
         }
 
         public void testCreationChef() {
+            zeff = Chef.getInstance();
+            zeff.setNom("Zeff");
 
+            System.out.println(); // TODO Valeur chef
+            Assert.assertEquals("Zeff", zeff.getNom());
         }
 
         public void testCreationMenu() {
+            menu = new Menu("Menu menufact");
+
+            Ingredient os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, tomatoSauce, pepperoni, bacon, cheese, patePizza;
+            os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = tomatoSauce = pepperoni = bacon = cheese = patePizza = null;
+
+            try {
+                os = new Viande("Os", new EtatIngredientSolide(0.2));
+                viandeHachee = new Viande("Viande Hachee", new EtatIngredientSolide(0.5));
+
+                gomuFruit = new Fruit("Gomu Gomu", new EtatIngredientSolide(0.4));
+                pateTarte = new Fruit("Pâte à tarte", new EtatIngredientSolide(0.7));
+
+                poisson = new Viande("Poisson", new EtatIngredientSolide(0.3));
+                jusCitron = new Fruit("Jus de citron", new EtatIngredientLiquide(0.075));
+
+                tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.5));
+                pepperoni = new Viande("pepperoni", new EtatIngredientSolide(0.2));
+                bacon = new Viande("bacon", new EtatIngredientSolide(0.2));
+                cheese = new Laitier("cheese", new EtatIngredientSolide(1));
+                patePizza = new Fruit("pate", new EtatIngredientSolide(0.454));
+            } catch (IngredientException ie) {
+                System.out.println("Erreur dans la création des ingrédients au menu: " + ie.getMessage());
+            }
+
+            Recette recetteOsViande = new Recette(new Ingredient[]{os, viandeHachee});
+            Recette recettetarteGomuFruit = new Recette(new Ingredient[]{gomuFruit, pateTarte});
+            Recette recettePoisson = new Recette(new Ingredient[]{poisson, jusCitron});
+            Recette recettePizzza = new Recette(new Ingredient[]{tomatoSauce, pepperoni, bacon, cheese, patePizza});
+
+            PlatBuilder pb = new PlatBuilder();
+
+            try {
+                pb.buildPrix(24.99).buildDescription("Viande hachée autour d'un os").buildRecette(recetteOsViande);
+            }
+            catch (PlatException pe) {
+                System.out.println("Erreur dans la création du plat: " + pe.getMessage());
+            }
+            PlatAuMenu platOsViande = pb.getResult();
 
         }
 
