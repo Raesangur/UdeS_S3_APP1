@@ -24,7 +24,10 @@ public class Chef {
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        if(nom != null){
+            this.nom = nom;
+        }
+
     }
 
 
