@@ -87,7 +87,7 @@ public class Facture {
     }
 
     /**
-     * Permet de chager l'état de la facture à FERMEE
+     * Permet de changer l'état de la facture à FERMEE
      */
     public void fermer() throws FactureException {
         if (etat.changerEtat(new FactureEtatFermee())) {

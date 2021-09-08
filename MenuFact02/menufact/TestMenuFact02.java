@@ -24,7 +24,7 @@ public class TestMenuFact02 {
 
     public static void main(String[] args) throws FactureException {
         // Les tests de base qui venaient avec le code fourni
-        test0_base();
+
 
         TestIngredient.runTests();
         TestPlatChoisi.runTests();
@@ -33,6 +33,11 @@ public class TestMenuFact02 {
         TestRecette.runTests();
         TestInventaire.runTests();
         TestPlat.runTests();
+        TestClient.runTests();
+
+
+
+        test0_base();
     }
 
 
@@ -1475,6 +1480,7 @@ public class TestMenuFact02 {
         }
 
         public void testAjoutMenu() {
+
 
         }
 
