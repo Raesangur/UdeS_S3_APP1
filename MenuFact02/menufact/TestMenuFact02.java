@@ -420,6 +420,15 @@ public class TestMenuFact02 {
                 System.out.println("Erreur dans la quantite d'ingredient" + pe.getMessage());
                 Assert.fail();
             }
+            // Créer un fruit quantité négative
+            System.out.println("TestCréer fruit avec quantité négative : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                pomme = factory.creer("pomme", new EtatIngredientSolide(-1));
+                Assert.fail();
+            } catch (IngredientException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
 
             // Test le fruit créé
             System.out.println("TestFactoryFruit : valeur retour GOOD = 'pomme'");
@@ -433,6 +442,12 @@ public class TestMenuFact02 {
             System.out.println("TestFactoryFruit : valeur retour GOOD = 'Solide': {'Qty (kg)': 0.2}");
             System.out.println(pomme.getEtat());
             Assert.assertTrue(pomme.getEtat() instanceof EtatIngredientSolide);
+
+            //Test set Nom vers nom null
+            System.out.println("TestSetNomNull : valeur retour GOOD = 'pomme'");
+            pomme.setNom(null);
+            System.out.println(pomme.getNom());
+            Assert.assertEquals("pomme", pomme.getNom());
         }
 
         @Test
@@ -449,6 +464,15 @@ public class TestMenuFact02 {
                 Assert.fail();
             }
 
+            // Créer un legume quantité négative
+            System.out.println("TestCréer fruit avec quantité négative : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                concombre = factory.creer("concombre", new EtatIngredientSolide(-1));
+                Assert.fail();
+            } catch (IngredientException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
             // Test le légume créé
             System.out.println("TestFactoryLegumes : valeur retour GOOD = 'concombre'");
             System.out.println(concombre.getNom());
@@ -461,6 +485,12 @@ public class TestMenuFact02 {
             System.out.println("TestFactoryLegumes : valeur retour GOOD = 'Solide': {'Qty (kg)': 0.5}");
             System.out.println(concombre.getEtat());
             Assert.assertTrue(concombre.getEtat() instanceof EtatIngredientSolide);
+
+            //Test set Nom vers nom null
+            System.out.println("TestSetNomNull : valeur retour GOOD = 'concombre'");
+            concombre.setNom(null);
+            System.out.println(concombre.getNom());
+            Assert.assertEquals("concombre", concombre.getNom());
         }
 
         @Test
@@ -477,6 +507,15 @@ public class TestMenuFact02 {
                 Assert.fail();
             }
 
+            // Créer un Épice quantité négative
+            System.out.println("TestCréer Epice avec quantité négative : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                sriracha = factory.creer("sriracha", new EtatIngredientSolide(-1));
+                Assert.fail();
+            } catch (IngredientException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
             // Test l'épice
             System.out.println("TestFactoryEpice : valeur retour GOOD = 'Sriracha'");
             System.out.println(sriracha.getNom());
@@ -489,6 +528,12 @@ public class TestMenuFact02 {
             System.out.println("TestFactoryEpice : valeur retour GOOD = 'Liquide': {'Qty (L)': 1}");
             System.out.println(sriracha.getEtat());
             Assert.assertTrue(sriracha.getEtat() instanceof EtatIngredientLiquide);
+
+            //Test set Nom vers nom null
+            System.out.println("TestSetNomNull : valeur retour GOOD = 'Sriracha'");
+            sriracha.setNom(null);
+            System.out.println(sriracha.getNom());
+            Assert.assertEquals("Sriracha", sriracha.getNom());
         }
 
         @Test
@@ -505,6 +550,15 @@ public class TestMenuFact02 {
                 Assert.fail();
             }
 
+            // Créer un Laitier quantité négative
+            System.out.println("TestCréer Epice avec quantité négative : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                lait = factory.creer("Lait", new EtatIngredientSolide(-1));
+                Assert.fail();
+            } catch (IngredientException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
             // Test le produit laitier
             System.out.println("TestFactoryLaitier : valeur retour GOOD = 'Lait'");
             System.out.println(lait.getNom());
@@ -517,6 +571,12 @@ public class TestMenuFact02 {
             System.out.println("TestFactoryLaitier : valeur retour GOOD = ''Liquide': {'Qty (L)': 4}'");
             System.out.println(lait.getEtat());
             Assert.assertTrue(lait.getEtat() instanceof EtatIngredientLiquide);
+
+            //Test set Nom vers nom null
+            System.out.println("TestSetNomNull : valeur retour GOOD = 'Lait'");
+            lait.setNom(null);
+            System.out.println(lait.getNom());
+            Assert.assertEquals("Lait", lait.getNom());
         }
 
         @Test
@@ -533,6 +593,15 @@ public class TestMenuFact02 {
                 Assert.fail();
             }
 
+            // Créer une Viande quantité négative
+            System.out.println("TestCréer Epice avec quantité négative : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                coteLevee = factory.creer("coteLevee", new EtatIngredientSolide(-1));
+                Assert.fail();
+            } catch (IngredientException pe) {
+                System.out.println("Task Failed Successfully");
+            }
+
             // Test la viande
             System.out.println("TestFactoryViande : valeur retour GOOD = 'coteLevee'");
             System.out.println(coteLevee.getNom());
@@ -545,6 +614,13 @@ public class TestMenuFact02 {
             System.out.println("TestFactoryViande : valeur retour GOOD = ''Solide': {'Qty (kg)': 0.454}''");
             System.out.println(coteLevee.getEtat());
             Assert.assertTrue(coteLevee.getEtat() instanceof EtatIngredientSolide);
+
+            //Test set Nom vers nom null
+            System.out.println("TestSetNomNull : valeur retour GOOD = 'coteLevee'");
+            coteLevee.setNom(null);
+            System.out.println(coteLevee.getNom());
+            Assert.assertEquals("coteLevee", coteLevee.getNom());
+
         }
     }
 
@@ -621,6 +697,12 @@ public class TestMenuFact02 {
 
         @Test
         public void testNom() {
+            System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
+            Assert.assertEquals(Zeff.getNom(), "Zeff");
+            System.out.println(Zeff.getNom());
+
+            //TestChangement nom null
+            Zeff.setNom(null);
             System.out.println("TestChefNom : valeur retour GOOD = 'Zeff'");
             Assert.assertEquals(Zeff.getNom(), "Zeff");
             System.out.println(Zeff.getNom());
@@ -852,7 +934,6 @@ public class TestMenuFact02 {
                 try {
                     Ingredient nullIngredient = null;
                     congelo.ajouterIngredient(nullIngredient);
-
                     Assert.fail();      // On devrait avoir throw
                 } catch (IngredientException ie) {
                     System.out.println(ie.getMessage());
@@ -873,6 +954,39 @@ public class TestMenuFact02 {
             } catch (IngredientException ie) {
                 System.out.println("Test Consommation Erreur: " + ie.getMessage());
                 Assert.fail();
+            }
+
+            //Consommation nulle
+            System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                congelo.consommerRecette(null, 1, 0.5);
+                Assert.fail();
+            } catch (IngredientException ie) {
+                System.out.println("Task Failed Successfully");
+            }
+            //Consommation quantité négative
+            System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                congelo.consommerRecette(recettePizza, -1, 0.5);
+                Assert.fail();
+            } catch (IngredientException ie) {
+                System.out.println("Task Failed Successfully");
+            }
+            //Consommation quantité négative
+            System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                congelo.consommerRecette(recettePizza, 1, -1);
+                Assert.fail();
+            } catch (IngredientException ie) {
+                System.out.println("Task Failed Successfully");
+            }
+            //Consommation quantité négative
+            System.out.println("Test Consommation null : valeur retour GOOD = 'Task Failed Successfully'");
+            try {
+                congelo.consommerRecette(recettePizza, 1, 3);
+                Assert.fail();
+            } catch (IngredientException ie) {
+                System.out.println("Task Failed Successfully");
             }
 
             // Les qty devraient être de moitié
