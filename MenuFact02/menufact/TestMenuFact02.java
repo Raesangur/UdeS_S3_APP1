@@ -1303,6 +1303,46 @@ public class TestMenuFact02 {
             System.out.println(nouveauClient.getNumeroCarteCredit());
             Assert.assertEquals("0000-0000-0000-0000", nouveauClient.getNumeroCarteCredit());
 
+            //passer un numéro null
+            System.out.println("TestSet#CarteNUll : valeur retour GOOD = 'Task failed successfully'");
+            try{
+                nouveauClient.setNumeroCarteCredit(null);
+                System.out.println("Error dans L'Erreur");
+                Assert.fail();
+            }
+            catch (FactureException fe){
+                System.out.println("Task failed successfully");
+            }
+            //passer un numéro faux avec des lettres
+            System.out.println("TestSetMauvaisNumeros : valeur retour GOOD = 'Task failed successfully'");
+            try{
+                nouveauClient.setNumeroCarteCredit("fasdfasdasfdsGVSD 1213123 12 3123");
+                System.out.println("Error dans L'Erreur");
+                Assert.fail();
+            }
+            catch (FactureException fe){
+                System.out.println("Task failed successfully");
+            }
+            //passer un numéro faux sans le bon nombre de chiffres
+            System.out.println("TestSetPasAssezDeChiffre : valeur retour GOOD = 'Task failed successfully'");
+            try{
+                nouveauClient.setNumeroCarteCredit("1234");
+                System.out.println("Error dans L'Erreur");
+                Assert.fail();
+            }
+            catch (FactureException fe){
+                System.out.println("Task failed successfully");
+            }
+            //passer un numéro faux sans le bon nombre de chiffres
+            System.out.println("TestSetTropDeChiffre : valeur retour GOOD = 'Task failed successfully'");
+            try{
+                nouveauClient.setNumeroCarteCredit("1234 1566 1566 5165 6541");
+                System.out.println("Error dans L'Erreur");
+                Assert.fail();
+            }
+            catch (FactureException fe){
+                System.out.println("Task failed successfully");
+            }
             
         }
     }
@@ -1421,9 +1461,9 @@ public class TestMenuFact02 {
         Menu m2 = new Menu("menufact.Menu 2");
 
         Facture f1 = new Facture("Ma facture");
-
+        Client c1 = null;
         try {
-            Client c1 = new Client(1, "Mr Client", "1234 5678 9012 3456");
+            c1 = new Client(1, "Mr Client", "5555 5555 5555 4444");
         } catch (FactureException fe) {
             System.out.println("Erreur de carte de crédit client: " + fe.getMessage());
         }
