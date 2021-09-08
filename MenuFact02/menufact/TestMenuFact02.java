@@ -1239,8 +1239,14 @@ public class TestMenuFact02 {
     }
 
     private static class TestClient {
-        public TestClient() {
+        Client nouveauClient;
 
+        public TestClient() {
+            try {
+                nouveauClient = new Client(2, "Pascal", "5258935034607288");
+            } catch (FactureException fe) {
+                System.out.println("Erreur dans la création du client: " + fe.getMessage());
+            }
         }
 
         public static void runTests() {
@@ -1250,27 +1256,69 @@ public class TestMenuFact02 {
             testClient.testNoCarteCredit();
         }
 
+        @Test
         public void testIdClient() {
+            System.out.println("TestIdClient : valeur retour GOOD = '2'");
+            System.out.println(nouveauClient.getIdClient());
+            Assert.assertEquals(2, nouveauClient.getIdClient());
 
+
+            System.out.println("TestIdClient : valeur retour GOOD = '0'");
+            nouveauClient.setIdClient(0);
+            System.out.println(nouveauClient.getIdClient());
+            Assert.assertEquals(0, nouveauClient.getIdClient());
+
+
+            System.out.println("TestIdClient : valeur retour GOOD = '-5'");
+            nouveauClient.setIdClient(-5);
+            System.out.println(nouveauClient.getIdClient());
+            Assert.assertEquals(-5, nouveauClient.getIdClient());
         }
 
+        @Test
         public void testNomClient() {
+            System.out.println("TestIdClient : valeur retour GOOD = 'Pascal'");
+            System.out.println(nouveauClient.getNom());
+            Assert.assertEquals("Pascal", nouveauClient.getNom());
 
+            System.out.println("TestIdClient : valeur retour GOOD = 'Pascal'");
+            nouveauClient.setNom(null);
+            System.out.println(nouveauClient.getNom());
+            Assert.assertEquals("Pascal", nouveauClient.getNom());
         }
 
+        @Test
         public void testNoCarteCredit() {
+            System.out.println("TestIdClient : valeur retour GOOD = '5258935034607288'");
+            System.out.println(nouveauClient.getNumeroCarteCredit());
+            Assert.assertEquals("5258935034607288", nouveauClient.getNumeroCarteCredit());
 
+            System.out.println("TestIdClient : valeur retour GOOD = '0000-0000-0000-0000'");
+            try {
+                nouveauClient.setNumeroCarteCredit("0000-0000-0000-0000");
+            } catch(FactureException fe) {
+                System.out.println("Erreur dans le # de carte de crédit: " + fe.getMessage());
+                Assert.fail();
+            }
+            System.out.println(nouveauClient.getNumeroCarteCredit());
+            Assert.assertEquals("0000-0000-0000-0000", nouveauClient.getNumeroCarteCredit());
+
+            
         }
     }
 
     private static class TestMenuFact {
-        public TestMenuFact () {
+        Chef zeff;
+        Client luffy;
+
+        public TestMenuFact() {
             testCreationClient();
             testCreationChef();
             testCreationMenu();
             testCreationInventaire();
             testCreationFacture();
         }
+
         public static void runTests() {
             TestMenuFact testMenuFact = new TestMenuFact();
             testMenuFact.testAjoutMenu();
@@ -1282,7 +1330,17 @@ public class TestMenuFact02 {
         }
 
         public void testCreationClient() {
+            try {
+                luffy = new Client(1, "Luffy", "0123 4567 8901 2345");
+            } catch (FactureException fe) {
+                System.out.println("Erreur dans la création du client" + fe.getMessage());
+                Assert.fail();
+            }
 
+            System.out.println(); // TODO Valeur client
+            Assert.assertEquals(1, luffy.getIdClient());
+            Assert.assertEquals("Luffy", luffy.getNom());
+            Assert.assertEquals("0123 4567 8901 2345", luffy.getNumeroCarteCredit());
         }
 
         public void testCreationChef() {
@@ -1364,7 +1422,11 @@ public class TestMenuFact02 {
 
         Facture f1 = new Facture("Ma facture");
 
-        Client c1 = new Client(1, "Mr Client", "1234567890");
+        try {
+            Client c1 = new Client(1, "Mr Client", "1234 5678 9012 3456");
+        } catch (FactureException fe) {
+            System.out.println("Erreur de carte de crédit client: " + fe.getMessage());
+        }
 
 
         t.test1_AffichePlatsAuMenu(trace, p1, p2, p3, p4, p5);

@@ -27,7 +27,6 @@ public class Chef {
         if(nom != null){
             this.nom = nom;
         }
-
     }
 
 
