@@ -1552,7 +1552,7 @@ public class TestMenuFact02 {
         public void testAjoutMenu() {
             Ingredient tomatoSauce, pepperoni, bacon, cheese, patePizza;
             tomatoSauce = pepperoni = bacon = cheese = patePizza = null;
-
+            System.out.println("TestAjoutMenu : valeur retour GOOD = Object JSON contenant le Menu");
             try {
                 tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.5));
                 pepperoni = new Viande("pepperoni", new EtatIngredientSolide(0.2));
@@ -1579,13 +1579,12 @@ public class TestMenuFact02 {
 
             menu.ajoute(platPizza);
 
-            System.out.println(); // TODO Valeur menu
             System.out.println(menu);
         }
         @Test
         public void testPlatCorrect() {
             PlatChoisi plat = null;
-            menu.position(1);
+            menu.position(0);
             System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
@@ -1593,8 +1592,8 @@ public class TestMenuFact02 {
             } catch (PlatException pe) {
                 System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
                 Assert.fail();
-            }
-
+            } 
+            Assert.assertFalse(plat.getPlat() instanceof PlatSante || plat.getPlat() instanceof PlatEnfant);
             try {
                 facture.ajoutePlat(plat);
             } catch (FactureException | PlatException fe) {
@@ -1607,10 +1606,50 @@ public class TestMenuFact02 {
         }
         @Test
         public void testPlatSante() {
+            PlatChoisi plat = null;
+            menu.position(2);
+            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
+            try {
+                plat = new PlatChoisi(menu.platCourant(), 3);
 
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
+                Assert.fail();
+            }
+            Assert.assertTrue(plat.getPlat() instanceof PlatSante);
+            try {
+                facture.ajoutePlat(plat);
+            } catch (FactureException | PlatException fe) {
+                System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
+                Assert.fail();
+            }
+            System.out.println(facture);
+            System.out.println(plat.getEtat());
+            Assert.assertTrue(plat.getEtat() instanceof Servi);
         }
         @Test
         public void testPlatEnfant() {
+            PlatChoisi plat = null;
+            menu.position(1);
+            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
+            try {
+                plat = new PlatChoisi(menu.platCourant(), 3);
+
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
+                Assert.fail();
+            }
+
+            Assert.assertTrue(plat.getPlat() instanceof PlatEnfant);
+            try {
+                facture.ajoutePlat(plat);
+            } catch (FactureException | PlatException fe) {
+                System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
+                Assert.fail();
+            }
+            System.out.println(facture);
+            System.out.println(plat.getEtat());
+            Assert.assertTrue(plat.getEtat() instanceof Servi);
 
         }
         @Test
