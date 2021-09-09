@@ -872,13 +872,13 @@ public class TestMenuFact02 {
 
         @Test
         public static void runTests() {
-            new TestInventaire().testInventairePrésent();
+            new TestInventaire().testInventairePresent();
             new TestInventaire().testAjoutDouble();
             new TestInventaire().testConsommation();
         }
 
         @Test
-        public void testInventairePrésent() {
+        public void testInventairePresent() {
             // Récupération d'un ingrédient existant
             System.out.println("testInventairePrésent : valeur retour GOOD = 'tomate'");
             Ingredient tomate = congelo.getIngredient("tomate");
