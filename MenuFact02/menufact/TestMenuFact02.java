@@ -1366,7 +1366,8 @@ public class TestMenuFact02 {
         Chef zeff;
         Client luffy;
         Menu menu;
-        Facture facture1;
+        Inventaire congelateur;
+
         public TestMenuFact() {
             testCreationClient();
             testCreationChef();
@@ -1400,7 +1401,12 @@ public class TestMenuFact02 {
         }
 
         public void testCreationChef() {
+            zeff = Chef.getInstance();
+            zeff.setNom("Zeff");
 
+            System.out.println("Chef: {\n\tNom: 'Zeff'\n\n}");
+            System.out.println(zeff);
+            Assert.assertEquals("Chef: {\n\tNom: 'Zeff'\n\n}", zeff.toString());
         }
 
         public void testCreationMenu() {
@@ -1483,16 +1489,10 @@ public class TestMenuFact02 {
         }
 
         public void testCreationInventaire() {
-            Inventaire congelo;
-            Ingredient tomatoSauce = null;
-            Ingredient pepperoni = null;
-            Ingredient bacon = null;
-            Ingredient cheese = null;
-            Ingredient pate = null;
-            Ingredient os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, curcuma, poire, cerise, pomme, jus, steak, sel, poivre, tomate, laitue, kobeSteak, chipsLays, spaghetti, meetBall;
-            os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = curcuma = poire = cerise = pomme = jus = sel = poivre = laitue = tomate = steak = kobeSteak = chipsLays = meetBall = spaghetti = null;
+            Ingredient tomatoSauce, pepperoni, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, curcuma, poire, cerise, pomme, jus, steak, sel, poivre, tomate, laitue, kobeSteak, chipsLays, spaghetti, meetBall;
+            tomatoSauce = pepperoni = bacon = cheese = pate = os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = curcuma = poire = cerise = pomme = jus = sel = poivre = laitue = tomate = steak = kobeSteak = chipsLays = meetBall = spaghetti = null;
 
-            congelo = Inventaire.getInstance();
+            congelateur = Inventaire.getInstance();
 
             // Création des ingrédients
             try {
@@ -1529,24 +1529,17 @@ public class TestMenuFact02 {
 
             // Ajout des ingrédients dans l'inventaire
             try {
-                congelo.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, spaghetti, meetBall, jusCitron, chipsLays, kobeSteak, curcuma, pomme, jus, poire, cerise, sel, poivre, steak, tomate, laitue});
+                congelateur.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, spaghetti, meetBall, jusCitron, chipsLays, kobeSteak, curcuma, pomme, jus, poire, cerise, sel, poivre, steak, tomate, laitue});
             } catch (IngredientException ie) {
                 System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
                 Assert.fail();
             }
-            System.out.println(congelo);
+            System.out.println(congelateur);
         }
 
         public void testCreationFacture() {
-            facture1 = new Facture("factureTest");
-            try {
-                facture1.ouvrir();
-            } catch (FactureException fe) {
-                System.out.println("Erreur dans l'ouverture de la facture: " + fe.getMessage());
-                Assert.fail();
-            }
+            Facture facture1 = new Facture("factureTest");
             facture1.associerClient(luffy);
-
         }
 
         public void testAjoutMenu() {
@@ -1561,7 +1554,6 @@ public class TestMenuFact02 {
                 patePizza = new Fruit("pate", new EtatIngredientSolide(0.454));
             } catch (IngredientException ie) {
                 System.out.println("Erreur dans la création des ingrédients au menu: " + ie.getMessage());
-                Assert.fail();
             }
 
             Recette recettePizza = new Recette(new Ingredient[]{tomatoSauce, pepperoni, bacon, cheese, patePizza});
@@ -1573,7 +1565,6 @@ public class TestMenuFact02 {
                         .buildRecette(recettePizza);
             } catch (PlatException pe) {
                 System.out.println("Erreur dans la création du plat: " + pe.getMessage());
-                Assert.fail();
             }
             PlatAuMenu platPizza = pb.getResult();
 
@@ -1584,34 +1575,7 @@ public class TestMenuFact02 {
         }
 
         public void testPlatCorrect() {
-            PlatChoisi plat=null;
-            for (int i = 0; i < 3; i++){
-                try {
-                    menu.positionSuivante();
-                }
-                catch (MenuException me){
-                    System.out.println("Erreur dans la position du Menu : " + me.getMessage());
-                    Assert.fail();
-                }
 
-            }
-            try {
-                plat = new PlatChoisi(menu.platCourant(), 3);
-
-            }
-            catch (PlatException pe){
-                System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
-                Assert.fail();
-            }
-            try {
-                facture1.ajoutePlat(plat);
-            } catch (FactureException fe) {
-                System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
-                Assert.fail();
-            } catch (PlatException pe) {
-                System.out.println("Erreur dans l'ajout du plat: " + pe.getMessage());
-                Assert.fail();
-            }
         }
 
         public void testPlatSante() {
