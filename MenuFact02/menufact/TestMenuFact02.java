@@ -1604,11 +1604,8 @@ public class TestMenuFact02 {
             }
             try {
                 facture1.ajoutePlat(plat);
-            } catch (FactureException fe) {
-                System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
-                Assert.fail();
-            } catch (PlatException pe) {
-                System.out.println("Erreur dans l'ajout du plat: " + pe.getMessage());
+            } catch (FactureException | PlatException E) {
+                System.out.println("Erreur dans l'ajout du plat: " + E.getMessage());
                 Assert.fail();
             }
         }
