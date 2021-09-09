@@ -138,7 +138,7 @@ public class Facture {
      * @throws FactureException Seulement si la facture est OUVERTE
      */
     public void ajoutePlat(PlatChoisi p) throws FactureException, PlatException {
-        if (etat instanceof FactureEtatOuverte)
+        if (etat instanceof FactureEtatOuverte) {
             if (p == null) {
                 throw new PlatException("Impossible de rajoputer un plat null à la facture");
             }
@@ -153,8 +153,9 @@ public class Facture {
                     System.out.println("Il n'y a pas assez d'ingrédient" + ie.getMessage());
                 }
             }
-        else
+        } else {
             throw new FactureException("On peut ajouter un plat seulement sur une facture OUVERTE.");
+        }
     }
 
 
