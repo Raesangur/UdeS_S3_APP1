@@ -1467,7 +1467,7 @@ public class TestMenuFact02 {
                         .buildGras(0.04)
                         .buildPrix(16.99)
                         .buildDescription("Saumon au four")
-                        .buildRecette(recetteTarteGomuFruit);
+                        .buildRecette(recettePoisson);
             } catch (PlatException pe) {
                 System.out.println("Erreur dans la création du plat enfant: " + pe.getMessage());
             }
