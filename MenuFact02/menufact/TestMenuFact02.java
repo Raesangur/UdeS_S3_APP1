@@ -1640,7 +1640,7 @@ public class TestMenuFact02 {
         public void testPlatSante() {
             PlatChoisi plat = null;
             menu.position(2);
-            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
+            System.out.println("TestPlatSante : valeur retour GOOD = 'Servi'");
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
 
@@ -1664,7 +1664,7 @@ public class TestMenuFact02 {
         public void testPlatEnfant() {
             PlatChoisi plat = null;
             menu.position(1);
-            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
+            System.out.println("TestPlatEnfant : valeur retour GOOD = 'Servi'");
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
 
