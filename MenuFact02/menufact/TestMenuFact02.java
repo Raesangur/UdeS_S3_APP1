@@ -1366,7 +1366,7 @@ public class TestMenuFact02 {
         Chef zeff;
         Client luffy;
         Menu menu;
-
+        Facture facture1;
         public TestMenuFact() {
             testCreationClient();
             testCreationChef();
@@ -1538,8 +1538,15 @@ public class TestMenuFact02 {
         }
 
         public void testCreationFacture() {
-            Facture facture1 = new Facture("factureTest");
+            facture1 = new Facture("factureTest");
+            try {
+                facture1.ouvrir();
+            } catch (FactureException fe) {
+                System.out.println("Erreur dans l'ouverture de la facture: " + fe.getMessage());
+                Assert.fail();
+            }
             facture1.associerClient(luffy);
+
         }
 
         public void testAjoutMenu() {
@@ -1554,6 +1561,7 @@ public class TestMenuFact02 {
                 patePizza = new Fruit("pate", new EtatIngredientSolide(0.454));
             } catch (IngredientException ie) {
                 System.out.println("Erreur dans la création des ingrédients au menu: " + ie.getMessage());
+                Assert.fail();
             }
 
             Recette recettePizza = new Recette(new Ingredient[]{tomatoSauce, pepperoni, bacon, cheese, patePizza});
@@ -1565,6 +1573,7 @@ public class TestMenuFact02 {
                         .buildRecette(recettePizza);
             } catch (PlatException pe) {
                 System.out.println("Erreur dans la création du plat: " + pe.getMessage());
+                Assert.fail();
             }
             PlatAuMenu platPizza = pb.getResult();
 
@@ -1575,7 +1584,34 @@ public class TestMenuFact02 {
         }
 
         public void testPlatCorrect() {
-            
+            PlatChoisi plat=null;
+            for (int i = 0; i < 3; i++){
+                try {
+                    menu.positionSuivante();
+                }
+                catch (MenuException me){
+                    System.out.println("Erreur dans la position du Menu : " + me.getMessage());
+                    Assert.fail();
+                }
+
+            }
+            try {
+                plat = new PlatChoisi(menu.platCourant(), 3);
+
+            }
+            catch (PlatException pe){
+                System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
+                Assert.fail();
+            }
+            try {
+                facture1.ajoutePlat(plat);
+            } catch (FactureException fe) {
+                System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans l'ajout du plat: " + pe.getMessage());
+                Assert.fail();
+            }
         }
 
         public void testPlatSante() {

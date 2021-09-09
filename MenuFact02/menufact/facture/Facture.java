@@ -103,10 +103,10 @@ public class Facture {
      * @throws FactureException en cas que la facture soit PAYEE
      */
     public void ouvrir() throws FactureException {
-        if (etat.changerEtat(new FactureEtatFermee())) {
+        if (etat.changerEtat(new FactureEtatOuverte())) {
             throw new FactureException("La facture ne peut pas être reouverte.");
         } else {
-            etat = new FactureEtatFermee();
+            etat = new FactureEtatOuverte();
         }
     }
 
