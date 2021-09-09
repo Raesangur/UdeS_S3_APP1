@@ -1592,8 +1592,8 @@ public class TestMenuFact02 {
                     System.out.println("Erreur dans la position du Menu : " + me.getMessage());
                     Assert.fail();
                 }
-
             }
+
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
 
