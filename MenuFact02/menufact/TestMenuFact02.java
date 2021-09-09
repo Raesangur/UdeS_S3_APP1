@@ -1379,8 +1379,8 @@ public class TestMenuFact02 {
 
         public static void runTests() {
             TestMenuFact testMenuFact = new TestMenuFact();
-            testMenuFact.testAjoutMenu();
             testMenuFact.testPlatCorrect();
+            testMenuFact.testAjoutMenu();
             testMenuFact.testPlatSante();
             testMenuFact.testPlatEnfant();
             testMenuFact.testPlatInnexistant();
@@ -1476,9 +1476,9 @@ public class TestMenuFact02 {
             }
             PlatSante platPoisson = psb.getResult();
 
-            menu.ajoute(platOsViande);
-            menu.ajoute(tarteGomuFruit);
-            menu.ajoute(platPoisson);
+            menu.ajoute(platOsViande);      // 0
+            menu.ajoute(tarteGomuFruit);    // 1
+            menu.ajoute(platPoisson);       // 2
 
             System.out.println(); // TODO Valeur menu
             System.out.println(menu);
@@ -1577,7 +1577,7 @@ public class TestMenuFact02 {
             }
             PlatAuMenu platPizza = pb.getResult();
 
-            menu.ajoute(platPizza);
+            menu.ajoute(platPizza);     // 3
 
             System.out.println(); // TODO Valeur menu
             System.out.println(menu);
@@ -1618,16 +1618,47 @@ public class TestMenuFact02 {
         }
 
         public void testPlatInnexistant() {
-
-        }
-
-        public void testPlatInsuffisant() {
             System.out.println(); // TODO Valeur facture
             System.out.println(facture);
 
             System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Impossible de rajoputer un plat null à la facture'");
             try {
                 facture.ajoutePlat(null);
+                System.out.println("Erreur dans l'erreur");
+                Assert.fail();
+            } catch (PlatException pe) {
+                System.out.println(pe.getMessage());
+            } catch (FactureException fe) {
+                System.out.println(fe.getMessage());
+                Assert.fail();
+            }
+        }
+
+        public void testPlatInsuffisant() {
+            System.out.println(); // TODO Valeur facture
+            System.out.println(facture);
+
+
+            menu.position(0);
+            PlatAuMenu osViande = menu.platCourant();
+
+            System.out.println("TestErrorPlatInsuffisant: valeur retour GOOD = 'Viande hachée autour d'un os'");
+            System.out.println(osViande.getDescription());
+            Assert.assertEquals("Viande hachée autour d'un os", osViande.getDescription());
+            Assert.assertFalse(osViande instanceof PlatSante);
+            Assert.assertFalse(osViande instanceof PlatEnfant);
+
+            PlatChoisi osViandeChoisi = null;
+            try {
+                osViandeChoisi = new PlatChoisi(osViande, 10000);
+            } catch (PlatException pe) {
+                System.out.println(pe.getMessage());
+                Assert.fail();
+            }
+
+            System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Il n'y a pas assez d'ingrédient'");
+            try {
+                facture.ajoutePlat(osViandeChoisi);
                 System.out.println("Erreur dans l'erreur");
                 Assert.fail();
             } catch (PlatException pe) {
