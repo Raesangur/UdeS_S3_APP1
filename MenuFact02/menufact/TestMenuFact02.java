@@ -1479,15 +1479,65 @@ public class TestMenuFact02 {
         }
 
         public void testCreationInventaire() {
+            Inventaire congelo;
+            Ingredient tomatoSauce = null;
+            Ingredient pepperoni = null;
+            Ingredient bacon = null;
+            Ingredient cheese = null;
+            Ingredient pate = null;
+            Ingredient os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, curcuma,poire,cerise,pomme,jus,steak,sel,poivre,tomate,laitue,kobeSteak,chipsLays,spaghetti,meetBall;
+            os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = curcuma =poire=cerise=pomme=jus=sel=poivre=laitue=tomate =steak=kobeSteak=chipsLays=meetBall=spaghetti=null;
 
+            congelo = Inventaire.getInstance();
+
+            // Création des ingrédients
+            try {
+                curcuma = new Epice("curcuma", new EtatIngredientSolide(1));
+                tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(500));
+                pepperoni = new Viande("pepperoni", new EtatIngredientSolide(10));
+                bacon = new Viande("bacon", new EtatIngredientSolide(5));
+                cheese = new Laitier("cheese", new EtatIngredientSolide(50));
+                pate = new Fruit("pate", new EtatIngredientSolide(50));
+                os = new Viande("Os", new EtatIngredientSolide(1));
+                viandeHachee = new Viande("Viande Hachee", new EtatIngredientSolide(30));
+                poire = new Fruit("Poire", new EtatIngredientSolide(1));
+                cerise = new Fruit("Cerise", new EtatIngredientSolide(1));
+                pomme = new Fruit("Pomme", new EtatIngredientSolide(1));
+                jus = new Fruit("Jus", new EtatIngredientLiquide(5));
+                gomuFruit = new Fruit("Gomu Gomu", new EtatIngredientSolide(3));
+                pateTarte = new Fruit("Pâte à tarte", new EtatIngredientSolide(10));
+                steak = new Viande("Steak", new EtatIngredientSolide(50));
+                sel = new Epice("Sel", new EtatIngredientSolide(1));
+                poivre = new Epice("Poivre", new EtatIngredientSolide(1));
+                tomate = new Legume("Tomate", new EtatIngredientSolide(5));
+                laitue = new Legume("Laitue", new EtatIngredientSolide(5));
+                chipsLays = new Legume("lays", new EtatIngredientGazeux(100));
+                spaghetti = new Legume("spaghetti", new EtatIngredientSolide(10));
+                meetBall = new Viande("steakHache", new EtatIngredientSolide(10));
+                poisson = new Viande("Poisson", new EtatIngredientSolide(10));
+                jusCitron = new Fruit("Jus de citron", new EtatIngredientLiquide(1));
+                kobeSteak = new Viande("kobe", new EtatIngredientSolide(3));
+
+            } catch (IngredientException ie) {
+                System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
+                Assert.fail();
+            }
+
+            // Ajout des ingrédients dans l'inventaire
+            try {
+                congelo.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate,os,viandeHachee,gomuFruit,pateTarte,poisson,spaghetti,meetBall,jusCitron,chipsLays,kobeSteak,curcuma,pomme,jus,poire,cerise,sel,poivre,steak,tomate,laitue});
+            } catch (IngredientException ie) {
+                System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
+                Assert.fail();
+            }
+            System.out.println(congelo);
         }
 
         public void testCreationFacture() {
-
+            
         }
 
         public void testAjoutMenu() {
-
 
         }
 
