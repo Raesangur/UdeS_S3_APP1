@@ -13,6 +13,7 @@ public class Menu {
 
     /**
      * Créer un menu contenant sa description
+     *
      * @param description un string de description
      */
     private Menu(String description) {
@@ -21,6 +22,7 @@ public class Menu {
 
     /**
      * refere ou créer un menu s'il existe déjà un menu
+     *
      * @return instance du menu
      */
     public synchronized static Menu getInstance() {
@@ -29,6 +31,7 @@ public class Menu {
 
     /**
      * Donne la description du menu
+     *
      * @return description du menu
      */
     public String getDescription() {
@@ -37,6 +40,7 @@ public class Menu {
 
     /**
      * Permet de Changer la description du menu
+     *
      * @param description un string de description
      */
     public void setDescription(String description) {
@@ -47,38 +51,40 @@ public class Menu {
 
     /**
      * Permet d'ajouter un Plat au menu sous forme de PlatAuMenu
+     *
      * @param p un PlatAuMenu à ajouter
      */
-    public void ajoute(PlatAuMenu p)
-    {
-        plat.add(p);
+    public void ajoute(PlatAuMenu p) {
+        if (p != null) {
+            plat.add(p);
+        }
     }
 
     /**
      * Permet de changer la position actuel du menu
+     *
      * @param i un int représentant la position
      */
-    public void position(int i)
-    {
+    public void position(int i) {
         courant = i;
     }
 
     /**
      * donne le plat a la position courante du menu
+     *
      * @return Plat courant
      */
-    public PlatAuMenu platCourant()
-    {
+    public PlatAuMenu platCourant() {
         return plat.get(courant);
     }
 
     /**
      * Change la position vers la position suivante
+     *
      * @throws MenuException si le courant+1 est plus grand que le size du plat on le return
      */
-    public void positionSuivante() throws MenuException
-    {
-        if (courant+1 >= plat.size())
+    public void positionSuivante() throws MenuException {
+        if (courant + 1 >= plat.size())
             throw new MenuException("On depasse le nombre maximale de plats.");
         else
             courant++;
@@ -86,11 +92,11 @@ public class Menu {
 
     /**
      * Change la position courante pour la position précédente
+     *
      * @throws MenuException si le courant-1 est plus petit que 0 on le return
      */
-    public void positionPrecedente() throws MenuException
-    {
-        if (courant-1 < 0)
+    public void positionPrecedente() throws MenuException {
+        if (courant - 1 < 0)
             throw new MenuException("On depasse le nombre minimale de plats");
         else
             courant--;
@@ -98,6 +104,7 @@ public class Menu {
 
     /**
      * Permet d'afficher le menu sous forme de String
+     *
      * @return String du Menu
      */
 

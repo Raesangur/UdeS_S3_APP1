@@ -872,13 +872,13 @@ public class TestMenuFact02 {
 
         @Test
         public static void runTests() {
-            new TestInventaire().testInventairePrésent();
+            new TestInventaire().testInventairePresent();
             new TestInventaire().testAjoutDouble();
             new TestInventaire().testConsommation();
         }
 
         @Test
-        public void testInventairePrésent() {
+        public void testInventairePresent() {
             // Récupération d'un ingrédient existant
             System.out.println("testInventairePrésent : valeur retour GOOD = 'tomate'");
             Ingredient tomate = congelo.getIngredient("tomate");
@@ -1407,12 +1407,12 @@ public class TestMenuFact02 {
             menu = Menu.getInstance();
             menu.setDescription("Menu MenuFact");
 
-            System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Servi'");
+            System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Menu MenuFact'");
             System.out.println(menu.getDescription());
             Assert.assertEquals("Menu MenuFact", menu.getDescription());
 
-            Ingredient os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, tomatoSauce, pepperoni, bacon, cheese, patePizza;
-            os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = tomatoSauce = pepperoni = bacon = cheese = patePizza = null;
+            Ingredient os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron;
+            os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = null;
 
             try {
                 os = new Viande("Os", new EtatIngredientSolide(0.2));
@@ -1424,11 +1424,7 @@ public class TestMenuFact02 {
                 poisson = new Viande("Poisson", new EtatIngredientSolide(0.3));
                 jusCitron = new Fruit("Jus de citron", new EtatIngredientLiquide(0.075));
 
-                tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.5));
-                pepperoni = new Viande("pepperoni", new EtatIngredientSolide(0.2));
-                bacon = new Viande("bacon", new EtatIngredientSolide(0.2));
-                cheese = new Laitier("cheese", new EtatIngredientSolide(1));
-                patePizza = new Fruit("pate", new EtatIngredientSolide(0.454));
+
             } catch (IngredientException ie) {
                 System.out.println("Erreur dans la création des ingrédients au menu: " + ie.getMessage());
             }
@@ -1436,7 +1432,7 @@ public class TestMenuFact02 {
             Recette recetteOsViande = new Recette(new Ingredient[]{os, viandeHachee});
             Recette recetteTarteGomuFruit = new Recette(new Ingredient[]{gomuFruit, pateTarte});
             Recette recettePoisson = new Recette(new Ingredient[]{poisson, jusCitron});
-            Recette recettePizza = new Recette(new Ingredient[]{tomatoSauce, pepperoni, bacon, cheese, patePizza});
+
 
             PlatBuilder pb = new PlatBuilder();
 
@@ -1476,6 +1472,14 @@ public class TestMenuFact02 {
             menu.ajoute(platOsViande);
             menu.ajoute(tarteGomuFruit);
             menu.ajoute(platPoisson);
+
+            System.out.println(); // TODO Valeur menu
+            System.out.println(menu);
+
+            menu.ajoute(null);
+
+            System.out.println(); // TODO Valeur menu
+            System.out.println(menu);
         }
 
         public void testCreationInventaire() {
@@ -1487,8 +1491,35 @@ public class TestMenuFact02 {
         }
 
         public void testAjoutMenu() {
+            Ingredient tomatoSauce, pepperoni, bacon, cheese, patePizza;
+            tomatoSauce = pepperoni = bacon = cheese = patePizza = null;
 
+            try {
+                tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.5));
+                pepperoni = new Viande("pepperoni", new EtatIngredientSolide(0.2));
+                bacon = new Viande("bacon", new EtatIngredientSolide(0.2));
+                cheese = new Laitier("cheese", new EtatIngredientSolide(1));
+                patePizza = new Fruit("pate", new EtatIngredientSolide(0.454));
+            } catch (IngredientException ie) {
+                System.out.println("Erreur dans la création des ingrédients au menu: " + ie.getMessage());
+            }
 
+            Recette recettePizza = new Recette(new Ingredient[]{tomatoSauce, pepperoni, bacon, cheese, patePizza});
+
+            PlatBuilder pb = new PlatBuilder();
+            try {
+                pb.buildPrix(16.99)
+                        .buildDescription("Pizza au bacon")
+                        .buildRecette(recettePizza);
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans la création du plat: " + pe.getMessage());
+            }
+            PlatAuMenu platPizza = pb.getResult();
+
+            menu.ajoute(platPizza);
+
+            System.out.println(); // TODO Valeur menu
+            System.out.println(menu);
         }
 
         public void testPlatCorrect() {

@@ -46,7 +46,6 @@ public class PlatChoisi {
         return etat;
     }
 
-    ;
 
     public void setEtat(CommandeEtat etat2) throws PlatException {
         // Vérifie que l'état peut changer vers le nouvel état

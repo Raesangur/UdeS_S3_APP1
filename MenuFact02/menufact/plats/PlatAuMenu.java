@@ -79,7 +79,7 @@ public class PlatAuMenu {
 
     /**
      * Donne la proportion d'un plat de base de 1
-     * @return 
+     * @return proportion de base de 1
      */
     public double getProportion() {
         return 1.0;
