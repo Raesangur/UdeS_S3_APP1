@@ -1575,7 +1575,7 @@ public class TestMenuFact02 {
         }
 
         public void testPlatCorrect() {
-            
+
         }
 
         public void testPlatSante() {

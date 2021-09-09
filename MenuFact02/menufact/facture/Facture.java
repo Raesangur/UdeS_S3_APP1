@@ -30,7 +30,6 @@ public class Facture {
     private Chef chef;
 
 
-
     /**********************Constantes ************/
     private final double TPS = 0.05;
     private final double TVQ = 0.095;
@@ -40,6 +39,13 @@ public class Facture {
      */
     public void associerClient(Client client) {
         this.client = client;
+    }
+
+    /**
+     * @param chef le chef de la facture
+     */
+    public void associerChef(Chef chef) {
+        this.chef = chef;
     }
 
     /**
@@ -103,7 +109,7 @@ public class Facture {
      * @throws FactureException en cas que la facture soit PAYEE
      */
     public void ouvrir() throws FactureException {
-        if (etat.changerEtat(new FactureEtatFermee())) {
+        if (etat.changerEtat(new FactureEtatOuverte())) {
             throw new FactureException("La facture ne peut pas être reouverte.");
         } else {
             etat = new FactureEtatFermee();
@@ -133,16 +139,14 @@ public class Facture {
      */
     public void ajoutePlat(PlatChoisi p) throws FactureException, PlatException {
         if (etat instanceof FactureEtatOuverte)
-            if(chef == null){
+            if (chef == null) {
                 throw new FactureException("Il n'y a pas de chef.");
-            }
-            else{
+            } else {
                 try {
                     chef.cuisiner(p);
                     platchoisi.add(p);
-                }
-                catch (IngredientException ie){
-                    System.out.println("Il n'y a pas assez d'ingrédient"+ ie.getMessage());
+                } catch (IngredientException ie) {
+                    System.out.println("Il n'y a pas assez d'ingrédient" + ie.getMessage());
                 }
             }
         else
@@ -192,7 +196,8 @@ public class Facture {
 
         return factureGenere;
     }
-    public void Subscribe(Chef cook){
+
+    public void Subscribe(Chef cook) {
         chef = cook;
     }
 }
