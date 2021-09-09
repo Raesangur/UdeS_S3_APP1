@@ -1508,8 +1508,8 @@ public class TestMenuFact02 {
                 cerise = new Fruit("Cerise", new EtatIngredientSolide(1));
                 pomme = new Fruit("Pomme", new EtatIngredientSolide(1));
                 jus = new Fruit("Jus", new EtatIngredientLiquide(5));
-                gomuFruit = new Fruit("Gomu Gomu", new EtatIngredientSolide(3));
-                pateTarte = new Fruit("Pâte à tarte", new EtatIngredientSolide(10));
+                gomuFruit = new Fruit("Gomu Gomu", new EtatIngredientSolide(10));
+                pateTarte = new Fruit("Pâte à tarte", new EtatIngredientSolide(20));
                 steak = new Viande("Steak", new EtatIngredientSolide(50));
                 sel = new Epice("Sel", new EtatIngredientSolide(1));
                 poivre = new Epice("Poivre", new EtatIngredientSolide(1));
@@ -1538,7 +1538,8 @@ public class TestMenuFact02 {
         }
 
         public void testCreationFacture() {
-
+            Facture facture1 = new Facture("factureTest");
+            facture1.associerClient(luffy);
         }
 
         public void testAjoutMenu() {
@@ -1574,7 +1575,7 @@ public class TestMenuFact02 {
         }
 
         public void testPlatCorrect() {
-
+            
         }
 
         public void testPlatSante() {
