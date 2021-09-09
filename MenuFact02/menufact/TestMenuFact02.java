@@ -1386,7 +1386,7 @@ public class TestMenuFact02 {
             testMenuFact.testPlatInnexistant();
             testMenuFact.testPlatInsuffisant();
         }
-
+        @Test
         public void testCreationClient() {
             try {
                 luffy = new Client(1, "Luffy", "0123 4567 8901 2345");
@@ -1400,7 +1400,7 @@ public class TestMenuFact02 {
             Assert.assertEquals("Luffy", luffy.getNom());
             Assert.assertEquals("0123 4567 8901 2345", luffy.getNumeroCarteCredit());
         }
-
+        @Test
         public void testCreationChef() {
             zeff = Chef.getInstance();
             zeff.setNom("Zeff");
@@ -1409,7 +1409,7 @@ public class TestMenuFact02 {
             System.out.println(zeff);
             Assert.assertEquals("Chef: {\n\tNom: 'Zeff'\n\n}", zeff.toString());
         }
-
+        @Test
         public void testCreationMenu() {
             menu = Menu.getInstance();
             menu.setDescription("Menu MenuFact");
@@ -1488,7 +1488,7 @@ public class TestMenuFact02 {
             System.out.println(); // TODO Valeur menu
             System.out.println(menu);
         }
-
+        @Test
         public void testCreationInventaire() {
             Ingredient tomatoSauce, pepperoni, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, curcuma, poire, cerise, pomme, jus, steak, sel, poivre, tomate, laitue, kobeSteak, chipsLays, spaghetti, meetBall;
             tomatoSauce = pepperoni = bacon = cheese = pate = os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = curcuma = poire = cerise = pomme = jus = sel = poivre = laitue = tomate = steak = kobeSteak = chipsLays = meetBall = spaghetti = null;
@@ -1537,7 +1537,7 @@ public class TestMenuFact02 {
             }
             System.out.println(congelateur);
         }
-
+        @Test
         public void testCreationFacture() {
             facture = new Facture("factureTest");
             try {
@@ -1548,7 +1548,7 @@ public class TestMenuFact02 {
             }
             facture.associerClient(luffy);
         }
-
+        @Test
         public void testAjoutMenu() {
             Ingredient tomatoSauce, pepperoni, bacon, cheese, patePizza;
             tomatoSauce = pepperoni = bacon = cheese = patePizza = null;
@@ -1582,11 +1582,11 @@ public class TestMenuFact02 {
             System.out.println(); // TODO Valeur menu
             System.out.println(menu);
         }
-
+        @Test
         public void testPlatCorrect() {
             PlatChoisi plat = null;
             menu.position(1);
-
+            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
 
@@ -1594,26 +1594,30 @@ public class TestMenuFact02 {
                 System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
                 Assert.fail();
             }
+
             try {
                 facture.ajoutePlat(plat);
             } catch (FactureException | PlatException fe) {
                 System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
                 Assert.fail();
             }
+            System.out.println(facture);
+            System.out.println(plat.getEtat());
+            Assert.assertTrue(plat.getEtat() instanceof Servi);
         }
-
+        @Test
         public void testPlatSante() {
 
         }
-
+        @Test
         public void testPlatEnfant() {
 
         }
-
+        @Test
         public void testPlatInnexistant() {
 
         }
-
+        @Test
         public void testPlatInsuffisant() {
             System.out.println(); // TODO Valeur facture
             System.out.println(facture);
