@@ -1367,7 +1367,8 @@ public class TestMenuFact02 {
         Client luffy;
         Menu menu;
         Inventaire congelateur;
-        Facture facture1;
+        Facture facture;
+
         public TestMenuFact() {
             testCreationClient();
             testCreationChef();
@@ -1538,14 +1539,14 @@ public class TestMenuFact02 {
         }
 
         public void testCreationFacture() {
-            facture1 = new Facture("factureTest");
+            facture = new Facture("factureTest");
             try {
-                facture1.ouvrir();
+                facture.ouvrir();
             } catch (FactureException fe) {
                 System.out.println("Erreur dans l'ouverture de la facture: " + fe.getMessage());
                 Assert.fail();
             }
-            facture1.associerClient(luffy);
+            facture.associerClient(luffy);
         }
 
         public void testAjoutMenu() {
@@ -1583,12 +1584,11 @@ public class TestMenuFact02 {
         }
 
         public void testPlatCorrect() {
-            PlatChoisi plat=null;
-            for (int i = 0; i < 3; i++){
+            PlatChoisi plat = null;
+            for (int i = 0; i < 3; i++) {
                 try {
                     menu.positionSuivante();
-                }
-                catch (MenuException me){
+                } catch (MenuException me) {
                     System.out.println("Erreur dans la position du Menu : " + me.getMessage());
                     Assert.fail();
                 }
@@ -1597,18 +1597,14 @@ public class TestMenuFact02 {
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
 
-            }
-            catch (PlatException pe){
+            } catch (PlatException pe) {
                 System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
                 Assert.fail();
             }
             try {
-                facture1.ajoutePlat(plat);
-            } catch (FactureException fe) {
+                facture.ajoutePlat(plat);
+            } catch (FactureException | PlatException fe) {
                 System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
-                Assert.fail();
-            } catch (PlatException pe) {
-                System.out.println("Erreur dans l'ajout du plat: " + pe.getMessage());
                 Assert.fail();
             }
         }
@@ -1634,10 +1630,9 @@ public class TestMenuFact02 {
                 facture.ajoutePlat(null);
                 System.out.println("Erreur dans l'erreur");
                 Assert.fail();
-            } catch(PlatException pe) {
+            } catch (PlatException pe) {
                 System.out.println(pe.getMessage());
-            }
-            catch (FactureException fe) {
+            } catch (FactureException fe) {
                 System.out.println(fe.getMessage());
                 Assert.fail();
             }
