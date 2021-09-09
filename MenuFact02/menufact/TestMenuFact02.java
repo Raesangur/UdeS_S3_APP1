@@ -1387,6 +1387,7 @@ public class TestMenuFact02 {
             testMenuFact.testPlatInsuffisant();
         }
 
+        @Test
         public void testCreationClient() {
             try {
                 luffy = new Client(1, "Luffy", "0123 4567 8901 2345");
@@ -1401,6 +1402,7 @@ public class TestMenuFact02 {
             Assert.assertEquals("0123 4567 8901 2345", luffy.getNumeroCarteCredit());
         }
 
+        @Test
         public void testCreationChef() {
             zeff = Chef.getInstance();
             zeff.setNom("Zeff");
@@ -1410,6 +1412,7 @@ public class TestMenuFact02 {
             Assert.assertEquals("Chef: {\n\tNom: 'Zeff'\n\n}", zeff.toString());
         }
 
+        @Test
         public void testCreationMenu() {
             menu = Menu.getInstance();
             menu.setDescription("Menu MenuFact");
@@ -1489,6 +1492,7 @@ public class TestMenuFact02 {
             System.out.println(menu);
         }
 
+        @Test
         public void testCreationInventaire() {
             Ingredient tomatoSauce, pepperoni, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, curcuma, poire, cerise, pomme, jus, steak, sel, poivre, tomate, laitue, kobeSteak, chipsLays, spaghetti, meetBall;
             tomatoSauce = pepperoni = bacon = cheese = pate = os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = curcuma = poire = cerise = pomme = jus = sel = poivre = laitue = tomate = steak = kobeSteak = chipsLays = meetBall = spaghetti = null;
@@ -1538,6 +1542,7 @@ public class TestMenuFact02 {
             System.out.println(congelateur);
         }
 
+        @Test
         public void testCreationFacture() {
             facture = new Facture("factureTest");
             try {
@@ -1549,10 +1554,11 @@ public class TestMenuFact02 {
             facture.associerClient(luffy);
         }
 
+        @Test
         public void testAjoutMenu() {
             Ingredient tomatoSauce, pepperoni, bacon, cheese, patePizza;
             tomatoSauce = pepperoni = bacon = cheese = patePizza = null;
-
+            System.out.println("TestAjoutMenu : valeur retour GOOD = Object JSON contenant le Menu");
             try {
                 tomatoSauce = new Legume("tomate", new EtatIngredientLiquide(0.5));
                 pepperoni = new Viande("pepperoni", new EtatIngredientSolide(0.2));
@@ -1579,21 +1585,14 @@ public class TestMenuFact02 {
 
             menu.ajoute(platPizza);     // 3
 
-            System.out.println(); // TODO Valeur menu
             System.out.println(menu);
         }
 
+        @Test
         public void testPlatCorrect() {
             PlatChoisi plat = null;
-            for (int i = 0; i < 3; i++) {
-                try {
-                    menu.positionSuivante();
-                } catch (MenuException me) {
-                    System.out.println("Erreur dans la position du Menu : " + me.getMessage());
-                    Assert.fail();
-                }
-            }
-
+            menu.position(0);
+            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
 
@@ -1601,25 +1600,59 @@ public class TestMenuFact02 {
                 System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
                 Assert.fail();
             }
+            Assert.assertFalse(plat.getPlat() instanceof PlatSante || plat.getPlat() instanceof PlatEnfant);
             try {
                 facture.ajoutePlat(plat);
             } catch (FactureException | PlatException fe) {
                 System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
                 Assert.fail();
             }
-        }
-
-        public void testPlatSante() {
-
-        }
-
-        public void testPlatEnfant() {
-
-        }
-
-        public void testPlatInnexistant() {
-            System.out.println(); // TODO Valeur facture
             System.out.println(facture);
+            System.out.println(plat.getEtat());
+            Assert.assertTrue(plat.getEtat() instanceof Servi);
+        }
+
+        @Test
+        public void testPlatSante() {
+            PlatChoisi plat = null;
+            menu.position(2);
+            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
+            try {
+                plat = new PlatChoisi(menu.platCourant(), 3);
+
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
+                Assert.fail();
+            }
+            Assert.assertTrue(plat.getPlat() instanceof PlatSante);
+            try {
+                facture.ajoutePlat(plat);
+            } catch (FactureException | PlatException fe) {
+                System.out.println("Erreur dans l'ajout du plat: " + fe.getMessage());
+                Assert.fail();
+            }
+            System.out.println(facture);
+            System.out.println(plat.getEtat());
+            Assert.assertTrue(plat.getEtat() instanceof Servi);
+        }
+
+        @Test
+        public void testPlatEnfant() {
+            PlatChoisi plat = null;
+            menu.position(1);
+            System.out.println("TestPlatCorrect : valeur retour GOOD = 'Servi'");
+            try {
+                plat = new PlatChoisi(menu.platCourant(), 3);
+
+            } catch (PlatException pe) {
+                System.out.println("Erreur dans le test de la facture : " + pe.getMessage());
+                Assert.fail();
+            }
+        }
+
+        @Test
+        public void testPlatInnexistant() {
+            String factureOriginale = facture.toString();
 
             System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Impossible de rajoputer un plat null à la facture'");
             try {
@@ -1632,12 +1665,15 @@ public class TestMenuFact02 {
                 System.out.println(fe.getMessage());
                 Assert.fail();
             }
+
+            System.out.println("Valeur Good: " + factureOriginale);
+            System.out.println(facture);
+            Assert.assertEquals(factureOriginale, facture.toString());
         }
 
+        @Test
         public void testPlatInsuffisant() {
-            System.out.println(); // TODO Valeur facture
-            System.out.println(facture);
-
+            String factureOriginale = facture.toString();
 
             menu.position(0);
             PlatAuMenu osViande = menu.platCourant();
@@ -1667,11 +1703,12 @@ public class TestMenuFact02 {
                 System.out.println(fe.getMessage());
                 Assert.fail();
             }
-        }
 
+            System.out.println("Valeur Good: " + factureOriginale);
+            System.out.println(facture);
+            Assert.assertEquals(factureOriginale, facture.toString());
+        }
     }
-    // TODO Test Facture?
-    // TODO Test Menu?
 
     private static void test0_base() {
         boolean trace = true;
