@@ -1,22 +1,26 @@
 package menufact;
 
 import menufact.exceptions.MenuException;
-import menufact.facture.Facture;
 import menufact.facture.exceptions.FactureException;
+import menufact.ingredients.exceptions.IngredientException;
+import menufact.plats.exception.PlatException;
+
+import menufact.facture.Facture;
 import menufact.facture.state.FactureEtatFermee;
 import menufact.facture.state.FactureEtatOuverte;
+
 import menufact.ingredients.*;
 import menufact.ingredients.etat.EtatIngredientGazeux;
 import menufact.ingredients.etat.EtatIngredientLiquide;
 import menufact.ingredients.etat.EtatIngredientSolide;
-import menufact.ingredients.exceptions.IngredientException;
 import menufact.ingredients.factory.*;
+
 import menufact.plats.*;
 import menufact.plats.builder.PlatBuilder;
 import menufact.plats.builder.PlatEnfantBuilder;
 import menufact.plats.builder.PlatSanteBuilder;
-import menufact.plats.exception.PlatException;
 import menufact.plats.state.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -1730,6 +1734,7 @@ public class TestMenuFact02 {
         }
     }
 
+    @Test
     private static void test0_base() {
         boolean trace = true;
         Assert.assertTrue(trace);
@@ -1834,6 +1839,7 @@ public class TestMenuFact02 {
         System.out.println(f1.genererFacture());
     }
 
+    @Test
     private void test1_AffichePlatsAuMenu(boolean trace, PlatAuMenu p1, PlatAuMenu p2,
                                           PlatAuMenu p3, PlatAuMenu p4, PlatAuMenu p5) {
         System.out.println("=== test1_AffichePlatsAuMenu");
@@ -1846,7 +1852,7 @@ public class TestMenuFact02 {
         }
     }
 
-
+    @Test
     private void test2_AffichePlatsSante(boolean trace, PlatSante ps1, PlatSante ps2,
                                          PlatSante ps3, PlatSante ps4, PlatSante ps5) {
         System.out.println("=== test2_AffichePlatsSante");
@@ -1860,9 +1866,8 @@ public class TestMenuFact02 {
         }
     }
 
-
+    @Test
     private static void test3_AjoutMenu(boolean trace, Menu m1, Menu m2) {
-
         System.out.println("=== test3_AjoutMenu");
 
         if (trace) {
@@ -1871,7 +1876,7 @@ public class TestMenuFact02 {
         }
     }
 
-
+    @Test
     private void test4_AjoutPlatsAuMenu(boolean trace, Menu m1,
                                         PlatAuMenu p1, PlatAuMenu p2,
                                         PlatSante ps1, PlatSante ps2,
@@ -1898,7 +1903,7 @@ public class TestMenuFact02 {
         }
     }
 
-
+    @Test
     private void test5_DeplacementMenuAvancer(Menu m1) throws MenuException {
         System.out.println("=== test5_DeplacementMenuAvancer");
 
@@ -1925,7 +1930,7 @@ public class TestMenuFact02 {
         }
     }
 
-
+    @Test
     private void test6_DeplacementMenuReculer(Menu m1) throws MenuException {
         System.out.println("===test6_DeplacementMenuReculer");
 
@@ -1952,6 +1957,7 @@ public class TestMenuFact02 {
         }
     }
 
+    @Test
     private void test7_CreerFacture(Facture f1, Menu m1) throws FactureException, PlatException {
         System.out.println("===test7_CreerFacture");
 
@@ -1960,13 +1966,14 @@ public class TestMenuFact02 {
         System.out.println(f1);
     }
 
-
+    @Test
     private void test8_AjouterClientFacture(Facture f1, Client c1) {
         System.out.println("===test8_AjouterClientFacture");
         f1.associerClient(c1);
         System.out.println(f1);
     }
 
+    @Test
     private void test8_AjouterPlatsFacture(Facture f1, Menu m1, int pos) throws MenuException, FactureException, PlatException {
         System.out.println("===test8_AjouterPlatsFacture");
 
@@ -1979,6 +1986,7 @@ public class TestMenuFact02 {
         System.out.println(f1);
     }
 
+    @Test
     private void test9_PayerFacture(Facture f1) throws FactureException {
         System.out.println("===test9_PayerFacture");
 
