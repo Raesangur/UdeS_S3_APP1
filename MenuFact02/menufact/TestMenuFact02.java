@@ -1366,6 +1366,7 @@ public class TestMenuFact02 {
         Chef zeff;
         Client luffy;
         Menu menu;
+        Inventaire congelateur;
 
         public TestMenuFact() {
             testCreationClient();
@@ -1400,7 +1401,12 @@ public class TestMenuFact02 {
         }
 
         public void testCreationChef() {
+            zeff = Chef.getInstance();
+            zeff.setNom("Zeff");
 
+            System.out.println("Chef: {\n\tNom: 'Zeff'\n\n}");
+            System.out.println(zeff);
+            Assert.assertEquals("Chef: {\n\tNom: 'Zeff'\n\n}", zeff.toString());
         }
 
         public void testCreationMenu() {
@@ -1483,16 +1489,10 @@ public class TestMenuFact02 {
         }
 
         public void testCreationInventaire() {
-            Inventaire congelo;
-            Ingredient tomatoSauce = null;
-            Ingredient pepperoni = null;
-            Ingredient bacon = null;
-            Ingredient cheese = null;
-            Ingredient pate = null;
-            Ingredient os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, curcuma, poire, cerise, pomme, jus, steak, sel, poivre, tomate, laitue, kobeSteak, chipsLays, spaghetti, meetBall;
-            os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = curcuma = poire = cerise = pomme = jus = sel = poivre = laitue = tomate = steak = kobeSteak = chipsLays = meetBall = spaghetti = null;
+            Ingredient tomatoSauce, pepperoni, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, jusCitron, curcuma, poire, cerise, pomme, jus, steak, sel, poivre, tomate, laitue, kobeSteak, chipsLays, spaghetti, meetBall;
+            tomatoSauce = pepperoni = bacon = cheese = pate = os = viandeHachee = gomuFruit = pateTarte = poisson = jusCitron = curcuma = poire = cerise = pomme = jus = sel = poivre = laitue = tomate = steak = kobeSteak = chipsLays = meetBall = spaghetti = null;
 
-            congelo = Inventaire.getInstance();
+            congelateur = Inventaire.getInstance();
 
             // Création des ingrédients
             try {
@@ -1529,12 +1529,12 @@ public class TestMenuFact02 {
 
             // Ajout des ingrédients dans l'inventaire
             try {
-                congelo.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, spaghetti, meetBall, jusCitron, chipsLays, kobeSteak, curcuma, pomme, jus, poire, cerise, sel, poivre, steak, tomate, laitue});
+                congelateur.ajouterIngredient(new Ingredient[]{pepperoni, tomatoSauce, bacon, cheese, pate, os, viandeHachee, gomuFruit, pateTarte, poisson, spaghetti, meetBall, jusCitron, chipsLays, kobeSteak, curcuma, pomme, jus, poire, cerise, sel, poivre, steak, tomate, laitue});
             } catch (IngredientException ie) {
                 System.out.println("Erreur dans le test de l'Inventaire : " + ie.getMessage());
                 Assert.fail();
             }
-            System.out.println(congelo);
+            System.out.println(congelateur);
         }
 
         public void testCreationFacture() {
