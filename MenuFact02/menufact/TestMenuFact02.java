@@ -1591,7 +1591,21 @@ public class TestMenuFact02 {
         }
 
         public void testPlatInsuffisant() {
+            System.out.println(); // TODO Valeur facture
+            System.out.println(facture);
 
+            System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Impossible de rajoputer un plat null à la facture'");
+            try {
+                facture.ajoutePlat(null);
+                System.out.println("Erreur dans l'erreur");
+                Assert.fail();
+            } catch(PlatException pe) {
+                System.out.println(pe.getMessage());
+            }
+            catch (FactureException fe) {
+                System.out.println(fe.getMessage());
+                Assert.fail();
+            }
         }
 
     }

@@ -139,6 +139,10 @@ public class Facture {
      */
     public void ajoutePlat(PlatChoisi p) throws FactureException, PlatException {
         if (etat instanceof FactureEtatOuverte)
+            if (p == null) {
+                throw new PlatException("Impossible de rajoputer un plat null à la facture");
+            }
+
             if (chef == null) {
                 throw new FactureException("Il n'y a pas de chef.");
             } else {
