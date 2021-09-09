@@ -1585,14 +1585,7 @@ public class TestMenuFact02 {
 
         public void testPlatCorrect() {
             PlatChoisi plat = null;
-            for (int i = 0; i < 3; i++) {
-                try {
-                    menu.positionSuivante();
-                } catch (MenuException me) {
-                    System.out.println("Erreur dans la position du Menu : " + me.getMessage());
-                    Assert.fail();
-                }
-            }
+            menu.position(1);
 
             try {
                 plat = new PlatChoisi(menu.platCourant(), 3);
