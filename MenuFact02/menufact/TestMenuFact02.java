@@ -3,6 +3,8 @@ package menufact;
 import menufact.exceptions.MenuException;
 import menufact.facture.Facture;
 import menufact.facture.exceptions.FactureException;
+import menufact.facture.state.FactureEtatFermee;
+import menufact.facture.state.FactureEtatOuverte;
 import menufact.ingredients.*;
 import menufact.ingredients.etat.EtatIngredientGazeux;
 import menufact.ingredients.etat.EtatIngredientLiquide;
@@ -48,6 +50,8 @@ public class TestMenuFact02 {
         System.out.println("\n=== TESTS CLIENT ===");
         TestClient.runTests();
 
+        System.out.println("\n=== TESTS D'INTÉGRATIONS ===");
+        TestMenuFact.runTests();
 
         System.out.println("\n=== FIN DES TESTS ===");
 
@@ -1545,13 +1549,33 @@ public class TestMenuFact02 {
         @Test
         public void testCreationFacture() {
             facture = new Facture("factureTest");
+
+            System.out.println("TestAjoutMenu : valeur retour GOOD = 'La facture ne peut pas être reouverte'");
             try {
                 facture.ouvrir();
+                System.out.println("Error dans l'erreur");
+                Assert.fail();
             } catch (FactureException fe) {
-                System.out.println("Erreur dans l'ouverture de la facture: " + fe.getMessage());
+                System.out.println(fe.getMessage());
+                System.out.println("Task Failed Successfully");
+            }
+            try {
+                facture.fermer();
+                Assert.assertTrue(facture.getEtat() instanceof FactureEtatFermee);
+            } catch (FactureException fe) {
+                System.out.println("Erreur dans la fermeture de facture: " + fe.getMessage());
                 Assert.fail();
             }
+            try {
+                facture.ouvrir();
+                Assert.assertTrue(facture.getEtat() instanceof FactureEtatOuverte);
+            } catch (FactureException fe) {
+                System.out.println("Erreur dans l'ouverture de facture: " + fe.getMessage());
+                Assert.fail();
+            }
+
             facture.associerClient(luffy);
+            facture.associerChef(zeff);
         }
 
         @Test
@@ -1695,12 +1719,8 @@ public class TestMenuFact02 {
             System.out.println("TestErrorIngrdient : valeur retour GOOD = 'Il n'y a pas assez d'ingrédient'");
             try {
                 facture.ajoutePlat(osViandeChoisi);
-                System.out.println("Erreur dans l'erreur");
-                Assert.fail();
-            } catch (PlatException pe) {
-                System.out.println(pe.getMessage());
-            } catch (FactureException fe) {
-                System.out.println(fe.getMessage());
+            } catch (FactureException | PlatException ex) {
+                System.out.println(ex.getMessage());
                 Assert.fail();
             }
 
