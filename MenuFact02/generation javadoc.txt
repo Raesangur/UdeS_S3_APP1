@@ -1,0 +1,2 @@
+Utiliser les flags suivants si la génération de javadoc échoue
+-encoding utf8 -docencoding utf8 -charset utf8
